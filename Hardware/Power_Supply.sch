@@ -1,0 +1,333 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 2 2
+Title "DC/DC power supply"
+Date "2020-07-27"
+Rev "1.0"
+Comp "Cyclope robot by Adrien RICCIARDI"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Regulator_Switching:TPS565208 U1
+U 1 1 5F1F3596
+P 5500 3550
+F 0 "U1" H 5500 3917 50  0000 C CNN
+F 1 "TPS565208DDC" H 5500 3826 50  0000 C CNN
+F 2 "Package_TO_SOT_SMD:SOT-23-6" H 5550 3300 50  0001 L CNN
+F 3 "http://www.ti.com/lit/ds/symlink/tps565208.pdf" H 5500 3550 50  0001 C CNN
+	1    5500 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:L L1
+U 1 1 5F1F38BC
+P 7100 3450
+F 0 "L1" V 7290 3450 50  0000 C CNN
+F 1 "IHLP3232DZER3R3M01" V 7199 3450 50  0000 C CNN
+F 2 "" H 7100 3450 50  0001 C CNN
+F 3 "~" H 7100 3450 50  0001 C CNN
+F 4 "Vishay-Dale" H 7100 3450 50  0001 C CNN "Manufacturer"
+	1    7100 3450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 5F1F6510
+P 7550 3700
+F 0 "R1" H 7620 3791 50  0000 L CNN
+F 1 "54.9K" H 7620 3700 50  0000 L CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 7480 3700 50  0001 C CNN
+F 3 "~" H 7550 3700 50  0001 C CNN
+F 4 "1%" H 7620 3609 50  0000 L CNN "Value2"
+	1    7550 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 5F1F6CFB
+P 7550 4100
+F 0 "R2" H 7620 4191 50  0000 L CNN
+F 1 "10K" H 7620 4100 50  0000 L CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 7480 4100 50  0001 C CNN
+F 3 "~" H 7550 4100 50  0001 C CNN
+F 4 "1%" H 7620 4009 50  0000 L CNN "Value2"
+	1    7550 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C4
+U 1 1 5F1F72DC
+P 4500 3700
+F 0 "C4" H 4385 3563 50  0000 R CNN
+F 1 "100n" H 4385 3654 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 4538 3550 50  0001 C CNN
+F 3 "~" H 4500 3700 50  0001 C CNN
+F 4 "50V" H 4385 3745 50  0000 R CNN "Value2"
+F 5 "X7R" H 4385 3836 50  0000 R CNN "Value3"
+	1    4500 3700
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C C3
+U 1 1 5F1F85F3
+P 4050 3700
+F 0 "C3" H 3935 3563 50  0000 R CNN
+F 1 "10u" H 3935 3654 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 4088 3550 50  0001 C CNN
+F 3 "~" H 4050 3700 50  0001 C CNN
+F 4 "50V" H 3935 3745 50  0000 R CNN "Value2"
+F 5 "X7R" H 3935 3836 50  0000 R CNN "Value3"
+	1    4050 3700
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C C2
+U 1 1 5F1F89CE
+P 3600 3700
+F 0 "C2" H 3485 3563 50  0000 R CNN
+F 1 "10u" H 3485 3654 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 3638 3550 50  0001 C CNN
+F 3 "~" H 3600 3700 50  0001 C CNN
+F 4 "50V" H 3485 3745 50  0000 R CNN "Value2"
+F 5 "X7R" H 3485 3836 50  0000 R CNN "Value3"
+	1    3600 3700
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C C5
+U 1 1 5F1F9FA0
+P 8200 3700
+F 0 "C5" H 8085 3563 50  0000 R CNN
+F 1 "10u" H 8085 3654 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 8238 3550 50  0001 C CNN
+F 3 "~" H 8200 3700 50  0001 C CNN
+F 4 "25V" H 8085 3745 50  0000 R CNN "Value2"
+F 5 "X7R" H 8085 3836 50  0000 R CNN "Value3"
+F 6 "CC1206KRX7R9BB104" V 8200 3700 50  0001 C CNN "ManufacturerReference"
+	1    8200 3700
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C C6
+U 1 1 5F1FBC43
+P 8650 3700
+F 0 "C6" H 8535 3563 50  0000 R CNN
+F 1 "22u" H 8535 3654 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 8688 3550 50  0001 C CNN
+F 3 "~" H 8650 3700 50  0001 C CNN
+F 4 "25V" H 8535 3745 50  0000 R CNN "Value2"
+F 5 "X7R" H 8535 3836 50  0000 R CNN "Value3"
+F 6 "CC1206KRX7R9BB104" V 8650 3700 50  0001 C CNN "ManufacturerReference"
+	1    8650 3700
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C C7
+U 1 1 5F1FC068
+P 9100 3700
+F 0 "C7" H 8985 3563 50  0000 R CNN
+F 1 "22u" H 8985 3654 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 9138 3550 50  0001 C CNN
+F 3 "~" H 9100 3700 50  0001 C CNN
+F 4 "25V" H 8985 3745 50  0000 R CNN "Value2"
+F 5 "X7R" H 8985 3836 50  0000 R CNN "Value3"
+F 6 "CC1206KRX7R9BB104" V 9100 3700 50  0001 C CNN "ManufacturerReference"
+	1    9100 3700
+	-1   0    0    1   
+$EndComp
+$Comp
+L Mechanical:MountingHole_Pad H2
+U 1 1 5F1FE00E
+P 2900 3950
+F 0 "H2" V 3137 3953 50  0000 C CNN
+F 1 "BATTERY-" V 3046 3953 50  0000 C CNN
+F 2 "MountingHole:MountingHole_2.2mm_M2_Pad" H 2900 3950 50  0001 C CNN
+F 3 "~" H 2900 3950 50  0001 C CNN
+	1    2900 3950
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Mechanical:MountingHole_Pad H1
+U 1 1 5F1FF3A5
+P 2900 3450
+F 0 "H1" V 3137 3453 50  0000 C CNN
+F 1 "BATTERY+" V 3046 3453 50  0000 C CNN
+F 2 "MountingHole:MountingHole_2.2mm_M2_Pad" H 2900 3450 50  0001 C CNN
+F 3 "~" H 2900 3450 50  0001 C CNN
+	1    2900 3450
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3000 3450 3600 3450
+Wire Wire Line
+	3600 3450 3600 3550
+Wire Wire Line
+	3600 3450 4050 3450
+Wire Wire Line
+	4050 3450 4050 3550
+Connection ~ 3600 3450
+Wire Wire Line
+	4050 3450 4500 3450
+Wire Wire Line
+	4500 3450 4500 3550
+Connection ~ 4050 3450
+Wire Wire Line
+	4500 3450 5000 3450
+Connection ~ 4500 3450
+Wire Wire Line
+	5000 3450 5000 3650
+Wire Wire Line
+	5000 3650 5100 3650
+Connection ~ 5000 3450
+Wire Wire Line
+	5000 3450 5100 3450
+Wire Wire Line
+	3600 3850 3600 3950
+Wire Wire Line
+	4050 3950 4050 3850
+Wire Wire Line
+	4050 3950 4500 3950
+Wire Wire Line
+	4500 3950 4500 3850
+Connection ~ 4050 3950
+Wire Wire Line
+	4500 3950 5500 3950
+Wire Wire Line
+	5500 3950 5500 3850
+Connection ~ 4500 3950
+Wire Wire Line
+	3000 3950 3600 3950
+Connection ~ 3600 3950
+Wire Wire Line
+	3600 3950 4050 3950
+$Comp
+L power:GND #PWR02
+U 1 1 5F204807
+P 5500 4050
+F 0 "#PWR02" H 5500 3800 50  0001 C CNN
+F 1 "GND" H 5505 3877 50  0000 C CNN
+F 2 "" H 5500 4050 50  0001 C CNN
+F 3 "" H 5500 4050 50  0001 C CNN
+	1    5500 4050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5500 4050 5500 3950
+Connection ~ 5500 3950
+Wire Wire Line
+	5900 3650 6050 3650
+Wire Wire Line
+	5900 3550 6150 3550
+Wire Wire Line
+	6150 3550 6150 3650
+Wire Wire Line
+	6550 3650 6650 3650
+$Comp
+L Device:C C1
+U 1 1 5F1F48E7
+P 6400 3650
+F 0 "C1" V 5850 3650 50  0000 C CNN
+F 1 "100n" V 5950 3650 50  0000 C CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 6438 3500 50  0001 C CNN
+F 3 "~" H 6400 3650 50  0001 C CNN
+F 4 "25V" V 6050 3650 50  0000 C CNN "Value2"
+F 5 "X7R" V 6150 3650 50  0000 C CNN "Value3"
+F 6 "CC1206KRX7R9BB104" V 6400 3650 50  0001 C CNN "ManufacturerReference"
+	1    6400 3650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7550 3450 8200 3450
+Wire Wire Line
+	8200 3450 8200 3550
+Connection ~ 7550 3450
+Wire Wire Line
+	8200 3450 8650 3450
+Wire Wire Line
+	8650 3450 8650 3550
+Connection ~ 8200 3450
+Wire Wire Line
+	8650 3450 9100 3450
+Wire Wire Line
+	9100 3450 9100 3550
+Connection ~ 8650 3450
+$Comp
+L power:+5V #PWR01
+U 1 1 5F20FD84
+P 9100 3350
+F 0 "#PWR01" H 9100 3200 50  0001 C CNN
+F 1 "+5V" H 9115 3523 50  0000 C CNN
+F 2 "" H 9100 3350 50  0001 C CNN
+F 3 "" H 9100 3350 50  0001 C CNN
+	1    9100 3350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9100 3450 9100 3350
+Connection ~ 9100 3450
+Wire Wire Line
+	8200 3850 8200 3950
+Wire Wire Line
+	8200 3950 8650 3950
+Wire Wire Line
+	8650 3950 8650 3850
+Wire Wire Line
+	8650 3950 9100 3950
+Wire Wire Line
+	9100 3950 9100 3850
+Connection ~ 8650 3950
+$Comp
+L power:GND #PWR03
+U 1 1 5F2113CA
+P 8650 4050
+F 0 "#PWR03" H 8650 3800 50  0001 C CNN
+F 1 "GND" H 8655 3877 50  0000 C CNN
+F 2 "" H 8650 4050 50  0001 C CNN
+F 3 "" H 8650 4050 50  0001 C CNN
+	1    8650 4050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8650 4050 8650 3950
+Wire Wire Line
+	6050 3900 7550 3900
+Wire Wire Line
+	7550 3900 7550 3850
+Wire Wire Line
+	6050 3650 6050 3900
+Wire Wire Line
+	7550 3900 7550 3950
+Connection ~ 7550 3900
+$Comp
+L power:GND #PWR04
+U 1 1 5F213955
+P 7550 4350
+F 0 "#PWR04" H 7550 4100 50  0001 C CNN
+F 1 "GND" H 7555 4177 50  0000 C CNN
+F 2 "" H 7550 4350 50  0001 C CNN
+F 3 "" H 7550 4350 50  0001 C CNN
+	1    7550 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7550 4350 7550 4250
+Wire Wire Line
+	7550 3450 7550 3550
+Wire Wire Line
+	6150 3650 6250 3650
+Wire Wire Line
+	6650 3650 6650 3450
+Wire Wire Line
+	5900 3450 6650 3450
+Connection ~ 6650 3450
+Wire Wire Line
+	6650 3450 6950 3450
+Wire Wire Line
+	7250 3450 7550 3450
+$EndSCHEMATC

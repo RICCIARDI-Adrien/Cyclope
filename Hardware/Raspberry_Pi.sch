@@ -1,0 +1,190 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 3 3
+Title "Raspberry Pi"
+Date "2020-07-27"
+Rev "1.0"
+Comp "Cyclope robot by Adrien RICCIARDI"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector_Generic:Conn_02x20_Odd_Even J1
+U 1 1 5F229EE5
+P 5400 2950
+F 0 "J1" H 5450 4067 50  0000 C CNN
+F 1 "M20-9762042 " H 5450 3976 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_2x20_P2.54mm_Vertical" H 5400 2950 50  0001 C CNN
+F 3 "~" H 5400 2950 50  0001 C CNN
+	1    5400 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5F22CEF4
+P 6150 1900
+AR Path="/5F1F2F9E/5F22CEF4" Ref="C?"  Part="1" 
+AR Path="/5F22814A/5F22CEF4" Ref="C8"  Part="1" 
+F 0 "C8" H 6035 1763 50  0000 R CNN
+F 1 "100n" H 6035 1854 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 6188 1750 50  0001 C CNN
+F 3 "~" H 6150 1900 50  0001 C CNN
+F 4 "25V" H 6035 1945 50  0000 R CNN "Value2"
+F 5 "X7R" H 6035 2036 50  0000 R CNN "Value3"
+	1    6150 1900
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5F22D07D
+P 6700 1900
+AR Path="/5F1F2F9E/5F22D07D" Ref="C?"  Part="1" 
+AR Path="/5F22814A/5F22D07D" Ref="C9"  Part="1" 
+F 0 "C9" H 6585 1763 50  0000 R CNN
+F 1 "2.2u" H 6585 1854 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 6738 1750 50  0001 C CNN
+F 3 "~" H 6700 1900 50  0001 C CNN
+F 4 "25V" H 6585 1945 50  0000 R CNN "Value2"
+F 5 "X7R" H 6585 2036 50  0000 R CNN "Value3"
+	1    6700 1900
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:CP C10
+U 1 1 5F22DB67
+P 7250 1900
+F 0 "C10" H 7368 1991 50  0000 L CNN
+F 1 "47u" H 7368 1900 50  0000 L CNN
+F 2 "Capacitor_SMD:CP_Elec_5x5.4" H 7288 1750 50  0001 C CNN
+F 3 "~" H 7250 1900 50  0001 C CNN
+F 4 "25V" H 7368 1809 50  0000 L CNN "Value2"
+F 5 "MCVVT016M470DA1L" H 7250 1900 50  0001 C CNN "Value3"
+	1    7250 1900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR05
+U 1 1 5F22EC69
+P 6700 1600
+F 0 "#PWR05" H 6700 1450 50  0001 C CNN
+F 1 "+5V" H 6715 1773 50  0000 C CNN
+F 2 "" H 6700 1600 50  0001 C CNN
+F 3 "" H 6700 1600 50  0001 C CNN
+	1    6700 1600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5700 2150 5850 2150
+Wire Wire Line
+	5850 2150 5850 2050
+Wire Wire Line
+	5850 1650 6150 1650
+Wire Wire Line
+	6150 1650 6150 1750
+Wire Wire Line
+	5700 2050 5850 2050
+Connection ~ 5850 2050
+Wire Wire Line
+	5850 2050 5850 1650
+Wire Wire Line
+	6150 1650 6700 1650
+Connection ~ 6150 1650
+Wire Wire Line
+	6700 1650 6700 1750
+Connection ~ 6700 1650
+Wire Wire Line
+	6700 1600 6700 1650
+Wire Wire Line
+	6700 1650 7250 1650
+Wire Wire Line
+	7250 1650 7250 1750
+Wire Wire Line
+	6150 2050 6150 2150
+Wire Wire Line
+	6150 2150 6700 2150
+Wire Wire Line
+	6700 2150 6700 2050
+Wire Wire Line
+	6700 2150 7250 2150
+Wire Wire Line
+	7250 2150 7250 2050
+Connection ~ 6700 2150
+$Comp
+L power:GND #PWR06
+U 1 1 5F233893
+P 6700 2250
+F 0 "#PWR06" H 6700 2000 50  0001 C CNN
+F 1 "GND" H 6705 2077 50  0000 C CNN
+F 2 "" H 6700 2250 50  0001 C CNN
+F 3 "" H 6700 2250 50  0001 C CNN
+	1    6700 2250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6700 2250 6700 2150
+$Comp
+L power:GND #PWR08
+U 1 1 5F2348AC
+P 5850 4100
+F 0 "#PWR08" H 5850 3850 50  0001 C CNN
+F 1 "GND" H 5855 3927 50  0000 C CNN
+F 2 "" H 5850 4100 50  0001 C CNN
+F 3 "" H 5850 4100 50  0001 C CNN
+	1    5850 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR07
+U 1 1 5F235911
+P 5050 4100
+F 0 "#PWR07" H 5050 3850 50  0001 C CNN
+F 1 "GND" H 5055 3927 50  0000 C CNN
+F 2 "" H 5050 4100 50  0001 C CNN
+F 3 "" H 5050 4100 50  0001 C CNN
+	1    5050 4100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5700 3650 5850 3650
+Wire Wire Line
+	5850 3650 5850 4100
+Wire Wire Line
+	5700 3450 5850 3450
+Wire Wire Line
+	5850 3450 5850 3650
+Connection ~ 5850 3650
+Wire Wire Line
+	5700 2950 5850 2950
+Wire Wire Line
+	5850 2950 5850 3450
+Connection ~ 5850 3450
+Wire Wire Line
+	5700 2650 5850 2650
+Wire Wire Line
+	5850 2650 5850 2950
+Connection ~ 5850 2950
+Wire Wire Line
+	5700 2250 5850 2250
+Wire Wire Line
+	5850 2250 5850 2650
+Connection ~ 5850 2650
+Wire Wire Line
+	5200 2450 5050 2450
+Wire Wire Line
+	5050 2450 5050 3250
+Wire Wire Line
+	5200 3250 5050 3250
+Connection ~ 5050 3250
+Wire Wire Line
+	5050 3250 5050 3950
+Wire Wire Line
+	5200 3950 5050 3950
+Connection ~ 5050 3950
+Wire Wire Line
+	5050 3950 5050 4100
+$EndSCHEMATC

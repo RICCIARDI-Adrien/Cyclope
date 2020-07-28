@@ -2,6 +2,9 @@
 
 set -u
 
+# Create data partition mount point
+mkdir -p "${TARGET_DIR}"/media/data
+
 # Replace /var/log symlink to /tmp by a real directory (so logs are kept across reboots)
 rm -rf "${TARGET_DIR}"/var/log
 ln -s /media/data/var/log "${TARGET_DIR}"/var/log

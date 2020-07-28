@@ -193,7 +193,7 @@ Precision voltage regulator can provide up to 20mA.
 Text GLabel 2750 3350 0    50   UnSpc ~ 0
 BATTERY+
 Text Notes 1550 3200 0    50   ~ 0
-Battery maximum voltage is 8x2V (with margin) = 16V.\nThis voltage dividers outputs 3.4V at Vcc=16V.
+Battery maximum voltage is 8x2V (with margin) = 16V.\nThis voltage divider outputs 3.4V at Vcc = 16V.
 $Comp
 L Device:R R3
 U 1 1 5F252511
@@ -246,4 +246,66 @@ Wire Wire Line
 Connection ~ 2850 3800
 Wire Wire Line
 	2850 3800 2850 3850
+$Comp
+L Device:R R5
+U 1 1 5F258418
+P 3700 5050
+F 0 "R5" H 3770 5141 50  0000 L CNN
+F 1 "10K" H 3770 5050 50  0000 L CNN
+F 2 "Resistor_SMD:R_1210_3225Metric_Pad1.42x2.65mm_HandSolder" V 3630 5050 50  0001 C CNN
+F 3 "~" H 3700 5050 50  0001 C CNN
+F 4 "1%" H 3770 4959 50  0000 L CNN "Value2"
+	1    3700 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3VA #PWR012
+U 1 1 5F259335
+P 3700 4800
+F 0 "#PWR012" H 3700 4650 50  0001 C CNN
+F 1 "+3.3VA" H 3715 4973 50  0000 C CNN
+F 2 "" H 3700 4800 50  0001 C CNN
+F 3 "" H 3700 4800 50  0001 C CNN
+	1    3700 4800
+	1    0    0    -1  
+$EndComp
+Text Notes 2150 5250 0    50   ~ 0
+Voltage divider maximum drawn\ncurrent is 3.3V/10000 = 330uA.
+$Comp
+L Sensor_Optical:LDR07 R6
+U 1 1 5F25AAB7
+P 3700 5450
+F 0 "R6" H 3770 5496 50  0000 L CNN
+F 1 "LDR07" H 3770 5405 50  0000 L CNN
+F 2 "OptoDevice:R_LDR_5.1x4.3mm_P3.4mm_Vertical" V 3875 5450 50  0001 C CNN
+F 3 "http://www.tme.eu/de/Document/f2e3ad76a925811312d226c31da4cd7e/LDR07.pdf" H 3700 5400 50  0001 C CNN
+	1    3700 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5F20193C
+P 3700 5700
+F 0 "#PWR?" H 3700 5450 50  0001 C CNN
+F 1 "GND" H 3705 5527 50  0000 C CNN
+F 2 "" H 3700 5700 50  0001 C CNN
+F 3 "" H 3700 5700 50  0001 C CNN
+	1    3700 5700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3700 5700 3700 5600
+Wire Wire Line
+	3700 5300 3700 5250
+Wire Wire Line
+	3700 4900 3700 4800
+Wire Wire Line
+	3700 5250 5050 5250
+Wire Wire Line
+	5050 5250 5050 3800
+Wire Wire Line
+	5050 3800 5500 3800
+Connection ~ 3700 5250
+Wire Wire Line
+	3700 5250 3700 5200
 $EndSCHEMATC

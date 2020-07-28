@@ -204,30 +204,6 @@ Wire Wire Line
 Text GLabel 6350 3150 2    50   Output ~ 0
 ADC_SPI_CS
 $Comp
-L Supply_Part:Supply_Part M1
-U 1 1 5F220D82
-P 8750 4200
-F 0 "M1" H 8978 4246 50  0000 L CNN
-F 1 "FS5113R" H 8978 4155 50  0000 L CNN
-F 2 "Supply_Part:Supply_Part" H 8750 4200 50  0001 C CNN
-F 3 "" H 8750 4200 50  0001 C CNN
-F 4 "Feetech" H 8750 4200 50  0001 C CNN "Value2"
-	1    8750 4200
-	1    0    0    -1  
-$EndComp
-$Comp
-L Supply_Part:Supply_Part M2
-U 1 1 5F222375
-P 2200 4200
-F 0 "M2" H 2428 4246 50  0000 L CNN
-F 1 "FS5113R" H 2428 4155 50  0000 L CNN
-F 2 "Supply_Part:Supply_Part" H 2200 4200 50  0001 C CNN
-F 3 "" H 2200 4200 50  0001 C CNN
-F 4 "Feetech" H 2200 4200 50  0001 C CNN "Value2"
-	1    2200 4200
-	1    0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR017
 U 1 1 5F22F17E
 P 6950 4650

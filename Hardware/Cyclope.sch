@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 4
+Sheet 1 5
 Title "Main page"
 Date "2020-07-27"
 Rev "1.0"
@@ -119,4 +119,10 @@ F 5 "https://www.gotronic.fr/art-support-de-servos-asb01-11637.htm" H 3200 6400 
 	1    3200 6400
 	1    0    0    -1  
 $EndComp
+$Sheet
+S 2500 4000 1500 1450
+U 5F288D93
+F0 "Camera_Board" 50
+F1 "Camera_Board.sch" 50
+$EndSheet
 $EndSCHEMATC

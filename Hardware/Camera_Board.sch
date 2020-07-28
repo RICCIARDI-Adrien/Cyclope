@@ -1,0 +1,419 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 5 5
+Title "Separate board with camera, leds and LDR"
+Date "2020-07-27"
+Rev "1.0"
+Comp "Cyclope robot by Adrien RICCIARDI"
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:LED D1
+U 1 1 5F289A86
+P 3100 3350
+F 0 "D1" H 3093 3566 50  0000 C CNN
+F 1 "158301250" H 3093 3475 50  0000 C CNN
+F 2 "158301250:158301250" H 3100 3350 50  0001 C CNN
+F 3 "~" H 3100 3350 50  0001 C CNN
+	1    3100 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D2
+U 1 1 5F28F949
+P 3100 3900
+F 0 "D2" H 3093 4116 50  0000 C CNN
+F 1 "158301250" H 3093 4025 50  0000 C CNN
+F 2 "158301250:158301250" H 3100 3900 50  0001 C CNN
+F 3 "~" H 3100 3900 50  0001 C CNN
+	1    3100 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Sensor_Optical:LDR07 R?
+U 1 1 5F29225B
+P 4350 4150
+AR Path="/5F1FECAE/5F29225B" Ref="R?"  Part="1" 
+AR Path="/5F288D93/5F29225B" Ref="R6"  Part="1" 
+F 0 "R6" H 4420 4196 50  0000 L CNN
+F 1 "LDR07" H 4420 4105 50  0000 L CNN
+F 2 "OptoDevice:R_LDR_5.1x4.3mm_P3.4mm_Vertical" V 4525 4150 50  0001 C CNN
+F 3 "http://www.tme.eu/de/Document/f2e3ad76a925811312d226c31da4cd7e/LDR07.pdf" H 4350 4100 50  0001 C CNN
+	1    4350 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x04 J4
+U 1 1 5F294EF0
+P 5350 3750
+F 0 "J4" H 5430 3742 50  0000 L CNN
+F 1 "Camera_Right" H 5430 3651 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Horizontal" H 5350 3750 50  0001 C CNN
+F 3 "~" H 5350 3750 50  0001 C CNN
+	1    5350 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x04 J5
+U 1 1 5F296CBA
+P 5350 4300
+F 0 "J5" H 5430 4292 50  0000 L CNN
+F 1 "Camera_Left" H 5430 4201 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Horizontal" H 5350 4300 50  0001 C CNN
+F 3 "~" H 5350 4300 50  0001 C CNN
+	1    5350 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x04 J6
+U 1 1 5F2984F8
+P 7350 3850
+F 0 "J6" H 7429 3705 50  0000 L CNN
+F 1 "Motherboard_Right" H 7429 3796 50  0000 L CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical" H 7350 3850 50  0001 C CNN
+F 3 "~" H 7350 3850 50  0001 C CNN
+F 4 "DNP" H 7429 3887 50  0000 L CNN "Populate"
+	1    7350 3850
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x04 J7
+U 1 1 5F2998AF
+P 7350 4400
+F 0 "J7" H 7430 4255 50  0000 L CNN
+F 1 "Motherboard_Left" H 7430 4346 50  0000 L CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical" H 7350 4400 50  0001 C CNN
+F 3 "~" H 7350 4400 50  0001 C CNN
+F 4 "DNP" H 7430 4437 50  0000 L CNN "Populate"
+	1    7350 4400
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:GND #PWR0101
+U 1 1 5F29B440
+P 7650 4600
+F 0 "#PWR0101" H 7650 4350 50  0001 C CNN
+F 1 "GND" H 7655 4427 50  0000 C CNN
+F 2 "" H 7650 4600 50  0001 C CNN
+F 3 "" H 7650 4600 50  0001 C CNN
+	1    7650 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7550 4500 7650 4500
+Wire Wire Line
+	7650 4500 7650 4600
+Wire Wire Line
+	7550 4400 7650 4400
+Wire Wire Line
+	7650 4400 7650 4500
+Connection ~ 7650 4500
+Wire Wire Line
+	7550 4300 7650 4300
+Wire Wire Line
+	7650 4300 7650 4400
+Connection ~ 7650 4400
+Wire Wire Line
+	7550 4200 7650 4200
+Wire Wire Line
+	7650 4200 7650 4300
+Connection ~ 7650 4300
+$Comp
+L power:GNDD #PWR0102
+U 1 1 5F29F0FF
+P 5050 4600
+F 0 "#PWR0102" H 5050 4350 50  0001 C CNN
+F 1 "GNDD" H 5054 4445 50  0000 C CNN
+F 2 "" H 5050 4600 50  0001 C CNN
+F 3 "" H 5050 4600 50  0001 C CNN
+	1    5050 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5150 4500 5050 4500
+Wire Wire Line
+	5050 4500 5050 4600
+Wire Wire Line
+	5150 4400 5050 4400
+Wire Wire Line
+	5050 4400 5050 4500
+Connection ~ 5050 4500
+Wire Wire Line
+	5150 4300 5050 4300
+Wire Wire Line
+	5050 4300 5050 4400
+Connection ~ 5050 4400
+Wire Wire Line
+	5150 4200 5050 4200
+Wire Wire Line
+	5050 4200 5050 4300
+Connection ~ 5050 4300
+$Comp
+L power:+5V #PWR0103
+U 1 1 5F2A1CD1
+P 7650 3150
+F 0 "#PWR0103" H 7650 3000 50  0001 C CNN
+F 1 "+5V" H 7665 3323 50  0000 C CNN
+F 2 "" H 7650 3150 50  0001 C CNN
+F 3 "" H 7650 3150 50  0001 C CNN
+	1    7650 3150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7550 3650 7650 3650
+Wire Wire Line
+	7550 3750 7650 3750
+Wire Wire Line
+	7650 3750 7650 3650
+Connection ~ 7650 3650
+Wire Wire Line
+	7550 3850 7650 3850
+Wire Wire Line
+	7650 3850 7650 3750
+Connection ~ 7650 3750
+$Comp
+L Device:C C?
+U 1 1 5F2A61A6
+P 7950 3450
+AR Path="/5F1F2F9E/5F2A61A6" Ref="C?"  Part="1" 
+AR Path="/5F22814A/5F2A61A6" Ref="C?"  Part="1" 
+AR Path="/5F288D93/5F2A61A6" Ref="C18"  Part="1" 
+F 0 "C18" H 7835 3313 50  0000 R CNN
+F 1 "100n" H 7835 3404 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 7988 3300 50  0001 C CNN
+F 3 "~" H 7950 3450 50  0001 C CNN
+F 4 "25V" H 7835 3495 50  0000 R CNN "Value2"
+F 5 "X7R" H 7835 3586 50  0000 R CNN "Value3"
+	1    7950 3450
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5F2A61AE
+P 8450 3450
+AR Path="/5F1F2F9E/5F2A61AE" Ref="C?"  Part="1" 
+AR Path="/5F22814A/5F2A61AE" Ref="C?"  Part="1" 
+AR Path="/5F288D93/5F2A61AE" Ref="C19"  Part="1" 
+F 0 "C19" H 8335 3313 50  0000 R CNN
+F 1 "2.2u" H 8335 3404 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 8488 3300 50  0001 C CNN
+F 3 "~" H 8450 3450 50  0001 C CNN
+F 4 "25V" H 8335 3495 50  0000 R CNN "Value2"
+F 5 "X7R" H 8335 3586 50  0000 R CNN "Value3"
+	1    8450 3450
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	7650 3200 7950 3200
+Wire Wire Line
+	7950 3200 7950 3300
+Wire Wire Line
+	7950 3200 8450 3200
+Wire Wire Line
+	8450 3200 8450 3300
+Connection ~ 7950 3200
+Wire Wire Line
+	7950 3600 7950 3650
+Wire Wire Line
+	8450 3650 8450 3600
+Wire Wire Line
+	7950 3650 8200 3650
+$Comp
+L power:GND #PWR0104
+U 1 1 5F2AC559
+P 8200 3700
+F 0 "#PWR0104" H 8200 3450 50  0001 C CNN
+F 1 "GND" H 8205 3527 50  0000 C CNN
+F 2 "" H 8200 3700 50  0001 C CNN
+F 3 "" H 8200 3700 50  0001 C CNN
+	1    8200 3700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8200 3700 8200 3650
+Connection ~ 8200 3650
+Wire Wire Line
+	8200 3650 8450 3650
+Wire Wire Line
+	7650 3150 7650 3200
+Wire Wire Line
+	7650 3200 7650 3650
+Connection ~ 7650 3200
+Text GLabel 7800 3950 2    50   UnSpc ~ 0
+LDR
+Wire Wire Line
+	7800 3950 7550 3950
+Wire Notes Line
+	6500 5150 9000 5150
+Wire Notes Line
+	9000 5150 9000 2700
+Wire Notes Line
+	9000 2700 6500 2700
+Wire Notes Line
+	6500 2700 6500 5150
+Text Notes 6600 5100 0    50   ~ 0
+Part of motherboard.
+$Comp
+L power:+5VD #PWR0105
+U 1 1 5F2BDBFA
+P 5050 3550
+F 0 "#PWR0105" H 5050 3400 50  0001 C CNN
+F 1 "+5VD" H 5065 3723 50  0000 C CNN
+F 2 "" H 5050 3550 50  0001 C CNN
+F 3 "" H 5050 3550 50  0001 C CNN
+	1    5050 3550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 3550 5050 3650
+Wire Wire Line
+	5050 3650 5150 3650
+Wire Wire Line
+	5050 3750 5150 3750
+Connection ~ 5050 3650
+Wire Wire Line
+	5050 3750 5050 3850
+Wire Wire Line
+	5050 3850 5150 3850
+Connection ~ 5050 3750
+$Comp
+L power:GNDD #PWR0106
+U 1 1 5F2C3356
+P 4350 4350
+F 0 "#PWR0106" H 4350 4100 50  0001 C CNN
+F 1 "GNDD" H 4354 4195 50  0000 C CNN
+F 2 "" H 4350 4350 50  0001 C CNN
+F 3 "" H 4350 4350 50  0001 C CNN
+	1    4350 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4350 4350 4350 4300
+Wire Wire Line
+	5150 3950 4350 3950
+Wire Wire Line
+	4350 3950 4350 4000
+$Comp
+L power:GNDD #PWR0107
+U 1 1 5F2C704C
+P 2850 4150
+F 0 "#PWR0107" H 2850 3900 50  0001 C CNN
+F 1 "GNDD" H 2854 3995 50  0000 C CNN
+F 2 "" H 2850 4150 50  0001 C CNN
+F 3 "" H 2850 4150 50  0001 C CNN
+	1    2850 4150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2950 3900 2850 3900
+Wire Wire Line
+	2850 3900 2850 4150
+Wire Wire Line
+	2850 3900 2850 3350
+Wire Wire Line
+	2850 3350 2950 3350
+Connection ~ 2850 3900
+Text Notes 2650 2850 0    50   ~ 0
+Led forward voltage : 3V.\nLed forward current : 20mA.
+$Comp
+L Device:R R7
+U 1 1 5F2D70A9
+P 3650 3350
+F 0 "R7" V 3353 3350 50  0000 C CNN
+F 1 "100" V 3444 3350 50  0000 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 3580 3350 50  0001 C CNN
+F 3 "~" H 3650 3350 50  0001 C CNN
+F 4 "5%" V 3535 3350 50  0000 C CNN "Value2"
+	1    3650 3350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R8
+U 1 1 5F2DA263
+P 3650 3900
+F 0 "R8" V 3353 3900 50  0000 C CNN
+F 1 "100" V 3444 3900 50  0000 C CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 3580 3900 50  0001 C CNN
+F 3 "~" H 3650 3900 50  0001 C CNN
+F 4 "5%" V 3535 3900 50  0000 C CNN "Value2"
+	1    3650 3900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3250 3350 3500 3350
+Wire Wire Line
+	3250 3900 3500 3900
+Wire Wire Line
+	3800 3350 3900 3350
+Wire Wire Line
+	3900 3350 3900 3650
+Wire Wire Line
+	3900 3900 3800 3900
+Wire Wire Line
+	3900 3650 5050 3650
+Connection ~ 3900 3650
+Wire Wire Line
+	3900 3650 3900 3900
+Wire Wire Line
+	5050 3650 5050 3750
+$Comp
+L Mechanical:MountingHole H3
+U 1 1 5F2EC62F
+P 2850 4650
+F 0 "H3" H 2950 4696 50  0000 L CNN
+F 1 "Camera" H 2950 4605 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.2mm_M2" H 2850 4650 50  0001 C CNN
+F 3 "~" H 2850 4650 50  0001 C CNN
+	1    2850 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 5F2F030A
+P 3500 4650
+F 0 "H4" H 3600 4696 50  0000 L CNN
+F 1 "Camera" H 3600 4605 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.2mm_M2" H 3500 4650 50  0001 C CNN
+F 3 "~" H 3500 4650 50  0001 C CNN
+	1    3500 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H5
+U 1 1 5F2F0621
+P 2850 4950
+F 0 "H5" H 2950 4996 50  0000 L CNN
+F 1 "Camera" H 2950 4905 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.2mm_M2" H 2850 4950 50  0001 C CNN
+F 3 "~" H 2850 4950 50  0001 C CNN
+	1    2850 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H6
+U 1 1 5F2F098F
+P 3500 4950
+F 0 "H6" H 3600 4996 50  0000 L CNN
+F 1 "Camera" H 3600 4905 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.2mm_M2" H 3500 4950 50  0001 C CNN
+F 3 "~" H 3500 4950 50  0001 C CNN
+	1    3500 4950
+	1    0    0    -1  
+$EndComp
+Wire Notes Line
+	2500 5250 6250 5250
+Wire Notes Line
+	6250 5250 6250 2550
+Wire Notes Line
+	6250 2550 2500 2550
+Wire Notes Line
+	2500 2550 2500 5250
+Text Notes 5150 5150 0    50   ~ 0
+Camera separate board.
+$EndSCHEMATC

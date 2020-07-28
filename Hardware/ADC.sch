@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 4 4
+Sheet 4 5
 Title "Analog-to-digital converter"
 Date "2020-07-27"
 Rev "1.0"
@@ -263,32 +263,6 @@ F 3 "" H 3700 4800 50  0001 C CNN
 $EndComp
 Text Notes 2150 5250 0    50   ~ 0
 Voltage divider maximum drawn\ncurrent is 3.3V/10000 = 330uA.
-$Comp
-L Sensor_Optical:LDR07 R6
-U 1 1 5F25AAB7
-P 3700 5450
-F 0 "R6" H 3770 5496 50  0000 L CNN
-F 1 "LDR07" H 3770 5405 50  0000 L CNN
-F 2 "OptoDevice:R_LDR_5.1x4.3mm_P3.4mm_Vertical" V 3875 5450 50  0001 C CNN
-F 3 "http://www.tme.eu/de/Document/f2e3ad76a925811312d226c31da4cd7e/LDR07.pdf" H 3700 5400 50  0001 C CNN
-	1    3700 5450
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR013
-U 1 1 5F20193C
-P 3700 5700
-F 0 "#PWR013" H 3700 5450 50  0001 C CNN
-F 1 "GND" H 3705 5527 50  0000 C CNN
-F 2 "" H 3700 5700 50  0001 C CNN
-F 3 "" H 3700 5700 50  0001 C CNN
-	1    3700 5700
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	3700 5700 3700 5600
-Wire Wire Line
-	3700 5300 3700 5250
 Wire Wire Line
 	3700 4900 3700 4800
 Wire Wire Line
@@ -345,4 +319,10 @@ Wire Wire Line
 	7650 3550 7950 3550
 Wire Wire Line
 	7650 3450 7950 3450
+Text GLabel 3650 5450 0    50   UnSpc ~ 0
+LDR
+Wire Wire Line
+	3700 5450 3650 5450
+Wire Wire Line
+	3700 5250 3700 5450
 $EndSCHEMATC

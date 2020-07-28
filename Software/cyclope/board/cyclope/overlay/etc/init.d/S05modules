@@ -4,6 +4,8 @@ case "$1" in
 	start)
 		# Load PWM driver
 		modprobe pwm-bcm2835
+		# Load WiFi driver
+		modprobe brcmfmac
 		;;
 
 	stop)

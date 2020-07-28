@@ -9,9 +9,13 @@ GENIMAGE_TMP="${BUILD_DIR}/genimage.tmp"
 # Provide custom boot files
 cp "${BOARD_DIR}"/boot/* "${BOOT_PARTITION_DIR}"/rpi-firmware
 
-# Create empty partition image because genimage is not able to create a partition without content
+# Create data partition manually because genimage is only able to create FAT file systems with content
+# Create empty partition
 dd if=/dev/zero of="${BOOT_PARTITION_DIR}"/data.ext4 bs=1M count=500
-mkfs.ext4 -L data "${BOOT_PARTITION_DIR}"/data.ext4
+# Create file system skeleton to embed to generated file system
+rm -rf "${BOOT_PARTITION_DIR}"/data
+mkdir -p "${BOOT_PARTITION_DIR}"/data/var/log
+mkfs.ext4 -L data -d "${BOOT_PARTITION_DIR}"/data "${BOOT_PARTITION_DIR}"/data.ext4
 
 # Pass an empty rootpath. genimage makes a full copy of the given rootpath to
 # ${GENIMAGE_TMP}/root so passing TARGET_DIR would be a waste of time and disk

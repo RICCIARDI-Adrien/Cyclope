@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name NCP51460SN33T1G)(type Legacy)(uri ${KIPRJMOD}/NCP51460SN33T1G.lib)(options "")(descr ""))
+  (lib (name Supply_Part)(type Legacy)(uri ${KIPRJMOD}/Supply_Part.lib)(options "")(descr ""))
 )

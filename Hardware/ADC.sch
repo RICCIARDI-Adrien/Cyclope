@@ -35,7 +35,7 @@ U 1 1 5F215D4B
 P 6000 3600
 F 0 "U3" H 6250 4200 50  0000 C CNN
 F 1 "MCP3002" H 6350 4100 50  0000 C CNN
-F 2 "" H 6000 3500 50  0001 C CNN
+F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 6000 3500 50  0001 C CNN
 F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/21294E.pdf" H 6000 3800 50  0001 C CNN
 	1    6000 3600
 	1    0    0    -1  

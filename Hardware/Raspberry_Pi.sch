@@ -203,4 +203,228 @@ Wire Wire Line
 	6350 3150 5700 3150
 Text GLabel 6350 3150 2    50   Output ~ 0
 ADC_SPI_CS
+$Comp
+L Supply_Part:Supply_Part M1
+U 1 1 5F220D82
+P 8750 4200
+F 0 "M1" H 8978 4246 50  0000 L CNN
+F 1 "FS5113R" H 8978 4155 50  0000 L CNN
+F 2 "Supply_Part:Supply_Part" H 8750 4200 50  0001 C CNN
+F 3 "" H 8750 4200 50  0001 C CNN
+F 4 "Feetech" H 8750 4200 50  0001 C CNN "Value2"
+	1    8750 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Supply_Part:Supply_Part M2
+U 1 1 5F222375
+P 2200 4200
+F 0 "M2" H 2428 4246 50  0000 L CNN
+F 1 "FS5113R" H 2428 4155 50  0000 L CNN
+F 2 "Supply_Part:Supply_Part" H 2200 4200 50  0001 C CNN
+F 3 "" H 2200 4200 50  0001 C CNN
+F 4 "Feetech" H 2200 4200 50  0001 C CNN "Value2"
+	1    2200 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR017
+U 1 1 5F22F17E
+P 6950 4650
+F 0 "#PWR017" H 6950 4400 50  0001 C CNN
+F 1 "GND" H 6955 4477 50  0000 C CNN
+F 2 "" H 6950 4650 50  0001 C CNN
+F 3 "" H 6950 4650 50  0001 C CNN
+	1    6950 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x03 J3
+U 1 1 5F220658
+P 7850 4200
+F 0 "J3" H 7930 4242 50  0000 L CNN
+F 1 "Motor_1" H 7930 4151 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 7850 4200 50  0001 C CNN
+F 3 "~" H 7850 4200 50  0001 C CNN
+	1    7850 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5F23B1E7
+P 7150 4400
+AR Path="/5F1F2F9E/5F23B1E7" Ref="C?"  Part="1" 
+AR Path="/5F22814A/5F23B1E7" Ref="C17"  Part="1" 
+F 0 "C17" H 7035 4263 50  0000 R CNN
+F 1 "2.2u" H 7035 4354 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 7188 4250 50  0001 C CNN
+F 3 "~" H 7150 4400 50  0001 C CNN
+F 4 "25V" H 7035 4445 50  0000 R CNN "Value2"
+F 5 "X7R" H 7035 4536 50  0000 R CNN "Value3"
+	1    7150 4400
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5F23F5D8
+P 6700 4400
+AR Path="/5F1F2F9E/5F23F5D8" Ref="C?"  Part="1" 
+AR Path="/5F22814A/5F23F5D8" Ref="C16"  Part="1" 
+F 0 "C16" H 6585 4263 50  0000 R CNN
+F 1 "22u" H 6585 4354 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 6738 4250 50  0001 C CNN
+F 3 "~" H 6700 4400 50  0001 C CNN
+F 4 "25V" H 6585 4445 50  0000 R CNN "Value2"
+F 5 "X7R" H 6585 4536 50  0000 R CNN "Value3"
+F 6 "CC1206KRX7R9BB104" V 6700 4400 50  0001 C CNN "ManufacturerReference"
+	1    6700 4400
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6700 4550 6700 4600
+Wire Wire Line
+	6700 4600 6950 4600
+Wire Wire Line
+	6950 4600 6950 4650
+Wire Wire Line
+	6950 4600 7150 4600
+Wire Wire Line
+	7150 4600 7150 4550
+Connection ~ 6950 4600
+Wire Wire Line
+	7150 4600 7600 4600
+Wire Wire Line
+	7600 4600 7600 4300
+Wire Wire Line
+	7600 4300 7650 4300
+Connection ~ 7150 4600
+Wire Wire Line
+	6700 4200 6700 4250
+Wire Wire Line
+	6700 4200 7150 4200
+Wire Wire Line
+	7150 4200 7150 4250
+Wire Wire Line
+	7150 4200 7650 4200
+Connection ~ 7150 4200
+Wire Wire Line
+	5700 3550 7150 3550
+Wire Wire Line
+	7150 3550 7150 4100
+Wire Wire Line
+	7150 4100 7650 4100
+$Comp
+L power:+5V #PWR015
+U 1 1 5F24A8C3
+P 6700 4100
+F 0 "#PWR015" H 6700 3950 50  0001 C CNN
+F 1 "+5V" H 6715 4273 50  0000 C CNN
+F 2 "" H 6700 4100 50  0001 C CNN
+F 3 "" H 6700 4100 50  0001 C CNN
+	1    6700 4100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6700 4100 6700 4200
+Connection ~ 6700 4200
+$Comp
+L power:GND #PWR016
+U 1 1 5F250DF5
+P 3950 4650
+F 0 "#PWR016" H 3950 4400 50  0001 C CNN
+F 1 "GND" H 3955 4477 50  0000 C CNN
+F 2 "" H 3950 4650 50  0001 C CNN
+F 3 "" H 3950 4650 50  0001 C CNN
+	1    3950 4650
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x03 J2
+U 1 1 5F250DFB
+P 3050 4200
+F 0 "J2" H 2968 4517 50  0000 C CNN
+F 1 "Motor_2" H 2968 4426 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 3050 4200 50  0001 C CNN
+F 3 "~" H 3050 4200 50  0001 C CNN
+	1    3050 4200
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5F250E03
+P 3750 4400
+AR Path="/5F1F2F9E/5F250E03" Ref="C?"  Part="1" 
+AR Path="/5F22814A/5F250E03" Ref="C14"  Part="1" 
+F 0 "C14" H 3635 4263 50  0000 R CNN
+F 1 "2.2u" H 3635 4354 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 3788 4250 50  0001 C CNN
+F 3 "~" H 3750 4400 50  0001 C CNN
+F 4 "25V" H 3635 4445 50  0000 R CNN "Value2"
+F 5 "X7R" H 3635 4536 50  0000 R CNN "Value3"
+	1    3750 4400
+	1    0    0    1   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 5F250E0C
+P 4200 4400
+AR Path="/5F1F2F9E/5F250E0C" Ref="C?"  Part="1" 
+AR Path="/5F22814A/5F250E0C" Ref="C15"  Part="1" 
+F 0 "C15" H 4085 4263 50  0000 R CNN
+F 1 "22u" H 4085 4354 50  0000 R CNN
+F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 4238 4250 50  0001 C CNN
+F 3 "~" H 4200 4400 50  0001 C CNN
+F 4 "25V" H 4085 4445 50  0000 R CNN "Value2"
+F 5 "X7R" H 4085 4536 50  0000 R CNN "Value3"
+F 6 "CC1206KRX7R9BB104" V 4200 4400 50  0001 C CNN "ManufacturerReference"
+	1    4200 4400
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	4200 4550 4200 4600
+Wire Wire Line
+	4200 4600 3950 4600
+Wire Wire Line
+	3950 4600 3950 4650
+Wire Wire Line
+	3950 4600 3750 4600
+Wire Wire Line
+	3750 4600 3750 4550
+Connection ~ 3950 4600
+Wire Wire Line
+	3750 4600 3300 4600
+Wire Wire Line
+	3300 4600 3300 4300
+Wire Wire Line
+	3300 4300 3250 4300
+Connection ~ 3750 4600
+Wire Wire Line
+	4200 4200 4200 4250
+Wire Wire Line
+	4200 4200 3750 4200
+Wire Wire Line
+	3750 4200 3750 4250
+Wire Wire Line
+	3750 4200 3250 4200
+Connection ~ 3750 4200
+Wire Wire Line
+	3750 4100 3250 4100
+$Comp
+L power:+5V #PWR014
+U 1 1 5F250E23
+P 4200 4100
+F 0 "#PWR014" H 4200 3950 50  0001 C CNN
+F 1 "+5V" H 4215 4273 50  0000 C CNN
+F 2 "" H 4200 4100 50  0001 C CNN
+F 3 "" H 4200 4100 50  0001 C CNN
+	1    4200 4100
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4200 4100 4200 4200
+Connection ~ 4200 4200
+Wire Wire Line
+	3750 3650 5200 3650
+Wire Wire Line
+	3750 3650 3750 4100
 $EndSCHEMATC

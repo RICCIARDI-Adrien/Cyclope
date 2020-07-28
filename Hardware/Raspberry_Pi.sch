@@ -403,4 +403,8 @@ Wire Wire Line
 	3750 3650 5200 3650
 Wire Wire Line
 	3750 3650 3750 4100
+Wire Wire Line
+	6350 2850 5700 2850
+Text GLabel 6350 2850 2    50   Output ~ 0
+CAMERA_BOARD_LEDS
 $EndSCHEMATC

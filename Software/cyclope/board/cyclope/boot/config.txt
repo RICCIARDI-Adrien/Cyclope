@@ -6,3 +6,7 @@ gpu_mem=128
 
 # PWM
 dtoverlay=pwm-2chan,pin=12,func=4,pin2=13,func2=4
+
+# UART
+# Put UART back on ttyAMA0 (use ttyS0 for Bluetooth module)
+dtoverlay=miniuart-bt

@@ -187,4 +187,20 @@ Wire Wire Line
 Connection ~ 5050 3950
 Wire Wire Line
 	5050 3950 5050 4100
+Wire Wire Line
+	5200 3150 4550 3150
+Text GLabel 4550 3150 0    50   Output ~ 0
+ADC_SPI_SCK
+Wire Wire Line
+	5200 3050 4550 3050
+Text GLabel 4550 3050 0    50   Input ~ 0
+ADC_SPI_MISO
+Text GLabel 4550 2950 0    50   Output ~ 0
+ADC_SPI_MOSI
+Wire Wire Line
+	5200 2950 4550 2950
+Wire Wire Line
+	6350 3150 5700 3150
+Text GLabel 6350 3150 2    50   Output ~ 0
+ADC_SPI_CS
 $EndSCHEMATC

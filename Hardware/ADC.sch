@@ -159,22 +159,14 @@ F 3 "" H 6000 4200 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	6000 4200 6000 4100
-Text GLabel 6950 3400 2    50   Input ~ 0
+Text GLabel 7950 3450 2    50   Input ~ 0
 ADC_SPI_CS
-Wire Wire Line
-	6950 3400 6700 3400
-Text GLabel 6950 3500 2    50   Input ~ 0
+Text GLabel 7950 3550 2    50   Input ~ 0
 ADC_SPI_SCK
-Wire Wire Line
-	6950 3500 6700 3500
-Text GLabel 6950 3700 2    50   Output ~ 0
+Text GLabel 7950 3650 2    50   Output ~ 0
 ADC_SPI_MISO
-Wire Wire Line
-	6950 3700 6700 3700
-Text GLabel 6950 3800 2    50   Input ~ 0
+Text GLabel 7950 3750 2    50   Input ~ 0
 ADC_SPI_MOSI
-Wire Wire Line
-	6950 3800 6700 3800
 $Comp
 L power:+3.3VA #PWR09
 U 1 1 5F24C792
@@ -283,10 +275,10 @@ F 3 "http://www.tme.eu/de/Document/f2e3ad76a925811312d226c31da4cd7e/LDR07.pdf" H
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR?
+L power:GND #PWR013
 U 1 1 5F20193C
 P 3700 5700
-F 0 "#PWR?" H 3700 5450 50  0001 C CNN
+F 0 "#PWR013" H 3700 5450 50  0001 C CNN
 F 1 "GND" H 3705 5527 50  0000 C CNN
 F 2 "" H 3700 5700 50  0001 C CNN
 F 3 "" H 3700 5700 50  0001 C CNN
@@ -308,4 +300,49 @@ Wire Wire Line
 Connection ~ 3700 5250
 Wire Wire Line
 	3700 5250 3700 5200
+$Comp
+L Device:R_Pack04 RN1
+U 1 1 5F207575
+P 7450 3650
+F 0 "RN1" V 7033 3650 50  0000 C CNN
+F 1 "R_Pack04" V 7124 3650 50  0000 C CNN
+F 2 "Resistor_SMD:R_Array_Convex_4x1206" V 7725 3650 50  0001 C CNN
+F 3 "~" H 7450 3650 50  0001 C CNN
+F 4 "MP000987" V 7450 3650 50  0001 C CNN "Value2"
+F 5 "Multicomp" V 7450 3650 50  0001 C CNN "Manufacturer"
+	1    7450 3650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6700 3700 6850 3700
+Wire Wire Line
+	6850 3700 6850 3650
+Wire Wire Line
+	6850 3650 7250 3650
+Wire Wire Line
+	6950 3800 6950 3750
+Wire Wire Line
+	6950 3750 7250 3750
+Wire Wire Line
+	6700 3800 6950 3800
+Wire Wire Line
+	6700 3500 6850 3500
+Wire Wire Line
+	6850 3500 6850 3550
+Wire Wire Line
+	6850 3550 7250 3550
+Wire Wire Line
+	6700 3400 6950 3400
+Wire Wire Line
+	6950 3400 6950 3450
+Wire Wire Line
+	6950 3450 7250 3450
+Wire Wire Line
+	7650 3750 7950 3750
+Wire Wire Line
+	7650 3650 7950 3650
+Wire Wire Line
+	7650 3550 7950 3550
+Wire Wire Line
+	7650 3450 7950 3450
 $EndSCHEMATC

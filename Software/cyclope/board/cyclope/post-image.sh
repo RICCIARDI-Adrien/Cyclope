@@ -14,6 +14,7 @@ cp "${BOARD_DIR}"/boot/* "${BOOT_PARTITION_DIR}"/rpi-firmware
 dd if=/dev/zero of="${BOOT_PARTITION_DIR}"/data.ext4 bs=1M count=500
 # Create file system skeleton to embed to generated file system
 rm -rf "${BOOT_PARTITION_DIR}"/data
+mkdir -p "${BOOT_PARTITION_DIR}"/data/etc/wpa_supplicant
 mkdir -p "${BOOT_PARTITION_DIR}"/data/var/log
 mkfs.ext4 -L data -d "${BOOT_PARTITION_DIR}"/data "${BOOT_PARTITION_DIR}"/data.ext4
 

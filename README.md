@@ -9,7 +9,26 @@ PCB has been designed using KiCad 5.1.5. All manufacturing files are available f
 
 ## Software
 
-Robot's Raspberry Pi is powered by a tailored Buildroot Linux distribution.
+Robot's Raspberry Pi is powered by a tailored [Buildroot](https://buildroot.org) Linux distribution.
+
+### Getting sources
+
+Clone the repository and the submodules all in the row :
+```
+git clone --recurse-submodules https://github.com/RICCIARDI-Adrien/Cyclope
+```
+
+### Building
+
+Enter repository directory, clean previous build (if needed) and generate image :
+```
+cd Cyclope
+make -C buildroot distclean
+make BR2_EXTERNAL=$(realpath ..)/cyclope cyclope_defconfig
+make -C buildroot
+```
+
+Generated image to burn to a SD card is `Cyclope/Software/buildroot/output/images/sdcard.img`.
 
 ## Mechanical
 

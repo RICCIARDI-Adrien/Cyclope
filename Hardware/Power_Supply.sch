@@ -3,7 +3,7 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 3
+Sheet 2 4
 Title "DC/DC power supply"
 Date "2020-07-27"
 Rev "1.0"
@@ -344,4 +344,10 @@ $EndComp
 Wire Wire Line
 	2350 3350 2600 3350
 NoConn ~ 3000 3250
+Text GLabel 3650 3200 2    50   UnSpc ~ 0
+BATTERY+
+Wire Wire Line
+	3650 3200 3600 3200
+Wire Wire Line
+	3600 3200 3600 3450
 $EndSCHEMATC

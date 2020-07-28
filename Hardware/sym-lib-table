@@ -1,0 +1,5 @@
+(sym_lib_table
+  (lib (name Battery_Holder_1056)(type Legacy)(uri /home/ar/Documents/Nebulizer/PLC_Interface_Board/Hardware/Battery_Holder_1056.lib)(options "")(descr ""))
+  (lib (name Connector_Samtec_YTS)(type Legacy)(uri /home/ar/Documents/VCMA9_Board_Replacement/Hardware/Connector_Samtec_YTS.lib)(options "")(descr ""))
+  (lib (name NCP51460SN33T1G)(type Legacy)(uri /home/ar/Documents/VCMA9_Board_Replacement/Hardware/NCP51460SN33T1G.lib)(options "")(descr ""))
+)

@@ -5,4 +5,4 @@ kernel=zImage
 gpu_mem=128
 
 # PWM
-dtoverlay=pwm-2chan
+dtoverlay=pwm-2chan,pin=12,func=4,pin2=13,func2=4

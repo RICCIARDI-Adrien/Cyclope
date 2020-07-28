@@ -9,6 +9,10 @@ GENIMAGE_TMP="${BUILD_DIR}/genimage.tmp"
 # Provide custom boot files
 cp "${BOARD_DIR}"/boot/* "${BOOT_PARTITION_DIR}"/rpi-firmware
 
+# Create empty partition image because genimage is not able to create a partition without content
+dd if=/dev/zero of="${BOOT_PARTITION_DIR}"/data.ext4 bs=1M count=500
+mkfs.ext4 -L data "${BOOT_PARTITION_DIR}"/data.ext4
+
 # Pass an empty rootpath. genimage makes a full copy of the given rootpath to
 # ${GENIMAGE_TMP}/root so passing TARGET_DIR would be a waste of time and disk
 # space. We don't rely on genimage to build the rootfs image, just to insert a

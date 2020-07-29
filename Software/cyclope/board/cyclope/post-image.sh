@@ -5,6 +5,7 @@ set -e
 BOARD_DIR="$(dirname $0)"
 BOOT_PARTITION_DIR="$1"
 GENIMAGE_TMP="${BUILD_DIR}/genimage.tmp"
+FIRMWARE_UPDATE_FILE_NAME="cyclope.tar"
 
 # Provide custom boot files
 cp "${BOARD_DIR}"/boot/* "${BOOT_PARTITION_DIR}"/rpi-firmware
@@ -33,5 +34,26 @@ genimage \
 	--inputpath "${BINARIES_DIR}"  \
 	--outputpath "${BINARIES_DIR}" \
 	--config "${BOARD_DIR}/genimage.cfg"
+
+# Generate firmware update file
+printf "\033[33mGenerating firmware update file...\033[0m\n"
+cd "${BOOT_PARTITION_DIR}"
+rm -f "${FIRMWARE_UPDATE_FILE_NAME}"
+# Add rootfs
+tar --dereference --append -f "${FIRMWARE_UPDATE_FILE_NAME}" rootfs.ext4
+# Add boot partition files to a dedicated directory
+mkdir -p boot
+cp bcm2710-rpi-3-b.dtb bcm2710-rpi-3-b-plus.dtb bcm2710-rpi-cm3.dtb boot
+cp -r rpi-firmware/* boot
+# Do not copy cmdline.txt as this file is modified by the firmware update code to select the newly burned rootfs
+rm -f boot/cmdline.txt
+cp zImage boot
+tar --append -f "${FIRMWARE_UPDATE_FILE_NAME}" boot
+# Compress it
+printf "\033[33mCompressing firmware update file...\033[0m\n"
+rm -f "${FIRMWARE_UPDATE_FILE_NAME}".gz
+gzip "${FIRMWARE_UPDATE_FILE_NAME}"
+
+printf "\033[32mBuild succeeded.\033[0m\n"
 
 exit $?

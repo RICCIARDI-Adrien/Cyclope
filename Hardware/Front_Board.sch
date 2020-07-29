@@ -40,7 +40,7 @@ L Connector_Generic:Conn_01x04 J5
 U 1 1 5F2984F8
 P 7350 3850
 F 0 "J5" H 7429 3705 50  0000 L CNN
-F 1 "Motherboard_Right" H 7429 3796 50  0000 L CNN
+F 1 "Front" H 7429 3796 50  0000 L CNN
 F 2 "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical" H 7350 3850 50  0001 C CNN
 F 3 "~" H 7350 3850 50  0001 C CNN
 F 4 "DNP" H 7429 3887 50  0000 L CNN "Populate"
@@ -146,7 +146,7 @@ Connection ~ 8200 3300
 Wire Wire Line
 	8200 3300 8450 3300
 Text GLabel 7800 3750 2    50   UnSpc ~ 0
-CAMERA_BOARD_LDR
+FRONT_BOARD_LDR
 Wire Wire Line
 	7800 3750 7550 3750
 Wire Notes Line
@@ -274,8 +274,8 @@ Wire Notes Line
 	6250 2550 2500 2550
 Wire Notes Line
 	2500 2550 2500 5250
-Text Notes 5150 5150 0    50   ~ 0
-Camera separate board.
+Text Notes 5350 5150 0    50   ~ 0
+Separate front board.
 Wire Wire Line
 	2850 4700 2850 3900
 Connection ~ 2850 3900
@@ -333,7 +333,7 @@ Wire Wire Line
 Wire Wire Line
 	8850 4100 8850 4150
 Text GLabel 9100 4100 2    50   Input ~ 0
-CAMERA_BOARD_LEDS
+FRONT_BOARD_LEDS
 Wire Wire Line
 	8850 4100 9100 4100
 Connection ~ 8850 4100
@@ -368,7 +368,7 @@ L Connector_Generic:Conn_01x04 J4
 U 1 1 5F294EF0
 P 5350 3750
 F 0 "J4" H 5430 3787 50  0000 L CNN
-F 1 "Camera" H 5430 3696 50  0000 L CNN
+F 1 "Front" H 5430 3696 50  0000 L CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 5350 3750 50  0001 C CNN
 F 3 "~" H 5350 3750 50  0001 C CNN
 F 4 "DNP" H 5430 3605 50  0000 L CNN "Populate"

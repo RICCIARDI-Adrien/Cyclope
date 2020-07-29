@@ -122,8 +122,8 @@ $EndComp
 $Sheet
 S 2500 4000 1500 1450
 U 5F288D93
-F0 "Camera_Board" 50
-F1 "Camera_Board.sch" 50
+F0 "Front_Board" 50
+F1 "Front_Board.sch" 50
 $EndSheet
 $Comp
 L Mechanical:MountingHole_Pad H7

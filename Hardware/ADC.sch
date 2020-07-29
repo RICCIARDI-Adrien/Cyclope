@@ -320,7 +320,7 @@ Wire Wire Line
 Wire Wire Line
 	7650 3450 7950 3450
 Text GLabel 3650 5450 0    50   UnSpc ~ 0
-CAMERA_BOARD_LDR
+FRONT_BOARD_LDR
 Wire Wire Line
 	3700 5450 3650 5450
 Wire Wire Line

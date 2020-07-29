@@ -396,7 +396,7 @@ Wire Wire Line
 	2100 3750 2100 3850
 Connection ~ 2100 3850
 Text GLabel 7750 2850 2    50   Output ~ 0
-CAMERA_BOARD_LEDS
+FRONT_BOARD_LEDS
 NoConn ~ 6600 2050
 NoConn ~ 6600 2150
 NoConn ~ 6600 2250

@@ -12,7 +12,7 @@ cp "${BOARD_DIR}"/boot/* "${BOOT_PARTITION_DIR}"/rpi-firmware
 
 # Create data partition manually because genimage is only able to create FAT file systems with content
 # Create empty partition
-dd if=/dev/zero of="${BOOT_PARTITION_DIR}"/data.ext4 bs=1M count=500
+dd if=/dev/zero of="${BOOT_PARTITION_DIR}"/data.ext4 bs=1M count=1000
 # Create file system skeleton to embed to generated file system
 rm -rf "${BOOT_PARTITION_DIR}"/data
 mkdir -p "${BOOT_PARTITION_DIR}"/data/etc/wpa_supplicant

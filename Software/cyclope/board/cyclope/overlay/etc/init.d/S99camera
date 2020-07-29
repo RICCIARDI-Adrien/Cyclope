@@ -1,0 +1,18 @@
+#!/bin/sh
+
+case "$1" in
+	start)
+		# Start video transmission server as a daemon
+		raspivid -t 0 -n -ih -fl -g 5/60 -o - | socat - TCP-LISTEN:1234,nodelay,reuseaddr,fork&
+		;;
+
+	stop)
+		killall -q socat
+		killall -q raspivid
+		;;
+
+	*)
+		echo "Usage: $0 {start|stop}"
+		exit 1
+		;;
+esac

@@ -6,6 +6,10 @@ set -u
 mkdir -p "${TARGET_DIR}"/media/boot
 mkdir -p "${TARGET_DIR}"/media/data
 
+# Redirect Dropbear configuration to data partition
+rm -rf "${TARGET_DIR}"/etc/dropbear
+ln -s /media/data/etc/dropbear "${TARGET_DIR}"/etc/dropbear
+
 # Replace /var/log symlink to /tmp by a real directory (so logs are kept across reboots)
 rm -rf "${TARGET_DIR}"/var/log
 ln -s /media/data/var/log "${TARGET_DIR}"/var/log

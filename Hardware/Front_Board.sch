@@ -217,45 +217,45 @@ Wire Wire Line
 $Comp
 L Mechanical:MountingHole H3
 U 1 1 5F2EC62F
-P 4700 2750
-F 0 "H3" H 4800 2796 50  0000 L CNN
-F 1 "Camera" H 4800 2705 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.2mm_M2" H 4700 2750 50  0001 C CNN
-F 3 "~" H 4700 2750 50  0001 C CNN
-	1    4700 2750
+P 4500 2350
+F 0 "H3" H 4600 2396 50  0000 L CNN
+F 1 "Camera" H 4600 2305 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.2mm_M2" H 4500 2350 50  0001 C CNN
+F 3 "~" H 4500 2350 50  0001 C CNN
+	1    4500 2350
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H4
 U 1 1 5F2F030A
-P 5350 2750
-F 0 "H4" H 5450 2796 50  0000 L CNN
-F 1 "Camera" H 5450 2705 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.2mm_M2" H 5350 2750 50  0001 C CNN
-F 3 "~" H 5350 2750 50  0001 C CNN
-	1    5350 2750
+P 5250 2350
+F 0 "H4" H 5350 2396 50  0000 L CNN
+F 1 "Camera" H 5350 2305 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.2mm_M2" H 5250 2350 50  0001 C CNN
+F 3 "~" H 5250 2350 50  0001 C CNN
+	1    5250 2350
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H5
 U 1 1 5F2F0621
-P 4700 3050
-F 0 "H5" H 4800 3096 50  0000 L CNN
-F 1 "Camera" H 4800 3005 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.2mm_M2" H 4700 3050 50  0001 C CNN
-F 3 "~" H 4700 3050 50  0001 C CNN
-	1    4700 3050
+P 4500 2650
+F 0 "H5" H 4600 2696 50  0000 L CNN
+F 1 "Camera" H 4600 2605 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.2mm_M2" H 4500 2650 50  0001 C CNN
+F 3 "~" H 4500 2650 50  0001 C CNN
+	1    4500 2650
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole H6
 U 1 1 5F2F098F
-P 5350 3050
-F 0 "H6" H 5450 3096 50  0000 L CNN
-F 1 "Camera" H 5450 3005 50  0000 L CNN
-F 2 "MountingHole:MountingHole_2.2mm_M2" H 5350 3050 50  0001 C CNN
-F 3 "~" H 5350 3050 50  0001 C CNN
-	1    5350 3050
+P 5250 2650
+F 0 "H6" H 5350 2696 50  0000 L CNN
+F 1 "Camera" H 5350 2605 50  0000 L CNN
+F 2 "MountingHole:MountingHole_2.2mm_M2" H 5250 2650 50  0001 C CNN
+F 3 "~" H 5250 2650 50  0001 C CNN
+	1    5250 2650
 	1    0    0    -1  
 $EndComp
 Wire Notes Line
@@ -468,4 +468,26 @@ Wire Wire Line
 Wire Wire Line
 	4700 3850 4700 4850
 Connection ~ 2750 4450
+$Comp
+L Mechanical:MountingHole H11
+U 1 1 5F25DF87
+P 4500 2950
+F 0 "H11" H 4600 2996 50  0000 L CNN
+F 1 "Front_Board" H 4600 2905 50  0000 L CNN
+F 2 "MountingHole:MountingHole_4.3mm_M4" H 4500 2950 50  0001 C CNN
+F 3 "~" H 4500 2950 50  0001 C CNN
+	1    4500 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H12
+U 1 1 5F25EF87
+P 5250 2950
+F 0 "H12" H 5350 2996 50  0000 L CNN
+F 1 "Front_Board" H 5350 2905 50  0000 L CNN
+F 2 "MountingHole:MountingHole_4.3mm_M4" H 5250 2950 50  0001 C CNN
+F 3 "~" H 5250 2950 50  0001 C CNN
+	1    5250 2950
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

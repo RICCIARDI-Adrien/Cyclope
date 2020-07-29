@@ -1,0 +1,75 @@
+#!/bin/sh
+
+LOGS_PREFIX="[upgrade]"
+FIRMWARE_FILE_PATH=/media/data
+UPGRADE_DIRECTORY_PATH=/media/data/upgrade
+FIRMWARE_FILE_NAME=cyclope
+#ARCHIVED_FIRMWARE_FILE_NAME=${FIRMWARE_FILE_NAME}.tar
+#COMPRESSED_FIRMWARE_FILE_NAME=${ARCHIVED_FIRMWARE_FILE_NAME}.gz
+
+# Clean previous upgrade artifacts
+printf "\033[33m${LOGS_PREFIX} Preparing for upgrade...\033[0m\n"
+rm -rf ${UPGRADE_DIRECTORY_PATH}
+mkdir -p ${UPGRADE_DIRECTORY_PATH}
+
+# Check for firmware file presence
+printf "\033[33m${LOGS_PREFIX} Checking for firmware file presence...\033[0m\n"
+if [ ! -e ${FIRMWARE_FILE_PATH}/${FIRMWARE_FILE_NAME}.tar.gz ]
+then
+	printf "\033[31mNo firmware file detected. Please provide \"${FIRMWARE_FILE_PATH}/${FIRMWARE_FILE_NAME}.tar.gz\" file.\033[0m\n"
+	exit 1
+fi
+
+# Uncompress firmware
+printf "\033[33m${LOGS_PREFIX} Uncompressing firmware file...\033[0m\n"
+mv ${FIRMWARE_FILE_PATH}/${FIRMWARE_FILE_NAME}.tar.gz ${UPGRADE_DIRECTORY_PATH}
+cd ${UPGRADE_DIRECTORY_PATH}
+gunzip ${FIRMWARE_FILE_NAME}.tar.gz
+tar -xf ${FIRMWARE_FILE_NAME}.tar
+
+# Determine the current rootfs partition
+Current_Rootfs_Partition=$(cat /media/boot/cmdline.txt | cut -c 19)
+if [ "${Current_Rootfs_Partition}" = "2" ]
+then
+	Other_Rootfs_Partition="3"
+elif [ "${Current_Rootfs_Partition}" = "3" ]
+then
+	Other_Rootfs_Partition="2"
+else
+	printf "\033[31m${LOGS_PREFIX} Error : could not determine current rootfs partition, aborting.\033[0m\n"
+	exit 1
+fi
+
+# Burn rootfs
+printf "\033[33m${LOGS_PREFIX} Current rootfs partition is ${Current_Rootfs_Partition}, flashing rootfs to partition ${Other_Rootfs_Partition}...\033[0m\n"
+dd if=${UPGRADE_DIRECTORY_PATH}/rootfs.ext4 of=/dev/mmcblk0p${Other_Rootfs_Partition}
+if [ $? -ne 0 ]
+then
+	printf "\033[31m${LOGS_PREFIX} Error : failed to flash rootfs.\033[0m\n"
+	exit 1
+fi
+
+# Update boot partition content
+printf "\033[33m${LOGS_PREFIX} Updating kernel and boot partition content...\033[0m\n"
+cp -r ${UPGRADE_DIRECTORY_PATH}/boot/* /media/boot
+if [ $? -ne 0 ]
+then
+	printf "\033[31m${LOGS_PREFIX} Error : failed to update kernel and boot partition content.\033[0m\n"
+	exit 1
+fi
+
+# Tell kernel to boot on the newly burned partition
+printf "\033[33m${LOGS_PREFIX} Updating boot partition in kernel command line...\033[0m\n"
+if [ "${Current_Rootfs_Partition}" = "2" ]
+then
+	sed -e 's/mmcblk0p2/mmcblk0p3/' -i /media/boot/cmdline.txt
+else
+	sed -e 's/mmcblk0p3/mmcblk0p2/' -i /media/boot/cmdline.txt
+fi
+sync
+
+# Clean update artifacts to get some free space
+printf "\033[33m${LOGS_PREFIX} Cleaning update temporary files...\033[0m\n"
+rm -rf ${UPGRADE_DIRECTORY_PATH}
+
+printf "\033[32m${LOGS_PREFIX} Update succeeded. Please reboot to run new firmware.\033[0m\n"

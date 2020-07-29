@@ -1408,14 +1408,14 @@
   )
 
   (module OptoDevice:R_LDR_5.1x4.3mm_P3.4mm_Vertical (layer F.Cu) (tedit 5B8603DB) (tstamp 5F20785B)
-    (at 196 44.5)
+    (at 236 117 90)
     (descr "Resistor, LDR 5.1x3.4mm, see http://yourduino.com/docs/Photoresistor-5516-datasheet.pdf")
     (tags "Resistor LDR5.1x3.4mm")
     (path /5F288D93/5F29225B)
-    (fp_text reference R6 (at 1.7 -2.9) (layer F.SilkS)
+    (fp_text reference R6 (at 5.5 0 180) (layer F.SilkS)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value LDR07 (at 1.5 3) (layer F.Fab) hide
+    (fp_text value LDR07 (at 1.5 3 90) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_arc (start 1.7 0) (end 0.2 2.1) (angle 109) (layer F.Fab) (width 0.1))
@@ -1443,12 +1443,12 @@
     (fp_line (start 1 0) (end 2.3 0) (layer F.Fab) (width 0.1))
     (fp_line (start 0.15 -2.15) (end 3.2 -2.15) (layer F.SilkS) (width 0.12))
     (fp_line (start 0.15 2.15) (end 3.2 2.15) (layer F.SilkS) (width 0.12))
-    (fp_text user %R (at 1.7 -2.9) (layer F.Fab)
+    (fp_text user %R (at 5.5 0 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (pad 2 thru_hole circle (at 3.4 0) (size 1.5 1.5) (drill 0.8) (layers *.Cu *.Mask)
+    (pad 2 thru_hole circle (at 3.4 0 90) (size 1.5 1.5) (drill 0.8) (layers *.Cu *.Mask)
       (net 45 GNDD))
-    (pad 1 thru_hole circle (at 0 0) (size 1.5 1.5) (drill 0.8) (layers *.Cu *.Mask)
+    (pad 1 thru_hole circle (at 0 0 90) (size 1.5 1.5) (drill 0.8) (layers *.Cu *.Mask)
       (net 59 "Net-(J4-Pad2)"))
     (model ${KISYS3DMOD}/OptoDevice.3dshapes/R_LDR_5.1x4.3mm_P3.4mm_Vertical.wrl
       (at (xyz 0 0 0))

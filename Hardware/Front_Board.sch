@@ -490,4 +490,26 @@ F 3 "~" H 5250 2950 50  0001 C CNN
 	1    5250 2950
 	1    0    0    -1  
 $EndComp
+$Comp
+L Mechanical:MountingHole BT1
+U 1 1 5F3734C7
+P 5350 4500
+F 0 "BT1" H 5450 4546 50  0000 L CNN
+F 1 "BreakTab" H 5450 4455 50  0000 L CNN
+F 2 "Break_Tab:Break_Tab" H 5350 4500 50  0001 C CNN
+F 3 "~" H 5350 4500 50  0001 C CNN
+	1    5350 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole BT2
+U 1 1 5F375442
+P 5350 4750
+F 0 "BT2" H 5450 4796 50  0000 L CNN
+F 1 "BreakTab" H 5450 4705 50  0000 L CNN
+F 2 "Break_Tab:Break_Tab" H 5350 4750 50  0001 C CNN
+F 3 "~" H 5350 4750 50  0001 C CNN
+	1    5350 4750
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

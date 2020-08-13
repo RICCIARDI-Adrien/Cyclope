@@ -493,23 +493,67 @@ $EndComp
 $Comp
 L Mechanical:MountingHole BT1
 U 1 1 5F3734C7
-P 5350 4500
-F 0 "BT1" H 5450 4546 50  0000 L CNN
-F 1 "BreakTab" H 5450 4455 50  0000 L CNN
-F 2 "Break_Tab:Break_Tab" H 5350 4500 50  0001 C CNN
-F 3 "~" H 5350 4500 50  0001 C CNN
-	1    5350 4500
+P 5550 4300
+F 0 "BT1" H 5650 4346 50  0000 L CNN
+F 1 "BreakTab" H 5650 4255 50  0000 L CNN
+F 2 "Break_Tab:Break_Tab" H 5550 4300 50  0001 C CNN
+F 3 "~" H 5550 4300 50  0001 C CNN
+	1    5550 4300
 	1    0    0    -1  
 $EndComp
 $Comp
 L Mechanical:MountingHole BT2
-U 1 1 5F375442
-P 5350 4750
-F 0 "BT2" H 5450 4796 50  0000 L CNN
-F 1 "BreakTab" H 5450 4705 50  0000 L CNN
-F 2 "Break_Tab:Break_Tab" H 5350 4750 50  0001 C CNN
-F 3 "~" H 5350 4750 50  0001 C CNN
-	1    5350 4750
+U 1 1 5F3A13DD
+P 5550 4550
+F 0 "BT2" H 5650 4596 50  0000 L CNN
+F 1 "BreakTab" H 5650 4505 50  0000 L CNN
+F 2 "Break_Tab:Break_Tab" H 5550 4550 50  0001 C CNN
+F 3 "~" H 5550 4550 50  0001 C CNN
+	1    5550 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole BT3
+U 1 1 5F3A17F1
+P 5550 4800
+F 0 "BT3" H 5650 4846 50  0000 L CNN
+F 1 "BreakTab" H 5650 4755 50  0000 L CNN
+F 2 "Break_Tab:Break_Tab" H 5550 4800 50  0001 C CNN
+F 3 "~" H 5550 4800 50  0001 C CNN
+	1    5550 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole BT4
+U 1 1 5F3ABA27
+P 6800 4300
+F 0 "BT4" H 6900 4346 50  0000 L CNN
+F 1 "BreakTab" H 6900 4255 50  0000 L CNN
+F 2 "Break_Tab:Break_Tab" H 6800 4300 50  0001 C CNN
+F 3 "~" H 6800 4300 50  0001 C CNN
+	1    6800 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole BT5
+U 1 1 5F3ABA2D
+P 6800 4550
+F 0 "BT5" H 6900 4596 50  0000 L CNN
+F 1 "BreakTab" H 6900 4505 50  0000 L CNN
+F 2 "Break_Tab:Break_Tab" H 6800 4550 50  0001 C CNN
+F 3 "~" H 6800 4550 50  0001 C CNN
+	1    6800 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole BT6
+U 1 1 5F3ABA33
+P 6800 4800
+F 0 "BT6" H 6900 4846 50  0000 L CNN
+F 1 "BreakTab" H 6900 4755 50  0000 L CNN
+F 2 "Break_Tab:Break_Tab" H 6800 4800 50  0001 C CNN
+F 3 "~" H 6800 4800 50  0001 C CNN
+	1    6800 4800
 	1    0    0    -1  
 $EndComp
 $EndSCHEMATC

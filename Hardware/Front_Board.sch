@@ -41,7 +41,7 @@ U 1 1 5F2984F8
 P 7350 3850
 F 0 "J5" H 7429 3705 50  0000 L CNN
 F 1 "Front" H 7429 3796 50  0000 L CNN
-F 2 "Connector_PinSocket_2.54mm:PinSocket_1x04_P2.54mm_Vertical" H 7350 3850 50  0001 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 7350 3850 50  0001 C CNN
 F 3 "~" H 7350 3850 50  0001 C CNN
 F 4 "DNP" H 7429 3887 50  0000 L CNN "Populate"
 	1    7350 3850

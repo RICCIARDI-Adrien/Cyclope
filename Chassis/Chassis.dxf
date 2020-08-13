@@ -31,9 +31,9 @@ $EXTMIN
   9
 $EXTMAX
  10
-77
+91.25
  20
-120
+150
  30
 0
   9
@@ -1115,9 +1115,9 @@ AcDbViewportTableRecord
  21
 1
  12
-102.009717126641
+97.51539138089598
  22
-73.48567300118214
+73.65875109943664
  13
 0
  23
@@ -1143,9 +1143,9 @@ AcDbViewportTableRecord
  37
 0
  40
-166.6964477026816
+193.9313984170242
  41
-1.834106728538283
+1.792517006802721
  42
 50
  43
@@ -2262,6 +2262,8 @@ Construction
     1
   6
 CONTINUOUS
+290
+0
 370
     0
 390
@@ -2653,6 +2655,24 @@ Motor_Left
 281
     0
   0
+BLOCK_RECORD
+  5
+5A
+330
+1
+100
+AcDbSymbolTableRecord
+100
+AcDbBlockTableRecord
+  2
+Battery
+ 70
+    0
+280
+    1
+281
+    0
+  0
 ENDTAB
   0
 ENDSEC
@@ -2763,7 +2783,7 @@ Servo_1
   0
 LWPOLYLINE
   5
-5A
+5D
 100
 AcDbEntity
   8
@@ -2801,7 +2821,7 @@ AcDbPolyline
   0
 MTEXT
   5
-5B
+5E
 100
 AcDbEntity
   8
@@ -2883,7 +2903,7 @@ Servo_2
   0
 LWPOLYLINE
   5
-5C
+5F
 100
 AcDbEntity
   8
@@ -2921,7 +2941,7 @@ AcDbPolyline
   0
 MTEXT
   5
-5D
+60
 100
 AcDbEntity
   8
@@ -3003,7 +3023,7 @@ Motor_Right
   0
 LWPOLYLINE
   5
-5E
+61
 100
 AcDbEntity
   8
@@ -3041,7 +3061,7 @@ AcDbPolyline
   0
 CIRCLE
   5
-5F
+62
 100
 AcDbEntity
   8
@@ -3063,7 +3083,7 @@ AcDbCircle
   0
 CIRCLE
   5
-60
+63
 100
 AcDbEntity
   8
@@ -3085,7 +3105,7 @@ AcDbCircle
   0
 LWPOLYLINE
   5
-61
+64
 100
 AcDbEntity
   8
@@ -3123,7 +3143,7 @@ AcDbPolyline
   0
 LWPOLYLINE
   5
-62
+65
 100
 AcDbEntity
   8
@@ -3161,7 +3181,7 @@ AcDbPolyline
   0
 MTEXT
   5
-63
+66
 100
 AcDbEntity
   8
@@ -3207,7 +3227,7 @@ standard
   0
 MTEXT
   5
-64
+67
 100
 AcDbEntity
   8
@@ -3289,7 +3309,7 @@ Motor_Left
   0
 LWPOLYLINE
   5
-65
+68
 100
 AcDbEntity
   8
@@ -3327,7 +3347,7 @@ AcDbPolyline
   0
 CIRCLE
   5
-66
+69
 100
 AcDbEntity
   8
@@ -3349,7 +3369,7 @@ AcDbCircle
   0
 CIRCLE
   5
-67
+6A
 100
 AcDbEntity
   8
@@ -3371,7 +3391,7 @@ AcDbCircle
   0
 MTEXT
   5
-68
+6B
 100
 AcDbEntity
   8
@@ -3417,7 +3437,7 @@ standard
   0
 MTEXT
   5
-69
+6C
 100
 AcDbEntity
   8
@@ -3463,7 +3483,7 @@ standard
   0
 LWPOLYLINE
   5
-6A
+6D
 100
 AcDbEntity
   8
@@ -3501,7 +3521,7 @@ AcDbPolyline
   0
 LWPOLYLINE
   5
-6B
+6E
 100
 AcDbEntity
   8
@@ -3549,6 +3569,164 @@ AcDbEntity
 100
 AcDbBlockEnd
   0
+BLOCK
+  5
+5B
+330
+5A
+100
+AcDbEntity
+  8
+0
+100
+AcDbBlockBegin
+  2
+Battery
+ 70
+    0
+ 10
+0
+ 20
+0
+  3
+Battery
+  1
+
+  0
+LWPOLYLINE
+  5
+6F
+100
+AcDbEntity
+  8
+Construction
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbPolyline
+ 90
+    4
+ 70
+    1
+ 43
+0
+ 10
+70
+ 20
+-7.335501182152356e-16
+ 10
+70
+ 20
+63
+ 10
+11
+ 20
+63
+ 10
+11
+ 20
+2.879157939269457e-15
+  0
+LWPOLYLINE
+  5
+70
+100
+AcDbEntity
+  8
+Construction
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbPolyline
+ 90
+    4
+ 70
+    1
+ 43
+0
+ 10
+11
+ 20
+30
+ 10
+11
+ 20
+63
+ 10
+0
+ 20
+63
+ 10
+0
+ 20
+30
+  0
+MTEXT
+  5
+71
+100
+AcDbEntity
+  8
+Construction
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbMText
+ 10
+31.66666666666649
+ 20
+34
+ 30
+0
+ 40
+4
+ 41
+19.55555555555574
+ 71
+    1
+ 72
+    1
+  1
+Battery
+  7
+standard
+210
+0
+220
+0
+230
+1
+ 50
+0
+ 73
+    2
+ 44
+1
+  0
+ENDBLK
+  5
+5C
+330
+5A
+100
+AcDbEntity
+  8
+0
+100
+AcDbBlockEnd
+  0
 ENDSEC
   0
 SECTION
@@ -3557,7 +3735,87 @@ ENTITIES
   0
 INSERT
   5
-6C
+72
+100
+AcDbEntity
+  8
+Construction
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbBlockReference
+  2
+Motor_Right
+ 10
+16
+ 20
+113.5
+ 30
+0
+ 41
+1
+ 42
+1
+ 43
+0
+ 50
+0
+ 70
+    1
+ 71
+    1
+ 44
+0
+ 45
+0
+  0
+INSERT
+  5
+73
+100
+AcDbEntity
+  8
+Construction
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbBlockReference
+  2
+Servo_2
+ 10
+26
+ 20
+96
+ 30
+0
+ 41
+1
+ 42
+1
+ 43
+0
+ 50
+0
+ 70
+    1
+ 71
+    1
+ 44
+0
+ 45
+0
+  0
+INSERT
+  5
+74
 100
 AcDbEntity
   8
@@ -3597,47 +3855,7 @@ Motor_Left
   0
 INSERT
   5
-6D
-100
-AcDbEntity
-  8
-Construction
-  6
-ByLayer
- 62
-  256
-370
-   -1
-100
-AcDbBlockReference
-  2
-Motor_Right
- 10
-16
- 20
-83.5
- 30
-0
- 41
-1
- 42
-1
- 43
-0
- 50
-0
- 70
-    1
- 71
-    1
- 44
-0
- 45
-0
-  0
-INSERT
-  5
-6E
+75
 100
 AcDbEntity
   8
@@ -3677,7 +3895,7 @@ Servo_1
   0
 INSERT
   5
-6F
+76
 100
 AcDbEntity
   8
@@ -3691,11 +3909,11 @@ ByLayer
 100
 AcDbBlockReference
   2
-Servo_2
+Battery
  10
-26
+12
  20
-66
+42
  30
 0
  41
@@ -3714,6 +3932,138 @@ Servo_2
 0
  45
 0
+  0
+CIRCLE
+  5
+77
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+89
+ 20
+75
+ 40
+2.25
+  0
+CIRCLE
+  5
+78
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+89
+ 20
+110
+ 40
+2.25
+  0
+CIRCLE
+  5
+79
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+89
+ 20
+40
+ 40
+2.25
+  0
+CIRCLE
+  5
+7A
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+4
+ 20
+75
+ 40
+2.25
+  0
+CIRCLE
+  5
+7B
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+4
+ 20
+110
+ 40
+2.25
+  0
+CIRCLE
+  5
+7C
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+4
+ 20
+40
+ 40
+2.25
   0
 ENDSEC
   0

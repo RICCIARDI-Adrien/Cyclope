@@ -474,7 +474,7 @@ U 1 1 5F25DF87
 P 4500 2950
 F 0 "H11" H 4600 2996 50  0000 L CNN
 F 1 "Front_Board" H 4600 2905 50  0000 L CNN
-F 2 "MountingHole:MountingHole_4.3mm_M4" H 4500 2950 50  0001 C CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 4500 2950 50  0001 C CNN
 F 3 "~" H 4500 2950 50  0001 C CNN
 	1    4500 2950
 	1    0    0    -1  
@@ -485,7 +485,7 @@ U 1 1 5F25EF87
 P 5250 2950
 F 0 "H12" H 5350 2996 50  0000 L CNN
 F 1 "Front_Board" H 5350 2905 50  0000 L CNN
-F 2 "MountingHole:MountingHole_4.3mm_M4" H 5250 2950 50  0001 C CNN
+F 2 "MountingHole:MountingHole_3.2mm_M3" H 5250 2950 50  0001 C CNN
 F 3 "~" H 5250 2950 50  0001 C CNN
 	1    5250 2950
 	1    0    0    -1  

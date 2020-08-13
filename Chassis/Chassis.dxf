@@ -23,9 +23,9 @@ $INSBASE
   9
 $EXTMIN
  10
-0
+-102.5
  20
-0
+-2.5
  30
 0
   9
@@ -91,7 +91,7 @@ STANDARD
   9
 $CLAYER
   8
-0
+Construction
   9
 $CELTYPE
   6
@@ -1115,9 +1115,9 @@ AcDbViewportTableRecord
  21
 1
  12
-97.51539138089598
+137.1951101250993
  22
-73.65875109943664
+115.3796332500835
  13
 0
  23
@@ -1143,9 +1143,9 @@ AcDbViewportTableRecord
  37
 0
  40
-193.9313984170242
+278.5917195002016
  41
-1.792517006802721
+1.834106728538283
  42
 50
  43
@@ -2673,6 +2673,24 @@ Battery
 281
     0
   0
+BLOCK_RECORD
+  5
+5D
+330
+1
+100
+AcDbSymbolTableRecord
+100
+AcDbBlockTableRecord
+  2
+Raspberry_Pi
+ 70
+    0
+280
+    1
+281
+    0
+  0
 ENDTAB
   0
 ENDSEC
@@ -2783,7 +2801,7 @@ Servo_1
   0
 LWPOLYLINE
   5
-5D
+60
 100
 AcDbEntity
   8
@@ -2821,7 +2839,7 @@ AcDbPolyline
   0
 MTEXT
   5
-5E
+61
 100
 AcDbEntity
   8
@@ -2903,7 +2921,7 @@ Servo_2
   0
 LWPOLYLINE
   5
-5F
+62
 100
 AcDbEntity
   8
@@ -2941,7 +2959,7 @@ AcDbPolyline
   0
 MTEXT
   5
-60
+63
 100
 AcDbEntity
   8
@@ -3023,7 +3041,7 @@ Motor_Right
   0
 LWPOLYLINE
   5
-61
+64
 100
 AcDbEntity
   8
@@ -3061,7 +3079,7 @@ AcDbPolyline
   0
 CIRCLE
   5
-62
+65
 100
 AcDbEntity
   8
@@ -3083,7 +3101,7 @@ AcDbCircle
   0
 CIRCLE
   5
-63
+66
 100
 AcDbEntity
   8
@@ -3105,7 +3123,7 @@ AcDbCircle
   0
 LWPOLYLINE
   5
-64
+67
 100
 AcDbEntity
   8
@@ -3143,7 +3161,7 @@ AcDbPolyline
   0
 LWPOLYLINE
   5
-65
+68
 100
 AcDbEntity
   8
@@ -3181,7 +3199,7 @@ AcDbPolyline
   0
 MTEXT
   5
-66
+69
 100
 AcDbEntity
   8
@@ -3227,7 +3245,7 @@ standard
   0
 MTEXT
   5
-67
+6A
 100
 AcDbEntity
   8
@@ -3309,7 +3327,7 @@ Motor_Left
   0
 LWPOLYLINE
   5
-68
+6B
 100
 AcDbEntity
   8
@@ -3347,7 +3365,7 @@ AcDbPolyline
   0
 CIRCLE
   5
-69
+6C
 100
 AcDbEntity
   8
@@ -3369,7 +3387,7 @@ AcDbCircle
   0
 CIRCLE
   5
-6A
+6D
 100
 AcDbEntity
   8
@@ -3391,7 +3409,7 @@ AcDbCircle
   0
 MTEXT
   5
-6B
+6E
 100
 AcDbEntity
   8
@@ -3437,7 +3455,7 @@ standard
   0
 MTEXT
   5
-6C
+6F
 100
 AcDbEntity
   8
@@ -3483,7 +3501,7 @@ standard
   0
 LWPOLYLINE
   5
-6D
+70
 100
 AcDbEntity
   8
@@ -3521,7 +3539,7 @@ AcDbPolyline
   0
 LWPOLYLINE
   5
-6E
+71
 100
 AcDbEntity
   8
@@ -3595,7 +3613,7 @@ Battery
   0
 LWPOLYLINE
   5
-6F
+72
 100
 AcDbEntity
   8
@@ -3633,7 +3651,7 @@ AcDbPolyline
   0
 LWPOLYLINE
   5
-70
+73
 100
 AcDbEntity
   8
@@ -3671,7 +3689,7 @@ AcDbPolyline
   0
 MTEXT
   5
-71
+74
 100
 AcDbEntity
   8
@@ -3727,6 +3745,214 @@ AcDbEntity
 100
 AcDbBlockEnd
   0
+BLOCK
+  5
+5E
+330
+5D
+100
+AcDbEntity
+  8
+0
+100
+AcDbBlockBegin
+  2
+Raspberry_Pi
+ 70
+    0
+ 10
+0
+ 20
+0
+  3
+Raspberry_Pi
+  1
+
+  0
+CIRCLE
+  5
+75
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+3.5
+ 20
+3.5
+ 40
+1.35
+  0
+CIRCLE
+  5
+76
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+52.5
+ 20
+3.5
+ 40
+1.35
+  0
+CIRCLE
+  5
+77
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+3.5
+ 20
+61.5
+ 40
+1.35
+  0
+CIRCLE
+  5
+78
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+52.5
+ 20
+61.5
+ 40
+1.35
+  0
+LWPOLYLINE
+  5
+79
+100
+AcDbEntity
+  8
+Construction
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbPolyline
+ 90
+    4
+ 70
+    1
+ 43
+0
+ 10
+0
+ 20
+0
+ 10
+56
+ 20
+0
+ 10
+56
+ 20
+65
+ 10
+0
+ 20
+65
+  0
+MTEXT
+  5
+7A
+100
+AcDbEntity
+  8
+Construction
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbMText
+ 10
+27.5
+ 20
+32.5
+ 30
+0
+ 40
+4
+ 41
+26.22222427937138
+ 71
+    5
+ 72
+    1
+  1
+Raspberry\PPi 3 A+
+  7
+standard
+210
+0
+220
+0
+230
+1
+ 50
+0
+ 73
+    2
+ 44
+1
+  0
+ENDBLK
+  5
+5F
+330
+5D
+100
+AcDbEntity
+  8
+0
+100
+AcDbBlockEnd
+  0
 ENDSEC
   0
 SECTION
@@ -3735,7 +3961,7 @@ ENTITIES
   0
 INSERT
   5
-72
+7B
 100
 AcDbEntity
   8
@@ -3775,7 +4001,7 @@ Motor_Right
   0
 INSERT
   5
-73
+7C
 100
 AcDbEntity
   8
@@ -3815,7 +4041,7 @@ Servo_2
   0
 INSERT
   5
-74
+7D
 100
 AcDbEntity
   8
@@ -3855,7 +4081,7 @@ Motor_Left
   0
 INSERT
   5
-75
+7E
 100
 AcDbEntity
   8
@@ -3893,9 +4119,53 @@ Servo_1
  45
 0
   0
+CIRCLE
+  5
+7F
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+89
+ 20
+75
+ 40
+2.25
+  0
+CIRCLE
+  5
+80
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+4
+ 20
+75
+ 40
+2.25
+  0
 INSERT
   5
-76
+81
 100
 AcDbEntity
   8
@@ -3911,9 +4181,9 @@ AcDbBlockReference
   2
 Battery
  10
-12
+11
  20
-42
+43
  30
 0
  41
@@ -3935,7 +4205,7 @@ Battery
   0
 CIRCLE
   5
-77
+82
 100
 AcDbEntity
   8
@@ -3951,13 +4221,35 @@ AcDbCircle
  10
 89
  20
-75
+38
  40
 2.25
   0
 CIRCLE
   5
-78
+83
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+4
+ 20
+38
+ 40
+2.25
+  0
+CIRCLE
+  5
+84
 100
 AcDbEntity
   8
@@ -3973,35 +4265,13 @@ AcDbCircle
  10
 89
  20
-110
+112
  40
 2.25
   0
 CIRCLE
   5
-79
-100
-AcDbEntity
-  8
-0
-  6
-ByLayer
- 62
-  256
-370
-   -1
-100
-AcDbCircle
- 10
-89
- 20
-40
- 40
-2.25
-  0
-CIRCLE
-  5
-7A
+85
 100
 AcDbEntity
   8
@@ -4017,17 +4287,17 @@ AcDbCircle
  10
 4
  20
-75
+112
  40
 2.25
   0
-CIRCLE
+INSERT
   5
-7B
+86
 100
 AcDbEntity
   8
-0
+Construction
   6
 ByLayer
  62
@@ -4035,35 +4305,31 @@ ByLayer
 370
    -1
 100
-AcDbCircle
+AcDbBlockReference
+  2
+Raspberry_Pi
  10
-4
+-100
  20
-110
- 40
-2.25
-  0
-CIRCLE
-  5
-7C
-100
-AcDbEntity
-  8
 0
-  6
-ByLayer
- 62
-  256
-370
-   -1
-100
-AcDbCircle
- 10
-4
- 20
-40
- 40
-2.25
+ 30
+0
+ 41
+1
+ 42
+1
+ 43
+0
+ 50
+0
+ 70
+    1
+ 71
+    1
+ 44
+0
+ 45
+0
   0
 ENDSEC
   0

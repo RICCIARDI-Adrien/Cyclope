@@ -3052,7 +3052,7 @@
   (gr_line (start 147.5 110) (end 147.5 114) (layer Edge.Cuts) (width 0.1) (tstamp 5F3584C7))
   (gr_line (start 109.25 114) (end 144 114) (layer Edge.Cuts) (width 0.1) (tstamp 5F360E74))
   (gr_line (start 105.75 110) (end 71 110) (layer Edge.Cuts) (width 0.1) (tstamp 5F357440))
-  (gr_line (start 144 110) (end 109.25 110) (layer Edge.Cuts) (width 0.05) (tstamp 5F35776D))
+  (gr_line (start 144 110) (end 109.25 110) (layer Edge.Cuts) (width 0.1) (tstamp 5F35776D))
   (gr_line (start 147.5 114) (end 152.5 114) (layer Edge.Cuts) (width 0.1) (tstamp 5F360E5A))
   (gr_line (start 67.5 110) (end 62.5 110) (layer Edge.Cuts) (width 0.1) (tstamp 5F35776A))
   (gr_line (start 67.5 114) (end 62.5 114) (layer Edge.Cuts) (width 0.1) (tstamp 5F3607E4))

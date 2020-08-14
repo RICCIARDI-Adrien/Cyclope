@@ -25,13 +25,13 @@ $EXTMIN
  10
 -152.0505474435728
  20
--11
+-6.000289127063638
  30
 0
   9
 $EXTMAX
  10
-209
+140
  20
 156
  30
@@ -1115,9 +1115,9 @@ AcDbViewportTableRecord
  21
 1
  12
-187.1283127501868
+78.50000000009017
  22
-115.0564410001149
+85.62500000009835
  13
 0
  23
@@ -1143,7 +1143,7 @@ AcDbViewportTableRecord
  37
 0
  40
-278.5917195002781
+215.5000000002475
  41
 1.834106728538283
  42
@@ -6046,6 +6046,314 @@ AcDbArc
 343.146
  51
 16.8539
+  0
+CIRCLE
+  5
+C5
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+131.5
+ 20
+39.00000000000001
+ 40
+2.25
+  0
+CIRCLE
+  5
+C6
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+131.5
+ 20
+111
+ 40
+2.25
+  0
+CIRCLE
+  5
+C7
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+123
+ 20
+0
+ 40
+2.25
+  0
+CIRCLE
+  5
+C8
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+29
+ 20
+0
+ 40
+2.25
+  0
+CIRCLE
+  5
+C9
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+-123
+ 20
+18
+ 40
+2.25
+  0
+CIRCLE
+  5
+CA
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+-97
+ 20
+0
+ 40
+2.25
+  0
+CIRCLE
+  5
+CB
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+-55
+ 20
+0
+ 40
+2.25
+  0
+CIRCLE
+  5
+CC
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+-13
+ 20
+0
+ 40
+2.25
+  0
+CIRCLE
+  5
+CD
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+123
+ 20
+150
+ 40
+2.25
+  0
+CIRCLE
+  5
+CE
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+29
+ 20
+150
+ 40
+2.25
+  0
+CIRCLE
+  5
+CF
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+-123
+ 20
+132
+ 40
+2.25
+  0
+CIRCLE
+  5
+D0
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+-97
+ 20
+150
+ 40
+2.25
+  0
+CIRCLE
+  5
+D1
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+-55
+ 20
+150
+ 40
+2.25
+  0
+CIRCLE
+  5
+D2
+100
+AcDbEntity
+  8
+0
+  6
+ByLayer
+ 62
+  256
+370
+   -1
+100
+AcDbCircle
+ 10
+-13
+ 20
+150
+ 40
+2.25
   0
 ENDSEC
   0

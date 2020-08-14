@@ -164,8 +164,6 @@ F 3 "~" H 2250 3350 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	3000 3450 3600 3450
-Wire Wire Line
 	3600 3450 3600 3550
 Wire Wire Line
 	3600 3450 4050 3450
@@ -343,11 +341,17 @@ F 3 "~" H 2800 3350 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	2350 3350 2600 3350
-NoConn ~ 3000 3250
 Text GLabel 3650 3200 2    50   UnSpc ~ 0
 BATTERY+
 Wire Wire Line
 	3650 3200 3600 3200
 Wire Wire Line
 	3600 3200 3600 3450
+Wire Wire Line
+	3000 3250 3200 3250
+Wire Wire Line
+	3200 3250 3200 3450
+Wire Wire Line
+	3200 3450 3600 3450
+NoConn ~ 3000 3450
 $EndSCHEMATC

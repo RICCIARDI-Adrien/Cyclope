@@ -130,7 +130,7 @@ L Mechanical:MountingHole_Pad H7
 U 1 1 5F3532F6
 P 6150 5050
 F 0 "H7" H 6250 5099 50  0000 L CNN
-F 1 "Raspberry_Pi" H 6250 5008 50  0000 L CNN
+F 1 "Motherboard" H 6250 5008 50  0000 L CNN
 F 2 "MountingHole:MountingHole_3.2mm_M3_Pad" H 6150 5050 50  0001 C CNN
 F 3 "~" H 6150 5050 50  0001 C CNN
 	1    6150 5050
@@ -141,7 +141,7 @@ L Mechanical:MountingHole_Pad H8
 U 1 1 5F353CDE
 P 6850 5050
 F 0 "H8" H 6950 5099 50  0000 L CNN
-F 1 "Raspberry_Pi" H 6950 5008 50  0000 L CNN
+F 1 "Motherboard" H 6950 5008 50  0000 L CNN
 F 2 "MountingHole:MountingHole_3.2mm_M3_Pad" H 6850 5050 50  0001 C CNN
 F 3 "~" H 6850 5050 50  0001 C CNN
 	1    6850 5050
@@ -152,7 +152,7 @@ L Mechanical:MountingHole_Pad H9
 U 1 1 5F35418A
 P 7550 5050
 F 0 "H9" H 7650 5099 50  0000 L CNN
-F 1 "Raspberry_Pi" H 7650 5008 50  0000 L CNN
+F 1 "Motherboard" H 7650 5008 50  0000 L CNN
 F 2 "MountingHole:MountingHole_3.2mm_M3_Pad" H 7550 5050 50  0001 C CNN
 F 3 "~" H 7550 5050 50  0001 C CNN
 	1    7550 5050
@@ -163,7 +163,7 @@ L Mechanical:MountingHole_Pad H10
 U 1 1 5F3543C8
 P 8250 5050
 F 0 "H10" H 8350 5099 50  0000 L CNN
-F 1 "Raspberry_Pi" H 8350 5008 50  0000 L CNN
+F 1 "Motherboard" H 8350 5008 50  0000 L CNN
 F 2 "MountingHole:MountingHole_3.2mm_M3_Pad" H 8250 5050 50  0001 C CNN
 F 3 "~" H 8250 5050 50  0001 C CNN
 	1    8250 5050

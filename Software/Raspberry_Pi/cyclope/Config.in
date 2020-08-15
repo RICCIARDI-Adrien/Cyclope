@@ -1,0 +1,1 @@
+source "$BR2_EXTERNAL_CYCLOPE_PATH/package/cyclope-controller/Config.in"

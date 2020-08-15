@@ -32,11 +32,22 @@ Generated image to burn to a SD card is `Cyclope/Software/buildroot/output/image
 
 ## Mechanical
 
-As much parts as possible were designed to be cut either from PCB or 3mm-thick steel plate used as chassis, decreasing custom crafted parts amount.  
-Remaining electromechanical parts are listed above.
+Chassis is made of two overlaid 3mm-thick steel plates.  
+Provide the `Chassis.dxf` file from [Release](https://github.com/RICCIARDI-Adrien/Cyclope/releases) page to a metal laser cutting service.
+
+## Supply parts
+
+See `Bill of material.csv` file from [Release](https://github.com/RICCIARDI-Adrien/Cyclope/releases) page for PCB parts. All other needed mechanical and electrical parts are listed below.
+
+### Electrical
+
+* 2x servomotor : [Feetech FS5113R](https://www.gotronic.fr/art-servomoteur-fs5113r-25841.htm)
+* 40-pin flat cable : [Amphenol FC40150-0](https://fr.farnell.com/amphenol/fc40150-0/cordon-2-54mm-f-f-150mm-40voies/dp/2217617)
+* Battery holder : [EM8](https://www.gotronic.fr/art-coupleur-8-piles-lr6-em8-5718.htm), isolate apparent contacts but battery holder ones with adhesive tape to them touching chassis spacers
+
+### Mechanical
 
 * Front castor wheel : [Guitel 55031100](https://fr.rs-online.com/web/p/roulettes-industrielles/3064300)
-* 2x servomotor : [Feetech FS5113R](https://www.gotronic.fr/art-servomoteur-fs5113r-25841.htm)
 * 2x servomotor support : [ASB01](https://www.gotronic.fr/art-support-de-servos-asb01-11637.htm)
 * 2x servomotor wheel : [FS5103R-W](https://www.gotronic.fr/art-roue-pour-servomoteur-fs5103r-25857.htm)
 * 2x front board flat angle bracket : NFLE2012-20

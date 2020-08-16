@@ -3,16 +3,16 @@
  * @author Adrien RICCIARDI
  */
 #include <cstdlib>
-#include <syslog.h>
+#include <Log.hpp>
 
 //-------------------------------------------------------------------------------------------------
 // Entry point
 //-------------------------------------------------------------------------------------------------
 int main()
 {
-	// Initialize logging
-	openlog("cyclope-controller", LOG_PID, LOG_USER);
-	syslog(LOG_INFO, "Starting Cyclope controller...");
+	// Initialize logging before everything else
+	Log::initialize();
+	LOG(LOG_INFO, "Starting Cyclope controller...");
 	
 	return EXIT_SUCCESS;
 }

@@ -1,4 +1,4 @@
 config BR2_PACKAGE_CYCLOPE_CONTROLLER
-	bool "Cyclope robot middleware"
+	bool "Cyclope robot controller"
 	help
 		Handle robot hardware and communicate with PC application.

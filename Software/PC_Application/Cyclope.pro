@@ -19,6 +19,7 @@ SOURCES += \
     CommunicationProtocol.cpp \
     Configuration.cpp \
     FormBase.cpp \
+    FormConnectToRobot.cpp \
     Main.cpp \
     MainWindow.cpp
 
@@ -26,9 +27,11 @@ HEADERS += \
     CommunicationProtocol.hpp \
     Configuration.hpp \
     FormBase.hpp \
+    FormConnectToRobot.hpp \
     MainWindow.hpp
 
 FORMS += \
+    FormConnectToRobot.ui \
     MainWindow.ui
 
 # Default rules for deployment.

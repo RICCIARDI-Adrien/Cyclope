@@ -12,5 +12,5 @@ jobs:
           submodules: 'recursive'
       - name: Buildroot distribution build
         run: |
-          make -C Software/Raspberry_Pi/buildroot BR2_EXTERNAL=$(realpath ..)/cyclope cyclope_defconfig
+          make -C Software/Raspberry_Pi/buildroot BR2_EXTERNAL=$(realpath .)/Software/Raspberry_Pi/cyclope cyclope_defconfig
           make -C Software/Raspberry_Pi/buildroot

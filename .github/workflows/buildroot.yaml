@@ -1,0 +1,12 @@
+name: Buildroot build
+on: [push]
+
+jobs:
+  buildroot_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+

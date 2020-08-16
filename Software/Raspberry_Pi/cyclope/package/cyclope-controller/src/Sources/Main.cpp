@@ -22,6 +22,7 @@ int main()
 		LOG(LOG_ERR, "Motors initialization failed, aborting.");
 		return EXIT_FAILURE;
 	}
+	LOG(LOG_INFO, "Motors successfully initialized.");
 	
 	return EXIT_SUCCESS;
 }

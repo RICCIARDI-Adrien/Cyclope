@@ -8,5 +8,5 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v2
         with:
-          submodules: 'true'
-
+          fetch-depth: '0'
+          submodules: 'recursive'

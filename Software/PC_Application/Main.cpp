@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 
     // Create application main window
     MainWindow mainWindow;
+    pointerMainWindow = &mainWindow;
     mainWindow.showMaximized();
 
     // Run application main loop

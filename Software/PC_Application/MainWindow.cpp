@@ -4,6 +4,7 @@
  */
 #include <FormConnectToRobot.hpp>
 #include <FormMainMenu.hpp>
+#include <FormRemoteControl.hpp>
 #include <MainWindow.hpp>
 #include <ui_MainWindow.h>
 
@@ -19,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Add all stacked widget pages
     ui->stackedWidget->addWidget(new FormConnectToRobot(this));
     ui->stackedWidget->addWidget(new FormMainMenu(this));
+    ui->stackedWidget->addWidget(new FormRemoteControl(this));
 }
 
 MainWindow::~MainWindow()

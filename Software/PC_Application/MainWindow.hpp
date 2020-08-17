@@ -22,6 +22,7 @@ public:
     {
         VIEW_ID_CONNECT_TO_ROBOT,
         VIEW_ID_MAIN_MENU,
+        VIEW_ID_REMOTE_CONTROL,
         VIEW_IDS_COUNT
     } ViewId;
 

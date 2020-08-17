@@ -31,6 +31,11 @@ jobs:
         uses: jurplel/install-qt-action@v2
         with:
           version: ${{env.QT_VERSION}}
+      - name: Build
+        run: |
+          qmake Cyclope.pro
+          make
+        working-directory: Software/PC_Application
 
   windows:
     name: Windows

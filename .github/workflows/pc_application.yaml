@@ -15,6 +15,10 @@ jobs:
         uses: jurplel/install-qt-action@v2
         with:
           version: ${{env.QT_VERSION}}
+      - run: |
+          qmake Cyclope.pro
+          make
+        working-directory: Software/PC_Application
 
   macos:
     name: macOS

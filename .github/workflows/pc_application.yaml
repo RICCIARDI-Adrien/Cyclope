@@ -1,6 +1,9 @@
 name: PC application build
 on: [push]
 
+env:
+    QT_VERSION: '5.14.2'
+
 jobs:
   pc_application_build:
     runs-on: ubuntu-latest
@@ -10,4 +13,4 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:
-          version: '5.14.2'
+          version: ${{env.QT_VERSION}}

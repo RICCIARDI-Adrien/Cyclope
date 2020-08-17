@@ -12,6 +12,11 @@ namespace Network
 	 * @return 0 on success.
 	 */
 	int initialize();
+	
+	/** Block calling thread until PC application commands to execute a specific program.
+	 * @return The program to execute index.
+	 */
+	int waitForProgramExecutionRequest();
 }
 
 #endif

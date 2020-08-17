@@ -5,8 +5,18 @@ env:
     QT_VERSION: '5.14.2'
 
 jobs:
-  pc_application_build:
+  linux_build:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: ${{env.QT_VERSION}}
+
+  windows_build:
+    runs-on: windows-latest
     steps:
       - name: Checkout sources
         uses: actions/checkout@v2

@@ -1,3 +1,5 @@
+![](https://github.com/RICCIARDI-Adrien/Cyclope/workflows/Buildroot%20build/badge.svg)
+
 # Cyclope
 
 A little robot powered by a Raspberry Pi 3 A+ and featuring a 8MPixel Raspberry Pi Camera V2.  

@@ -4,8 +4,6 @@ LOGS_PREFIX="[upgrade]"
 FIRMWARE_FILE_PATH=/media/data
 UPGRADE_DIRECTORY_PATH=/media/data/upgrade
 FIRMWARE_FILE_NAME=cyclope
-#ARCHIVED_FIRMWARE_FILE_NAME=${FIRMWARE_FILE_NAME}.tar
-#COMPRESSED_FIRMWARE_FILE_NAME=${ARCHIVED_FIRMWARE_FILE_NAME}.gz
 
 # Clean previous upgrade artifacts
 printf "\033[33m${LOGS_PREFIX} Preparing for upgrade...\033[0m\n"

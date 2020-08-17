@@ -5,6 +5,7 @@
 #include <CommunicationProtocol.hpp>
 #include <Configuration.hpp>
 #include <FormConnectToRobot.hpp>
+#include <MainWindow.hpp>
 #include <QMessageBox>
 #include <ui_FormConnectToRobot.h>
 
@@ -60,5 +61,6 @@ void FormConnectToRobot::_slotPushButtonConnectClicked(bool)
     // Keep this IP address for next program launch (do that only when connection has been successful, this avoids storing bad IP addresses)
     Configuration::setValue("LastUsedIpAddress", ui->lineEditIpAddress->text());
 
-    // TODO display next view
+    // Display main menu
+    pointerMainWindow->changeView(MainWindow::VIEW_ID_MAIN_MENU);
 }

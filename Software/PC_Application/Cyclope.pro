@@ -20,6 +20,7 @@ SOURCES += \
     Configuration.cpp \
     FormBase.cpp \
     FormConnectToRobot.cpp \
+    FormMainMenu.cpp \
     Main.cpp \
     MainWindow.cpp
 
@@ -28,10 +29,12 @@ HEADERS += \
     Configuration.hpp \
     FormBase.hpp \
     FormConnectToRobot.hpp \
+    FormMainMenu.hpp \
     MainWindow.hpp
 
 FORMS += \
     FormConnectToRobot.ui \
+    FormMainMenu.ui \
     MainWindow.ui
 
 # Default rules for deployment.

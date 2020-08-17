@@ -1,0 +1,13 @@
+name: PC application build
+on: [push]
+
+jobs:
+  pc_application_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Install Qt
+        uses: uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.14.2'

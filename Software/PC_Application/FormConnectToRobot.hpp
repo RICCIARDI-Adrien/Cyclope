@@ -25,6 +25,15 @@ public:
 
 private:
     Ui::FormConnectToRobot *ui;
+
+private slots:
+    /** Called when IP address line edit text is modified (either by user or programmatically). */
+    void _slotLineEditIpAddressTextChanged(const QString &referenceText);
+    /** Called when user pressed enter key while IP address line edit is focused. */
+    void _slotLineEditIpAddressReturnPressed();
+
+    /** Called when "connect" button is clicked. */
+    void _slotPushButtonConnectClicked(bool);
 };
 
 #endif // FORMCONNECTTOROBOT_HPP

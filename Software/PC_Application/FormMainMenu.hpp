@@ -25,6 +25,12 @@ public:
 
 private:
     Ui::FormMainMenu *ui;
+
+private slots:
+    /** Called when "remote control" button is clicked. */
+    void _slotPushButtonRemoteControlClicked(bool);
+    /** Called when "exit" button is clicked. */
+    void _slotPushButtonExitClicked(bool);
 };
 
 #endif // FORMMAINMENU_HPP

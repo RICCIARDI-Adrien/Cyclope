@@ -3,6 +3,7 @@
  * @author Adrien RICCIARDI
  */
 #include <CommunicationProtocol.hpp>
+#include <Configuration.hpp>
 #include <FormConnectToRobot.hpp>
 #include <QMessageBox>
 #include <ui_FormConnectToRobot.h>
@@ -17,6 +18,10 @@ FormConnectToRobot::FormConnectToRobot(QWidget *parent) :
     connect(ui->lineEditIpAddress, &QLineEdit::textChanged, this, &FormConnectToRobot::_slotLineEditIpAddressTextChanged);
     connect(ui->lineEditIpAddress, &QLineEdit::returnPressed, this, &FormConnectToRobot::_slotLineEditIpAddressReturnPressed);
     connect(ui->pushButtonConnect, &QPushButton::clicked, this, &FormConnectToRobot::_slotPushButtonConnectClicked);
+
+    // Auto fill last used address (do that after connecting slots so line edit signals can be received)
+    QString wrenchAddress = Configuration::getValue("LastUsedIpAddress", "").toString();
+    ui->lineEditIpAddress->setText(wrenchAddress);
 }
 
 FormConnectToRobot::~FormConnectToRobot()
@@ -26,7 +31,7 @@ FormConnectToRobot::~FormConnectToRobot()
 
 void FormConnectToRobot::enterView()
 {
-    // TODO
+    ui->lineEditIpAddress->setFocus();
 }
 
 void FormConnectToRobot::_slotLineEditIpAddressTextChanged(const QString &referenceText)
@@ -51,6 +56,9 @@ void FormConnectToRobot::_slotPushButtonConnectClicked(bool)
         QMessageBox::critical(this, tr("Connection error"), tr("Error: can't connect to wrench.\n%1.").arg(errorMessage));
         return;
     }
+
+    // Keep this IP address for next program launch (do that only when connection has been successful, this avoids storing bad IP addresses)
+    Configuration::setValue("LastUsedIpAddress", ui->lineEditIpAddress->text());
 
     // TODO display next view
 }

@@ -18,11 +18,6 @@ namespace Configuration
     /** Save configuration data and release allocated resources. */
     void uninitialize();
 
-    /** Retrieve the base directory to store application configuration and data to.
-     * @return Application data directory (located in user account standard "documents" directory).
-     */
-    QString getApplicationDataDirectory();
-
     /** Read a value from configuration file.
      * @param referenceKey The INI file key (can contain a path).
      * @param referenceDefaultValue If no value is found in the INI file, this value is provided.

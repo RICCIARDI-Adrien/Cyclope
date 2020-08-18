@@ -4,6 +4,7 @@
  */
 #include <CommunicationProtocol.hpp>
 #include <MainWindow.hpp>
+#include <QMessageBox>
 #include <QTcpSocket>
 
 /** How many milliseconds to wait for data to be received from the robot. */
@@ -28,6 +29,18 @@ namespace CommunicationProtocol
         }
 
         return 0;
+    }
+
+    void displayConnectionLostMessage(QWidget *pointerParentWidget)
+    {
+        // Close connection
+        _socket.close();
+
+        // Inform user
+        QMessageBox::critical(pointerParentWidget, QObject::tr("Robot connection lost"), QObject::tr("Network connection with robot has been lost. Please reconnect."), QMessageBox::Ok);
+
+        // Display connection view
+        pointerMainWindow->changeView(MainWindow::VIEW_ID_CONNECT_TO_ROBOT);
     }
 
     int setRobotMotion(RobotMotion robotMotion)

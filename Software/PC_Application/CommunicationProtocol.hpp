@@ -6,6 +6,7 @@
 #define COMMUNICATIONPROTOCOL_HPP
 
 #include <QString>
+#include <QWidget>
 
 namespace CommunicationProtocol
 {
@@ -41,6 +42,11 @@ namespace CommunicationProtocol
      * @return 0 on success.
      */
     int connectToRobot(QString ipAddress, QString &referenceErrorMessage); // It's better not to use 'connect()' method name to avoid messing with Qt signal system
+
+    /** Display a dialog telling that connection with server has been lost, close network connection has gracefully as possible and return to connection view.
+     * @param pointerParentWidget The widget into which the dialog will be centered.
+     */
+    void displayConnectionLostMessage(QWidget *pointerParentWidget);
 
     /** Tell robot to move or to stop.
      * @param robotMotion The motion to set.

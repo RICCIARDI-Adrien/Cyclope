@@ -3,6 +3,7 @@
  * @author Adrien RICCIARDI
  */
 #include <CommunicationProtocol.hpp>
+#include <MainWindow.hpp>
 #include <QTcpSocket>
 
 /** How many milliseconds to wait for data to be received from the robot. */
@@ -26,6 +27,18 @@ namespace CommunicationProtocol
             return -1;
         }
 
+        return 0;
+    }
+
+    int setRobotMotion(RobotMotion robotMotion)
+    {
+        // Create the command to send
+        unsigned char command[2];
+        command[0] = COMMUNICATION_PROTOCOL_COMMAND_SET_MOTION;
+        command[1] = robotMotion;
+
+        // Send command
+        if (_socket.write(reinterpret_cast<char *>(command), sizeof(command)) != sizeof(command)) return -1;
         return 0;
     }
 }

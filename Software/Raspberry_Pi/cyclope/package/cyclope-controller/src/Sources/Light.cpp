@@ -23,7 +23,6 @@ namespace Light
 	static void _applicationExit()
 	{
 		if (_gpioFileDescriptor != -1) close(_gpioFileDescriptor);
-		LOG(LOG_ERR, "caca");
 	}
 	
 	int initialize()
@@ -46,7 +45,7 @@ namespace Light
 		// Get a file descriptor to access the GPIO
 		if (ioctl(gpioChipFileDescriptor, GPIO_GET_LINEHANDLE_IOCTL, &gpioRequest) < 0)
 		{
-			LOG(LOG_ERR, "Could not retrieve leds GPIO handle (%s).\n", strerror(errno));
+			LOG(LOG_ERR, "Could not retrieve leds GPIO handle (%s).", strerror(errno));
 			close(gpioChipFileDescriptor);
 			return -1;
 		}
@@ -57,6 +56,23 @@ namespace Light
 		
 		// Automatically release resources on application exit
 		atexit(_applicationExit);
+		
+		return 0;
+	}
+	
+	int setEnabled(bool isEnabled)
+	{
+		// Set output level according to enabling state
+		struct gpiohandle_data gpioData;
+		if (isEnabled) gpioData.values[0] = 1;
+		else gpioData.values[0] = 0;
+		
+		// Set new GPIO value
+		if (ioctl(_gpioFileDescriptor, GPIOHANDLE_SET_LINE_VALUES_IOCTL, &gpioData) < 0)
+		{
+			LOG(LOG_ERR, "Could not set light state to %d (%s).", isEnabled, strerror(errno));
+			return -1;
+		}
 		
 		return 0;
 	}

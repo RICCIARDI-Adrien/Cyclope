@@ -3,6 +3,7 @@
  * @author Adrien RICCIARDI
  */
 #include <cstdlib>
+#include <Light.hpp>
 #include <Log.hpp>
 #include <Motor.hpp>
 #include <Network.hpp>
@@ -17,13 +18,20 @@ int main()
 	LOG(LOG_INFO, "Starting Cyclope controller...");
 	
 	// Configure motor PWMs
-	LOG(LOG_INFO, "Initializing motors...");
 	if (Motor::initialize() != 0)
 	{
 		LOG(LOG_ERR, "Motors initialization failed, aborting.");
 		return EXIT_FAILURE;
 	}
 	LOG(LOG_INFO, "Motors successfully initialized.");
+	
+	// Configure front board leds
+	if (Light::initialize() != 0)
+	{
+		LOG(LOG_ERR, "Lights initialization failed, aborting.");
+		return EXIT_FAILURE;
+	}
+	LOG(LOG_INFO, "Lights successfully initialized.");
 	
 	// Initialize server
 	if (Network::initialize() != 0)

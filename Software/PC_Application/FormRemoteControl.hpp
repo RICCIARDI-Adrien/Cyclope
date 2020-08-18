@@ -25,6 +25,14 @@ public:
 
 private:
     Ui::FormRemoteControl *ui;
+
+protected:
+    // See base class documentation
+    void keyPressEvent(QKeyEvent *pointerEvent);
+
+private slots:
+    /** Called when "back" button is clicked. */
+    void _slotPushButtonBackClicked(bool);
 };
 
 #endif // FORMREMOTECONTROL_HPP

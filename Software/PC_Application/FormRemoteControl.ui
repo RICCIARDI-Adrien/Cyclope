@@ -10,6 +10,9 @@
     <height>480</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -88,6 +91,9 @@
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="QCheckBox" name="checkBoxAutomaticLightMode">
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
+           </property>
            <property name="text">
             <string>Automatic handling</string>
            </property>
@@ -124,6 +130,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButtonBack">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
          <string>Back</string>
         </property>

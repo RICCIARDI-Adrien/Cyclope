@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <errno.h>
+#include <Light.hpp>
 #include <Log.hpp>
 #include <Motor.hpp>
 #include <netinet/in.h>
@@ -51,6 +52,7 @@ namespace Network
 		bool isErrorExitRequested = true;
 		CommunicationProtocolCommand command;
 		Motor::RobotMotion robotMotion;
+		unsigned char byte;
 		
 		LOG(LOG_INFO, "Network thread started, initializing server...");
 		
@@ -110,6 +112,13 @@ namespace Network
 						if (recv(clientSocket, &robotMotion, 1, MSG_WAITALL) != 1) goto Client_Disconnected;
 						// Set new motion
 						if (Motor::setRobotMotion(robotMotion) != 0) LOG(LOG_ERR, "Failed to set new robot motion %d.", robotMotion);
+						break;
+						
+					case NETWORK_COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED:
+						// Retrieve enabling state
+						if (recv(clientSocket, &byte, 1, MSG_WAITALL) != 1) goto Client_Disconnected;
+						// Apply new light state
+						if (Light::setEnabled(byte) != 0) LOG(LOG_ERR, "Failed to set new light state %d.", byte);
 						break;
 						
 					default:

@@ -25,7 +25,13 @@ FormRemoteControl::~FormRemoteControl()
 
 void FormRemoteControl::enterView()
 {
-    // TODO
+    // Make sure robot is stopped
+    if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_STOP) != 0)
+    {
+        CommunicationProtocol::displayConnectionLostMessage(this);
+        return;
+    }
+    ui->labelRobotMotion->setText(tr("Robot motion: <b>stopped</b>"));
 }
 
 void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)
@@ -36,19 +42,39 @@ void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)
         switch (pointerEvent->key())
         {
             case Qt::Key_Up:
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0)
+                {
+                    CommunicationProtocol::displayConnectionLostMessage(this);
+                    return;
+                }
+                ui->labelRobotMotion->setText(tr("Robot motion: <b>forward</b>"));
                 break;
 
             case Qt::Key_Down:
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0)
+                {
+                    CommunicationProtocol::displayConnectionLostMessage(this);
+                    return;
+                }
+                ui->labelRobotMotion->setText(tr("Robot motion: <b>backward</b>"));
                 break;
 
             case Qt::Key_Left:
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_LEFT) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_LEFT) != 0)
+                {
+                    CommunicationProtocol::displayConnectionLostMessage(this);
+                    return;
+                }
+                ui->labelRobotMotion->setText(tr("Robot motion: <b>left</b>"));
                 break;
 
             case Qt::Key_Right:
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_RIGHT) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_RIGHT) != 0)
+                {
+                    CommunicationProtocol::displayConnectionLostMessage(this);
+                    return;
+                }
+                ui->labelRobotMotion->setText(tr("Robot motion: <b>right</b>"));
                 break;
 
             // TODO lights
@@ -71,7 +97,12 @@ void FormRemoteControl::keyReleaseEvent(QKeyEvent *pointerEvent)
             case Qt::Key_Down:
             case Qt::Key_Left:
             case Qt::Key_Right:
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_STOP) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_STOP) != 0)
+                {
+                    CommunicationProtocol::displayConnectionLostMessage(this);
+                    return;
+                }
+                ui->labelRobotMotion->setText(tr("Robot motion: <b>stopped</b>"));
                 break;
 
             // TODO lights

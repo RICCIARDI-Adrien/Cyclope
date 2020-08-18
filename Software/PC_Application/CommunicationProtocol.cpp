@@ -45,13 +45,28 @@ namespace CommunicationProtocol
 
     int setRobotMotion(RobotMotion robotMotion)
     {
+        static RobotMotion lastMotion = ROBOT_MOTION_STOP;
+
+        // Do not send twice the same command
+        if (lastMotion == robotMotion) return 0;
+
         // Create the command to send
         unsigned char command[2];
         command[0] = COMMUNICATION_PROTOCOL_COMMAND_SET_MOTION;
         command[1] = robotMotion;
 
         // Send command
-        if (_socket.write(reinterpret_cast<char *>(command), sizeof(command)) != sizeof(command)) return -1;
-        return 0;
+        if (_socket.write(reinterpret_cast<char *>(command), sizeof(command)) != sizeof(command))
+        {
+            // Connection has been lost, consider robot is stopped
+            lastMotion = ROBOT_MOTION_STOP;
+            return -1;
+        }
+        else
+        {
+            // Keep currrent motion for next call
+            lastMotion = robotMotion;
+            return 0;
+        }
     }
 }

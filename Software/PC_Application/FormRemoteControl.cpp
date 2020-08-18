@@ -30,52 +30,56 @@ void FormRemoteControl::enterView()
 
 void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)
 {
-    switch (pointerEvent->key())
+    // Ignore auto repeat key events
+    if (!pointerEvent->isAutoRepeat())
     {
-        case Qt::Key_Up:
-            if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
-            break;
+        switch (pointerEvent->key())
+        {
+            case Qt::Key_Up:
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+                break;
 
-        case Qt::Key_Down:
-            if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
-            break;
+            case Qt::Key_Down:
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+                break;
 
-        case Qt::Key_Left:
-            if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_LEFT) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
-            break;
+            case Qt::Key_Left:
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_LEFT) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+                break;
 
-        case Qt::Key_Right:
-            if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_RIGHT) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
-            break;
+            case Qt::Key_Right:
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_RIGHT) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+                break;
 
-        // TODO lights
-
-        // Handle other keys in the normal way
-        default:
-            QWidget::keyPressEvent(pointerEvent);
-            break;
+            // TODO lights
+        }
     }
+
+    // Handle other keys in the normal way
+    QWidget::keyPressEvent(pointerEvent);
 }
 
 void FormRemoteControl::keyReleaseEvent(QKeyEvent *pointerEvent)
 {
-    switch (pointerEvent->key())
+    // Ignore auto repeat key events
+    if (!pointerEvent->isAutoRepeat())
     {
-        // Stop robot if one of direction keys was released
-        case Qt::Key_Up:
-        case Qt::Key_Down:
-        case Qt::Key_Left:
-        case Qt::Key_Right:
-            if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_STOP) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
-            break;
+        switch (pointerEvent->key())
+        {
+            // Stop robot if one of direction keys was released
+            case Qt::Key_Up:
+            case Qt::Key_Down:
+            case Qt::Key_Left:
+            case Qt::Key_Right:
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_STOP) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+                break;
 
-        // TODO lights
-
-        // Handle other keys in the normal way
-        default:
-            QWidget::keyPressEvent(pointerEvent);
-            break;
+            // TODO lights
+        }
     }
+
+    // Handle other keys in the normal way
+    QWidget::keyPressEvent(pointerEvent);
 }
 
 void FormRemoteControl::_slotPushButtonBackClicked(bool)

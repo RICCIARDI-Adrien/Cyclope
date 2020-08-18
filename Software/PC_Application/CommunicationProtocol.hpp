@@ -54,6 +54,13 @@ namespace CommunicationProtocol
      * @return 0 on success.
      */
     int setRobotMotion(RobotMotion robotMotion);
+
+    /** Turn light on or off.
+     * @param isEnabled Set to false to turn light off, set to true to turn light on.
+     * @return -1 if an error occurred,
+     * @return 0 on success.
+     */
+    int setLightEnabled(bool isEnabled);
 }
 
 #endif // COMMUNICATIONPROTOCOL_HPP

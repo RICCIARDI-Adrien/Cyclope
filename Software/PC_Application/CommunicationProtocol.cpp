@@ -69,4 +69,16 @@ namespace CommunicationProtocol
             return 0;
         }
     }
+
+    int setLightEnabled(bool isEnabled)
+    {
+        // Create the command to send
+        unsigned char command[2];
+        command[0] = COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED;
+        command[1] = isEnabled;
+
+        // Send command
+        if (_socket.write(reinterpret_cast<char *>(command), sizeof(command)) != sizeof(command)) return -1;
+        return 0;
+    }
 }

@@ -8,6 +8,7 @@
 #include <cstring>
 #include <errno.h>
 #include <Log.hpp>
+#include <Motor.hpp>
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <Network.hpp>
@@ -33,16 +34,6 @@ namespace Network
 		NETWORK_COMMUNICATION_PROTOCOL_COMMANDS_COUNT
 	} CommunicationProtocolCommand;
 	
-	// All possible motions the robot can perform
-	typedef enum
-	{
-		NETWORK_COMMUNICATION_PROTOCOL_ROBOT_MOTION_STOP,
-		NETWORK_COMMUNICATION_PROTOCOL_ROBOT_MOTION_FORWARD,
-		NETWORK_COMMUNICATION_PROTOCOL_ROBOT_MOTION_BACKWARD,
-		NETWORK_COMMUNICATION_PROTOCOL_ROBOT_MOTION_LEFT,
-		NETWORK_COMMUNICATION_PROTOCOL_ROBOT_MOTION_RIGHT
-	} CommunicationProtocolRobotMotion;
-	
 	/** The wait condition telling when a program execution can begin. */
 	static pthread_cond_t _programExecutionWaitCondition = PTHREAD_COND_INITIALIZER;
 	/** The mutex used to synchronize the program execution wait condition. */
@@ -59,7 +50,7 @@ namespace Network
 		socklen_t addressSize;
 		bool isErrorExitRequested = true;
 		CommunicationProtocolCommand command;
-		CommunicationProtocolRobotMotion motion;
+		Motor::RobotMotion robotMotion;
 		
 		LOG(LOG_INFO, "Network thread started, initializing server...");
 		
@@ -116,8 +107,9 @@ namespace Network
 				{
 					case NETWORK_COMMUNICATION_PROTOCOL_COMMAND_SET_MOTION:
 						// Retrieve motion parameter
-						if (recv(clientSocket, &motion, 1, MSG_WAITALL) != 1) goto Client_Disconnected;
-						// TODO
+						if (recv(clientSocket, &robotMotion, 1, MSG_WAITALL) != 1) goto Client_Disconnected;
+						// Set new motion
+						if (Motor::setRobotMotion(robotMotion) != 0) LOG(LOG_ERR, "Failed to set new robot motion %d.", robotMotion);
 						break;
 						
 					default:
@@ -127,8 +119,9 @@ namespace Network
 			}
 			
 		Client_Disconnected:
+			// Stop robot to avoid it colliding with something
+			Motor::setRobotMotion(Motor::ROBOT_MOTION_STOP); // TODO this implies that PC application must be connected while an AI program is running
 			// Connection with client has been lost, wait for a new connection
-			// TODO stop robot motion
 			close(clientSocket);
 			LOG(LOG_INFO, "Could not receive client command code, closing client connection (%s).", strerror(errno));
 		}

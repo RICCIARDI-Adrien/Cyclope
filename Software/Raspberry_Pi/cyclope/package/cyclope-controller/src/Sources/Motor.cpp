@@ -22,13 +22,21 @@
 
 namespace Motor
 {
-	/** TODO */
+	/** Gather motor-specific parameters. */
 	typedef struct
 	{
 		int pwmChannel;
 		int forwardPwmPeriodNanoseconds;
 		int backwardPwmPeriodNanoseconds;
 	} Motor;
+	
+	/** All possible motions a motor can perform. */
+	typedef enum
+	{
+		MOTOR_MOTION_STOP,
+		MOTOR_MOTION_FORWARD,
+		MOTOR_MOTION_BACKWARD
+	} MotorMotion;
 	
 	/** Direct access to each motor specific settings. */
 	static Motor _motors[] =
@@ -115,6 +123,44 @@ namespace Motor
 		return returnValue;
 	}
 	
+	/** Tell a motor to move or to stop.
+	 * @param motorId The motor to set motion.
+	 * @param motorMotion The motion to set.
+	 * @return -1 if an error occurred,
+	 * @return 0 on success.
+	 */
+	int _setMotorMotion(MotorId motorId, MotorMotion motorMotion)
+	{
+		// Make sure the specified motor exists
+		if (motorId >= MOTOR_IDS_COUNT) return -1;
+		
+		// Create sysfs file path
+		char stringSysfsFile[128];
+		sprintf(stringSysfsFile, MOTOR_PWM_CHIP_PATH "/pwm%d/duty_cycle", _motors[motorId].pwmChannel);
+		
+		// Set desired duty cycle
+		switch (motorMotion)
+		{
+			case MOTOR_MOTION_STOP:
+				if (_writeSysfsFile(stringSysfsFile, MOTOR_PWM_STOP_DUTY_CYCLE) != 0) return -1;
+				break;
+				
+			case MOTOR_MOTION_FORWARD:
+				if (_writeSysfsFile(stringSysfsFile, _motors[motorId].forwardPwmPeriodNanoseconds) != 0) return -1;
+				break;
+				
+			case MOTOR_MOTION_BACKWARD:
+				if (_writeSysfsFile(stringSysfsFile, _motors[motorId].backwardPwmPeriodNanoseconds) != 0) return -1;
+				break;
+				
+			default:
+				LOG(LOG_ERR, "Unknown motor motion requested : %d, ignoring command.", motorMotion);
+				return -1;
+		}
+		
+		return 0;
+	}
+	
 	int initialize()
 	{
 		// TODO load motor PWM periods from Configuration module
@@ -140,6 +186,43 @@ namespace Motor
 			// Enable motor signal
 			sprintf(stringTemporary, "%s/enable", stringPwmDirectoryPath);
 			if (_writeSysfsFile(stringTemporary, 1) != 0) return -1;
+		}
+		
+		return 0;
+	}
+	
+	int setRobotMotion(RobotMotion robotMotion)
+	{
+		switch (robotMotion)
+		{
+			case ROBOT_MOTION_STOP:
+				if (_setMotorMotion(MOTOR_ID_LEFT, MOTOR_MOTION_STOP) != 0) return -1;
+				if (_setMotorMotion(MOTOR_ID_RIGHT, MOTOR_MOTION_STOP) != 0) return -1;
+				break;
+				
+			case ROBOT_MOTION_FORWARD:
+				if (_setMotorMotion(MOTOR_ID_LEFT, MOTOR_MOTION_FORWARD) != 0) return -1;
+				if (_setMotorMotion(MOTOR_ID_RIGHT, MOTOR_MOTION_FORWARD) != 0) return -1;
+				break;
+				
+			case ROBOT_MOTION_BACKWARD:
+				if (_setMotorMotion(MOTOR_ID_LEFT, MOTOR_MOTION_BACKWARD) != 0) return -1;
+				if (_setMotorMotion(MOTOR_ID_RIGHT, MOTOR_MOTION_BACKWARD) != 0) return -1;
+				break;
+				
+			case ROBOT_MOTION_LEFT:
+				if (_setMotorMotion(MOTOR_ID_LEFT, MOTOR_MOTION_STOP) != 0) return -1;
+				if (_setMotorMotion(MOTOR_ID_RIGHT, MOTOR_MOTION_FORWARD) != 0) return -1;
+				break;
+				
+			case ROBOT_MOTION_RIGHT:
+				if (_setMotorMotion(MOTOR_ID_LEFT, MOTOR_MOTION_FORWARD) != 0) return -1;
+				if (_setMotorMotion(MOTOR_ID_RIGHT, MOTOR_MOTION_STOP) != 0) return -1;
+				break;
+				
+			default:
+				LOG(LOG_ERR, "Unknown robot motion : %d, ignoring it.", robotMotion);
+				return -1;
 		}
 		
 		return 0;

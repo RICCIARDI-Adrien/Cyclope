@@ -27,20 +27,51 @@ void FormRemoteControl::enterView()
 {
     // TODO
 }
-#include <QDebug>
+
 void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)
 {
     switch (pointerEvent->key())
     {
         case Qt::Key_Up:
-            //if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD)) /* TODO */ ;
-            qDebug() << "up";
+            if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
             break;
 
         case Qt::Key_Down:
-            qDebug() << "down";
+            if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
             break;
 
+        case Qt::Key_Left:
+            if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_LEFT) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+            break;
+
+        case Qt::Key_Right:
+            if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_RIGHT) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+            break;
+
+        // TODO lights
+
+        // Handle other keys in the normal way
+        default:
+            QWidget::keyPressEvent(pointerEvent);
+            break;
+    }
+}
+
+void FormRemoteControl::keyReleaseEvent(QKeyEvent *pointerEvent)
+{
+    switch (pointerEvent->key())
+    {
+        // Stop robot if one of direction keys was released
+        case Qt::Key_Up:
+        case Qt::Key_Down:
+        case Qt::Key_Left:
+        case Qt::Key_Right:
+            if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_STOP) != 0) CommunicationProtocol::displayConnectionLostMessage(this);
+            break;
+
+        // TODO lights
+
+        // Handle other keys in the normal way
         default:
             QWidget::keyPressEvent(pointerEvent);
             break;

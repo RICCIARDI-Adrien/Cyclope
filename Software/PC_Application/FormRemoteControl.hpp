@@ -29,6 +29,8 @@ private:
 protected:
     // See base class documentation
     void keyPressEvent(QKeyEvent *pointerEvent);
+    // See base class documentation
+    void keyReleaseEvent(QKeyEvent *pointerEvent);
 
 private slots:
     /** Called when "back" button is clicked. */

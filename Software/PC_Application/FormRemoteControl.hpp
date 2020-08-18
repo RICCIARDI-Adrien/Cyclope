@@ -26,6 +26,9 @@ public:
 private:
     Ui::FormRemoteControl *ui;
 
+    /** Tell whether light is lighted. */
+    bool _isLightEnabled;
+
 protected:
     // See base class documentation
     void keyPressEvent(QKeyEvent *pointerEvent);

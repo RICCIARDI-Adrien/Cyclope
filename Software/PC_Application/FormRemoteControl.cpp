@@ -32,6 +32,15 @@ void FormRemoteControl::enterView()
         return;
     }
     ui->labelRobotMotion->setText(tr("Robot motion: <b>stopped</b>"));
+
+    // Turn light off
+    _isLightEnabled = false;
+    if (CommunicationProtocol::setLightEnabled(false) != 0)
+    {
+        CommunicationProtocol::displayConnectionLostMessage(this);
+        return;
+    }
+    ui->labelLightState->setText(tr("State: <b>OFF</b>"));
 }
 
 void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)
@@ -77,7 +86,17 @@ void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)
                 ui->labelRobotMotion->setText(tr("Robot motion: <b>right</b>"));
                 break;
 
-            // TODO lights
+            case Qt::Key_L:
+                // Toggle light state
+                _isLightEnabled = !_isLightEnabled;
+                if (CommunicationProtocol::setLightEnabled(_isLightEnabled) != 0)
+                {
+                    CommunicationProtocol::displayConnectionLostMessage(this);
+                    return;
+                }
+                // Display new light state in user interface
+                if (_isLightEnabled) ui->labelLightState->setText(tr("State: <b>ON</b>"));
+                else ui->labelLightState->setText(tr("State: <b>OFF</b>"));
         }
     }
 
@@ -104,8 +123,6 @@ void FormRemoteControl::keyReleaseEvent(QKeyEvent *pointerEvent)
                 }
                 ui->labelRobotMotion->setText(tr("Robot motion: <b>stopped</b>"));
                 break;
-
-            // TODO lights
         }
     }
 
@@ -121,8 +138,13 @@ void FormRemoteControl::_slotPushButtonBackClicked(bool)
         CommunicationProtocol::displayConnectionLostMessage(this);
         return;
     }
-    // Turn lights off
-    // TODO
+
+    // Turn light off
+    if (CommunicationProtocol::setLightEnabled(false) != 0)
+    {
+        CommunicationProtocol::displayConnectionLostMessage(this);
+        return;
+    }
 
     // Display main menu
     pointerMainWindow->changeView(MainWindow::VIEW_ID_MAIN_MENU);

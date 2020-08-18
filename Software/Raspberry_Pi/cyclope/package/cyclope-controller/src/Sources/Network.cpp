@@ -18,12 +18,37 @@
 
 namespace Network
 {
+	/** All available commands the PC application can send. */
+	typedef enum
+	{
+		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_SET_MOTION,
+		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE,
+		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_GET_MOTOR_DUTY_CYCLE,
+		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_SET_MOTOR_DUTY_CYCLE,
+		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED,
+		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_POWER_OFF,
+		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_LIST_AVAILABLE_AI_PROGRAMS,
+		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_START_AI_PROGRAM,
+		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM,
+		NETWORK_COMMUNICATION_PROTOCOL_COMMANDS_COUNT
+	} CommunicationProtocolCommand;
+	
+	// All possible motions the robot can perform
+	typedef enum
+	{
+		NETWORK_COMMUNICATION_PROTOCOL_ROBOT_MOTION_STOP,
+		NETWORK_COMMUNICATION_PROTOCOL_ROBOT_MOTION_FORWARD,
+		NETWORK_COMMUNICATION_PROTOCOL_ROBOT_MOTION_BACKWARD,
+		NETWORK_COMMUNICATION_PROTOCOL_ROBOT_MOTION_LEFT,
+		NETWORK_COMMUNICATION_PROTOCOL_ROBOT_MOTION_RIGHT
+	} CommunicationProtocolRobotMotion;
+	
 	/** The wait condition telling when a program execution can begin. */
 	static pthread_cond_t _programExecutionWaitCondition = PTHREAD_COND_INITIALIZER;
 	/** The mutex used to synchronize the program execution wait condition. */
 	static pthread_mutex_t _programExecutionWaitConditionMutex = PTHREAD_MUTEX_INITIALIZER;
 	/** The program execution wait condition variable, it holds the program index to execute or -1 if no program must be executed. */
-	static int _programToExecuteIndex = -1;
+	static volatile int _programToExecuteIndex = -1;
 	
 	/** Network server thread. */
 	static void *_serverThread(void *)
@@ -33,6 +58,8 @@ namespace Network
 		struct sockaddr_in address;
 		socklen_t addressSize;
 		bool isErrorExitRequested = true;
+		CommunicationProtocolCommand command;
+		CommunicationProtocolRobotMotion motion;
 		
 		LOG(LOG_INFO, "Network thread started, initializing server...");
 		
@@ -77,6 +104,33 @@ namespace Network
 				goto Exit;
 			}
 			LOG(LOG_INFO, "A new client has connected. IP address : %s, port : %d.", inet_ntoa(address.sin_addr), ntohs(address.sin_port));
+			
+			// Process client commands
+			while (1)
+			{
+				// Wait for a command code
+				if (recv(clientSocket, &command, 1, MSG_WAITALL) != 1) goto Client_Disconnected; // TODO use select to allow to exit from the thread
+				
+				// Process command
+				switch (command)
+				{
+					case NETWORK_COMMUNICATION_PROTOCOL_COMMAND_SET_MOTION:
+						// Retrieve motion parameter
+						if (recv(clientSocket, &motion, 1, MSG_WAITALL) != 1) goto Client_Disconnected;
+						// TODO
+						break;
+						
+					default:
+						LOG(LOG_ERR, "Unknown command code received : %d, ignoring it.", command);
+						break;
+				}
+			}
+			
+		Client_Disconnected:
+			// Connection with client has been lost, wait for a new connection
+			// TODO stop robot motion
+			close(clientSocket);
+			LOG(LOG_INFO, "Could not receive client command code, closing client connection (%s).", strerror(errno));
 		}
 		
 	Exit:

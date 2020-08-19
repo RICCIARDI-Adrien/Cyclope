@@ -69,6 +69,8 @@ See `Bill_Of_Material.csv` file from [Release](https://github.com/RICCIARDI-Adri
 
 ![Servomotor, wheel and support](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Servomotor_And_Parts.jpg)
 
-### Chassis plates
+### Chassis
 
 ![Chassis plates](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Chassis_Plates.jpg)
+![Assembled wheels 1](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Wheels_1.jpg)
+![Assembled wheels 2](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Wheels_2.jpg)

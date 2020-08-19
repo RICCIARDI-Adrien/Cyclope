@@ -8,7 +8,8 @@ A fast WiFi connection allows to remote control the robot while displaying camer
 
 ## Hardware
 
-PCB has been designed using KiCad 5.1.5. All manufacturing files are available from [Release](https://github.com/RICCIARDI-Adrien/Cyclope/releases) page.
+PCB has been designed using KiCad 5.1.5. All manufacturing files are available from [Release](https://github.com/RICCIARDI-Adrien/Cyclope/releases) page.  
+A PDF version of the schematic is also provided.
 
 ## Software
 

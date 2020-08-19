@@ -57,3 +57,13 @@ See `Bill_Of_Material.csv` file from [Release](https://github.com/RICCIARDI-Adri
 * 2x front board flat angle bracket : NFLE2012-20
 * 21x chassis plates spacer : [Ettinger 05.04.401](https://fr.farnell.com/ettinger/05-04-401/entretoise-m4x40-vzk/dp/1466794)
 * TODO
+
+## Photo gallery
+
+### Castor wheel
+
+![Castor wheel](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Castor_Wheel.jpg)
+
+### Servomotor, wheel and support
+
+![Servomotor, wheel and support](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Servomotor_And_Parts.jpg)

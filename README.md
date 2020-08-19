@@ -74,3 +74,5 @@ See `Bill_Of_Material.csv` file from [Release](https://github.com/RICCIARDI-Adri
 ![Chassis plates](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Chassis_Plates.jpg)
 ![Assembled wheels 1](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Wheels_1.jpg)
 ![Assembled wheels 2](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Wheels_2.jpg)
+![Assembled chassis bottom 1](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Chassis_Bottom_1.jpg)
+![Assembled chassis bottom 2](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Chassis_Bottom_2.jpg)

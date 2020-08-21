@@ -1,0 +1,17 @@
+#!/bin/sh
+
+case "$1" in
+	start)
+		# Start middleware as a daemon
+		cyclope-controller &
+		;;
+
+	stop)
+		killall -q -15 cyclope-controller
+		;;
+
+	*)
+		echo "Usage: $0 {start|stop}"
+		exit 1
+		;;
+esac

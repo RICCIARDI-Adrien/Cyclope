@@ -16,6 +16,7 @@ endef
 
 define CYCLOPE_CONTROLLER_INSTALL_TARGET_CMDS
 	$(INSTALL) -m 0755 $(@D)/cyclope-controller $(TARGET_DIR)/usr/sbin
+	$(INSTALL) -m 0755 $(CYCLOPE_CONTROLLER_PKGDIR)/S80cyclope-controller $(TARGET_DIR)/etc/init.d
 endef
 
 $(eval $(generic-package))

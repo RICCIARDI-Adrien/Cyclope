@@ -26,13 +26,13 @@ git clone --recurse-submodules https://github.com/RICCIARDI-Adrien/Cyclope
 
 Enter repository directory, clean previous build (if needed) and generate image :
 ```
-cd Cyclope
-make -C buildroot distclean
+cd Cyclope/Software/Raspberry_Pi/buildroot
+make distclean
 make BR2_EXTERNAL=$(realpath ..)/cyclope cyclope_defconfig
-make -C buildroot
+make
 ```
 
-Generated image to burn to a SD card is `Cyclope/Software/buildroot/output/images/sdcard.img`.
+Generated image to burn to a SD card is `Cyclope/Software/Raspberry_Pi/buildroot/output/images/sdcard.img`.
 
 ## Mechanical
 

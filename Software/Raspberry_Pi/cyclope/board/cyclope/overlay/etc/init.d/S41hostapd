@@ -1,0 +1,16 @@
+#!/bin/sh
+
+case "$1" in
+	start)
+		hostapd -B /etc/hostapd.conf
+		;;
+
+	stop)
+		killall hostapd
+		;;
+
+	*)
+		echo "Usage: $0 {start|stop}"
+		exit 1
+		;;
+esac

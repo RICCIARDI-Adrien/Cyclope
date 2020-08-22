@@ -25,7 +25,7 @@
 *.sym
 *-bak
 _autosave-*
+build-Cyclope-*
 fp-info-cache
 Hardware/*.xml
 Hardware/Production_Files
-Software/PC_Application/build-Cyclope-*

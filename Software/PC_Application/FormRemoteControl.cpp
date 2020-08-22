@@ -141,11 +141,7 @@ void FormRemoteControl::_selectRobotMotion()
     // Stop robot if all direction keys are released
     if (!_isUpDirectionKeyPressed && !_isDownDirectionKeyPressed && !_isLeftDirectionKeyPressed && !_isRightDirectionKeyPressed)
     {
-        if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_STOP) != 0)
-        {
-            CommunicationProtocol::displayConnectionLostMessage(this);
-            return;
-        }
+        if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_STOP) != 0) goto Exit_Connection_Lost;
         ui->labelRobotMotion->setText(tr("Robot motion: <b>stopped</b>"));
     }
     else
@@ -158,20 +154,12 @@ void FormRemoteControl::_selectRobotMotion()
             {
                 if (_isUpDirectionKeyPressed)
                 {
-                    if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0)
-                    {
-                        CommunicationProtocol::displayConnectionLostMessage(this);
-                        return;
-                    }
+                    if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0) goto Exit_Connection_Lost;
                     ui->labelRobotMotion->setText(tr("Robot motion: <b>forward</b>"));
                 }
                 else
                 {
-                    if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0)
-                    {
-                        CommunicationProtocol::displayConnectionLostMessage(this);
-                        return;
-                    }
+                    if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0) goto Exit_Connection_Lost;
                     ui->labelRobotMotion->setText(tr("Robot motion: <b>backward</b>"));
                 }
             }
@@ -182,20 +170,12 @@ void FormRemoteControl::_selectRobotMotion()
                     // Forward turn if going forward
                     if (_isUpDirectionKeyPressed)
                     {
-                        if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD_LEFT) != 0)
-                        {
-                            CommunicationProtocol::displayConnectionLostMessage(this);
-                            return;
-                        }
+                        if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD_LEFT) != 0) goto Exit_Connection_Lost;
                     }
                     // Backward turn if going backward
                     else
                     {
-                        if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD_LEFT) != 0)
-                        {
-                            CommunicationProtocol::displayConnectionLostMessage(this);
-                            return;
-                        }
+                        if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD_LEFT) != 0) goto Exit_Connection_Lost;
                     }
                     ui->labelRobotMotion->setText(tr("Robot motion: <b>left</b>"));
                 }
@@ -204,20 +184,12 @@ void FormRemoteControl::_selectRobotMotion()
                     // Forward turn if going forward
                     if (_isUpDirectionKeyPressed)
                     {
-                        if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD_RIGHT) != 0)
-                        {
-                            CommunicationProtocol::displayConnectionLostMessage(this);
-                            return;
-                        }
+                        if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD_RIGHT) != 0) goto Exit_Connection_Lost;
                     }
                     // Backward turn if going backward
                     else
                     {
-                        if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD_RIGHT) != 0)
-                        {
-                            CommunicationProtocol::displayConnectionLostMessage(this);
-                            return;
-                        }
+                        if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD_RIGHT) != 0) goto Exit_Connection_Lost;
                     }
                     ui->labelRobotMotion->setText(tr("Robot motion: <b>right</b>"));
                 }
@@ -228,42 +200,32 @@ void FormRemoteControl::_selectRobotMotion()
         {
             if (_isUpDirectionKeyPressed)
             {
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0)
-                {
-                    CommunicationProtocol::displayConnectionLostMessage(this);
-                    return;
-                }
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0) goto Exit_Connection_Lost;
                 ui->labelRobotMotion->setText(tr("Robot motion: <b>forward</b>"));
             }
             else if (_isDownDirectionKeyPressed)
             {
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0)
-                {
-                    CommunicationProtocol::displayConnectionLostMessage(this);
-                    return;
-                }
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0) goto Exit_Connection_Lost;
                 ui->labelRobotMotion->setText(tr("Robot motion: <b>backward</b>"));
             }
             else if (_isLeftDirectionKeyPressed)
             {
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD_LEFT) != 0)
-                {
-                    CommunicationProtocol::displayConnectionLostMessage(this);
-                    return;
-                }
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD_LEFT) != 0) goto Exit_Connection_Lost;
                 ui->labelRobotMotion->setText(tr("Robot motion: <b>left</b>"));
             }
             else if (_isRightDirectionKeyPressed)
             {
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD_RIGHT) != 0)
-                {
-                    CommunicationProtocol::displayConnectionLostMessage(this);
-                    return;
-                }
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD_RIGHT) != 0) goto Exit_Connection_Lost;
                 ui->labelRobotMotion->setText(tr("Robot motion: <b>right</b>"));
             }
         }
     }
+
+    // No error occurred
+    return;
+
+Exit_Connection_Lost:
+    CommunicationProtocol::displayConnectionLostMessage(this);
 }
 
 void FormRemoteControl::_slotPushButtonBackClicked(bool)

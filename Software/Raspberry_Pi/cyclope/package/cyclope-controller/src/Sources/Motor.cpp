@@ -210,13 +210,23 @@ namespace Motor
 				if (_setMotorMotion(MOTOR_ID_RIGHT, MOTOR_MOTION_BACKWARD) != 0) return -1;
 				break;
 				
-			case ROBOT_MOTION_LEFT:
+			case ROBOT_MOTION_FORWARD_LEFT:
 				if (_setMotorMotion(MOTOR_ID_LEFT, MOTOR_MOTION_STOP) != 0) return -1;
 				if (_setMotorMotion(MOTOR_ID_RIGHT, MOTOR_MOTION_FORWARD) != 0) return -1;
 				break;
 				
-			case ROBOT_MOTION_RIGHT:
+			case ROBOT_MOTION_FORWARD_RIGHT:
 				if (_setMotorMotion(MOTOR_ID_LEFT, MOTOR_MOTION_FORWARD) != 0) return -1;
+				if (_setMotorMotion(MOTOR_ID_RIGHT, MOTOR_MOTION_STOP) != 0) return -1;
+				break;
+				
+			case ROBOT_MOTION_BACKWARD_LEFT:
+				if (_setMotorMotion(MOTOR_ID_LEFT, MOTOR_MOTION_STOP) != 0) return -1;
+				if (_setMotorMotion(MOTOR_ID_RIGHT, MOTOR_MOTION_BACKWARD) != 0) return -1;
+				break;
+				
+			case ROBOT_MOTION_BACKWARD_RIGHT:
+				if (_setMotorMotion(MOTOR_ID_LEFT, MOTOR_MOTION_BACKWARD) != 0) return -1;
 				if (_setMotorMotion(MOTOR_ID_RIGHT, MOTOR_MOTION_STOP) != 0) return -1;
 				break;
 				

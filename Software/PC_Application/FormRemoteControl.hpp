@@ -29,11 +29,26 @@ private:
     /** Tell whether light is lighted. */
     bool _isLightEnabled;
 
+    /** Tell whether "up arrow" keyboard key is pressed. */
+    volatile bool _isUpDirectionKeyPressed = false;
+    /** Tell whether "down arrow" keyboard key is pressed. */
+    volatile bool _isDownDirectionKeyPressed = false;
+    /** Tell whether "left arrow" keyboard key is pressed. */
+    volatile bool _isLeftDirectionKeyPressed = false;
+    /** Tell whether "right arrow" keyboard key is pressed. */
+    volatile bool _isRightDirectionKeyPressed = false;
+    /** Automatically set to true if the last pressed key was "up arrow" or "down arrow", otherwise it is set to false. */
+    volatile bool _isLastPressedDirectionKeyOnVerticalAxis = false;
+
 protected:
     // See base class documentation
     void keyPressEvent(QKeyEvent *pointerEvent);
     // See base class documentation
     void keyReleaseEvent(QKeyEvent *pointerEvent);
+
+private:
+    /** Set best robot motion according to pressed keyboard keys. */
+    void _selectRobotMotion();
 
 private slots:
     /** Called when "back" button is clicked. */

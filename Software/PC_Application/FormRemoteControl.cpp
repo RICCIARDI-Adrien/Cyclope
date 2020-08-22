@@ -48,42 +48,32 @@ void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)
     // Ignore auto repeat key events
     if (!pointerEvent->isAutoRepeat())
     {
+        bool isRobotMotionUpdateNeeded = false;
+
         switch (pointerEvent->key())
         {
             case Qt::Key_Up:
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0)
-                {
-                    CommunicationProtocol::displayConnectionLostMessage(this);
-                    return;
-                }
-                ui->labelRobotMotion->setText(tr("Robot motion: <b>forward</b>"));
+                _isUpDirectionKeyPressed = true;
+                _isLastPressedDirectionKeyOnVerticalAxis = true;
+                isRobotMotionUpdateNeeded = true;
                 break;
 
             case Qt::Key_Down:
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0)
-                {
-                    CommunicationProtocol::displayConnectionLostMessage(this);
-                    return;
-                }
-                ui->labelRobotMotion->setText(tr("Robot motion: <b>backward</b>"));
+                _isDownDirectionKeyPressed = true;
+                _isLastPressedDirectionKeyOnVerticalAxis = true;
+                isRobotMotionUpdateNeeded = true;
                 break;
 
             case Qt::Key_Left:
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_LEFT) != 0)
-                {
-                    CommunicationProtocol::displayConnectionLostMessage(this);
-                    return;
-                }
-                ui->labelRobotMotion->setText(tr("Robot motion: <b>left</b>"));
+                _isLeftDirectionKeyPressed = true;
+                _isLastPressedDirectionKeyOnVerticalAxis = false;
+                isRobotMotionUpdateNeeded = true;
                 break;
 
             case Qt::Key_Right:
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_RIGHT) != 0)
-                {
-                    CommunicationProtocol::displayConnectionLostMessage(this);
-                    return;
-                }
-                ui->labelRobotMotion->setText(tr("Robot motion: <b>right</b>"));
+                _isRightDirectionKeyPressed = true;
+                _isLastPressedDirectionKeyOnVerticalAxis = false;
+                isRobotMotionUpdateNeeded = true;
                 break;
 
             case Qt::Key_L:
@@ -97,7 +87,11 @@ void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)
                 // Display new light state in user interface
                 if (_isLightEnabled) ui->labelLightState->setText(tr("State: <b>ON</b>"));
                 else ui->labelLightState->setText(tr("State: <b>OFF</b>"));
-        }
+                break;
+            }
+
+            // Set new robot motion if needed
+            if (isRobotMotionUpdateNeeded) _selectRobotMotion();
     }
 
     // Handle other keys in the normal way
@@ -109,25 +103,141 @@ void FormRemoteControl::keyReleaseEvent(QKeyEvent *pointerEvent)
     // Ignore auto repeat key events
     if (!pointerEvent->isAutoRepeat())
     {
+        bool isRobotMotionUpdateNeeded = false;
+
         switch (pointerEvent->key())
         {
-            // Stop robot if one of direction keys was released
             case Qt::Key_Up:
+                _isUpDirectionKeyPressed = false;
+                isRobotMotionUpdateNeeded = true;
+                break;
+
             case Qt::Key_Down:
+                _isDownDirectionKeyPressed = false;
+                isRobotMotionUpdateNeeded = true;
+                break;
+
             case Qt::Key_Left:
+                _isLeftDirectionKeyPressed = false;
+                isRobotMotionUpdateNeeded = true;
+                break;
+
             case Qt::Key_Right:
-                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_STOP) != 0)
-                {
-                    CommunicationProtocol::displayConnectionLostMessage(this);
-                    return;
-                }
-                ui->labelRobotMotion->setText(tr("Robot motion: <b>stopped</b>"));
+                _isRightDirectionKeyPressed = false;
+                isRobotMotionUpdateNeeded = true;
                 break;
         }
+
+        // Set new robot motion if needed
+        if (isRobotMotionUpdateNeeded) _selectRobotMotion();
     }
 
     // Handle other keys in the normal way
     QWidget::keyPressEvent(pointerEvent);
+}
+
+void FormRemoteControl::_selectRobotMotion()
+{
+    // Stop robot if all direction keys are released
+    if (!_isUpDirectionKeyPressed && !_isDownDirectionKeyPressed && !_isLeftDirectionKeyPressed && !_isRightDirectionKeyPressed)
+    {
+        if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_STOP) != 0)
+        {
+            CommunicationProtocol::displayConnectionLostMessage(this);
+            return;
+        }
+        ui->labelRobotMotion->setText(tr("Robot motion: <b>stopped</b>"));
+    }
+    else
+    {
+        // Handle both vertical and horizontal direction movement
+        if ((_isUpDirectionKeyPressed || _isDownDirectionKeyPressed) && (_isLeftDirectionKeyPressed || _isRightDirectionKeyPressed))
+        {
+            // Keep trace of the last direction the user took to favor it, and when this key will be released the previous direction will be favored
+            if (_isLastPressedDirectionKeyOnVerticalAxis)
+            {
+                if (_isUpDirectionKeyPressed)
+                {
+                    if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0)
+                    {
+                        CommunicationProtocol::displayConnectionLostMessage(this);
+                        return;
+                    }
+                    ui->labelRobotMotion->setText(tr("Robot motion: <b>forward</b>"));
+                }
+                else
+                {
+                    if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0)
+                    {
+                        CommunicationProtocol::displayConnectionLostMessage(this);
+                        return;
+                    }
+                    ui->labelRobotMotion->setText(tr("Robot motion: <b>backward</b>"));
+                }
+            }
+            else
+            {
+                if (_isLeftDirectionKeyPressed)
+                {
+                    if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_LEFT) != 0)
+                    {
+                        CommunicationProtocol::displayConnectionLostMessage(this);
+                        return;
+                    }
+                    ui->labelRobotMotion->setText(tr("Robot motion: <b>left</b>"));
+                }
+                else
+                {
+                    if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_RIGHT) != 0)
+                    {
+                        CommunicationProtocol::displayConnectionLostMessage(this);
+                        return;
+                    }
+                    ui->labelRobotMotion->setText(tr("Robot motion: <b>right</b>"));
+                }
+            }
+        }
+        // Handle a single key press
+        else
+        {
+            if (_isUpDirectionKeyPressed)
+            {
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_FORWARD) != 0)
+                {
+                    CommunicationProtocol::displayConnectionLostMessage(this);
+                    return;
+                }
+                ui->labelRobotMotion->setText(tr("Robot motion: <b>forward</b>"));
+            }
+            else if (_isDownDirectionKeyPressed)
+            {
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_BACKWARD) != 0)
+                {
+                    CommunicationProtocol::displayConnectionLostMessage(this);
+                    return;
+                }
+                ui->labelRobotMotion->setText(tr("Robot motion: <b>backward</b>"));
+            }
+            else if (_isLeftDirectionKeyPressed)
+            {
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_LEFT) != 0)
+                {
+                    CommunicationProtocol::displayConnectionLostMessage(this);
+                    return;
+                }
+                ui->labelRobotMotion->setText(tr("Robot motion: <b>left</b>"));
+            }
+            else if (_isRightDirectionKeyPressed)
+            {
+                if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_RIGHT) != 0)
+                {
+                    CommunicationProtocol::displayConnectionLostMessage(this);
+                    return;
+                }
+                ui->labelRobotMotion->setText(tr("Robot motion: <b>right</b>"));
+            }
+        }
+    }
 }
 
 void FormRemoteControl::_slotPushButtonBackClicked(bool)

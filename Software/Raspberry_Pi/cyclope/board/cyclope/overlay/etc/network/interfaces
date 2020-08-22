@@ -2,7 +2,7 @@ auto lo
 iface lo inet loopback
 
 auto wlan0
-iface wlan0 inet dhcp
-  pre-up wpa_supplicant -B -Dnl80211 -iwlan0 -c/media/data/etc/wpa_supplicant/wpa_supplicant.conf -s
-  post-down killall -q wpa_supplicant
+iface wlan0 inet static
+  address 192.168.5.1
+  netmask 255.255.255.0
   wait-delay 15

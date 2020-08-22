@@ -31,8 +31,10 @@ namespace CommunicationProtocol
         ROBOT_MOTION_STOP,
         ROBOT_MOTION_FORWARD,
         ROBOT_MOTION_BACKWARD,
-        ROBOT_MOTION_LEFT,
-        ROBOT_MOTION_RIGHT
+        ROBOT_MOTION_FORWARD_LEFT,
+        ROBOT_MOTION_FORWARD_RIGHT,
+        ROBOT_MOTION_BACKWARD_LEFT,
+        ROBOT_MOTION_BACKWARD_RIGHT
     } RobotMotion;
 
     /** Connect to the robot.

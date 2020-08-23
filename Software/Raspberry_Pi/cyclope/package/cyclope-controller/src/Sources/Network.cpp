@@ -46,7 +46,7 @@ namespace Network
 	static void *_serverThread(void *)
 	{
 		// Declare all variables at the beginning to be able to use goto instruction without triggering "jump to label crosses variable initialization" error
-		int serverSocket = -1, isAddressReusingEnabled = 1, clientSocket = -1;
+		int serverSocket = -1, isAddressReusingEnabled = 1, clientSocket = -1, i;
 		struct sockaddr_in address;
 		socklen_t addressSize;
 		bool isErrorExitRequested = true;
@@ -77,8 +77,17 @@ namespace Network
 			goto Exit;
 		}
 		
-		// Wait for a client to connect
+		// Make robot lights blink three times to tell it is ready
+		for (i = 0; i < 3; i++)
+		{
+			if (Light::setEnabled(true) != 0) LOG(LOG_ERR, "Failed to turn lights on.");
+			usleep(250000);
+			if (Light::setEnabled(false) != 0) LOG(LOG_ERR, "Failed to turn lights off.");
+			usleep(250000);
+		}
 		LOG(LOG_INFO, "Server is ready.");
+		
+		// Wait for a client to connect
 		while (1)
 		{
 			// Allow only one client at a time

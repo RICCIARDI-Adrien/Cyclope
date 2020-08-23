@@ -130,6 +130,12 @@ namespace Network
 						if (Light::setEnabled(byte) != 0) LOG(LOG_ERR, "Failed to set new light state %d.", byte);
 						break;
 						
+					case NETWORK_COMMUNICATION_PROTOCOL_COMMAND_POWER_OFF:
+						LOG(LOG_INFO, "Received power off command, shutting system down.");
+						system("poweroff");
+						isErrorExitRequested = false;
+						goto Exit;
+						
 					default:
 						LOG(LOG_ERR, "Unknown command code received : %d, ignoring it.", command);
 						break;

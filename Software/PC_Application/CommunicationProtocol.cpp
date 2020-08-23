@@ -81,4 +81,18 @@ namespace CommunicationProtocol
         if (_socket.write(reinterpret_cast<char *>(command), sizeof(command)) != sizeof(command)) return -1;
         return 0;
     }
+
+    int powerRobotOff()
+    {
+        // Create the command to send
+        unsigned char command = COMMUNICATION_PROTOCOL_COMMAND_POWER_OFF;
+
+        // Send command
+        if (_socket.write(reinterpret_cast<char *>(&command), sizeof(command)) != sizeof(command)) return -1;
+
+        // Cleanfully close network connection
+        _socket.close();
+
+        return 0;
+    }
 }

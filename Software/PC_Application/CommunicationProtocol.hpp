@@ -63,6 +63,12 @@ namespace CommunicationProtocol
      * @return 0 on success.
      */
     int setLightEnabled(bool isEnabled);
+
+    /** Tell robot to immediately shutdown.
+     * @return -1 if an error occurred,
+     * @return 0 on success.
+     */
+    int powerRobotOff();
 }
 
 #endif // COMMUNICATIONPROTOCOL_HPP

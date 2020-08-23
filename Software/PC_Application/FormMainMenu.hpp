@@ -29,6 +29,8 @@ private:
 private slots:
     /** Called when "remote control" button is clicked. */
     void _slotPushButtonRemoteControlClicked(bool);
+    /** Called when "power robot off" button is clicked. */
+    void _slotPushButtonPowerRobotOffClicked(bool);
     /** Called when "exit" button is clicked. */
     void _slotPushButtonExitClicked(bool);
 };

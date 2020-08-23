@@ -91,6 +91,24 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="pushButtonPowerRobotOff">
+        <property name="minimumSize">
+         <size>
+          <width>250</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Power robot off</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="pushButtonExit">
         <property name="minimumSize">
          <size>

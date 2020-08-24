@@ -81,3 +81,8 @@ See `Bill_Of_Material.csv` file from [Release](https://github.com/RICCIARDI-Adri
 
 ![Naked PCB top](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Naked_PCB_Top.jpg)
 ![Naked PCB bottom](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Naked_PCB_Bottom.jpg)
+![Assembled motherboard PCB top](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Motherboard_PCB_Top.jpg)
+![Assembled motherboard PCB bottom](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Motherboard_PCB_Bottom.jpg)
+
+A big capacitor has been added to keep battery voltage stable when a lot of current is needed :
+![Motherboard PCB with big capacitor](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Motherboard_PCB_With_Big_Capacitor.jpg)

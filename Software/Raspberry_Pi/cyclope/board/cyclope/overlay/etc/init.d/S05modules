@@ -4,8 +4,14 @@ case "$1" in
 	start)
 		# Load PWM driver
 		modprobe pwm-bcm2835
+		
 		# Load WiFi driver
 		modprobe brcmfmac
+		
+		# Load MCP3002 all needed SPI drivers
+		modprobe spi-bcm2835
+		modprobe spidev
+		modprobe mcp320x
 		;;
 
 	stop)

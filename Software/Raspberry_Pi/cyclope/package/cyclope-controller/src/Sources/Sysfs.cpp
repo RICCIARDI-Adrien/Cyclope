@@ -14,6 +14,28 @@
 
 namespace Sysfs
 {
+	int readFile(const char *pointerStringFileName, int *pointerValue)
+	{
+		// Try to open sysfs file
+		FILE *pointerFile = fopen(pointerStringFileName, "r");
+		if (pointerFile == nullptr)
+		{
+			LOG(LOG_ERR, "Failed to open file \"%s\" (%s).", pointerStringFileName, strerror(errno));
+			return -1;
+		}
+		
+		// Retrieve data
+		if (fscanf(pointerFile, "%d", pointerValue) != 1)
+		{
+			fclose(pointerFile);
+			LOG(LOG_ERR, "Could not read numerical data from file \"%s\" (%s).", pointerStringFileName, strerror(errno));
+			return -1;
+		}
+		
+		fclose(pointerFile);
+		return 0;
+	}
+	
 	int writeFile(const char *pointerStringFileName, int value)
 	{
 		// Try to open sysfs file

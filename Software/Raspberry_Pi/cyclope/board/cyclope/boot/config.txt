@@ -10,3 +10,7 @@ dtoverlay=pwm-2chan,pin=12,func=4,pin2=13,func2=4
 # UART
 # Put UART back on ttyAMA0 (use ttyS0 for Bluetooth module)
 dtoverlay=miniuart-bt
+
+# ADC
+dtparam=spi=on
+dtoverlay=anyspi,spi0-0,dev="microchip,mcp3002",speed=1000000

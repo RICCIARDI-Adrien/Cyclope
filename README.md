@@ -6,6 +6,8 @@
 A little robot powered by a Raspberry Pi 3 A+ and featuring a 8MPixel Raspberry Pi Camera V2.  
 A fast WiFi connection allows to remote control the robot while displaying camera real-time full HD video stream.
 
+![Cyclope](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Cyclope.jpg)
+
 ## Hardware
 
 PCB has been designed using KiCad 5.1.5. All manufacturing files are available from [Release](https://github.com/RICCIARDI-Adrien/Cyclope/releases) page.  

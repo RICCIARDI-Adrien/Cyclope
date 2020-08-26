@@ -98,3 +98,11 @@ A big capacitor has been added to keep battery voltage stable when a lot of curr
 
 With Raspberry Pi Camera V2 mounted :
 ![Front board with camera](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Front_Board_With_Camera.jpg)
+
+### Assembled electronic boards
+
+![Electronic boards 1](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_1.jpg)
+![Electronic boards 2](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_2.jpg)
+![Electronic boards 3](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_3.jpg)
+![Electronic boards 4](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_4.jpg)
+![Electronic boards 5](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_5.jpg)

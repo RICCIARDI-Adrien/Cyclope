@@ -16,6 +16,7 @@ FormRemoteControl::FormRemoteControl(QWidget *parent) :
 
     // Connect slots
     connect(ui->pushButtonBack, &QPushButton::clicked, this, &FormRemoteControl::_slotPushButtonBackClicked);
+    connect(&_timerBatteryVoltagePolling, &QTimer::timeout, this, &FormRemoteControl::_slotTimerBatteryVoltagePollingTimeout);
 }
 
 FormRemoteControl::~FormRemoteControl()
@@ -41,6 +42,16 @@ void FormRemoteControl::enterView()
         return;
     }
     ui->labelLightState->setText(tr("State: <b>OFF</b>"));
+
+    // Start displaying voltage
+    _timerBatteryVoltagePolling.start(3000);
+    _slotTimerBatteryVoltagePollingTimeout(); // Immediately display values
+}
+
+void FormRemoteControl::exitView()
+{
+    // Battery voltage is no more needed
+    _timerBatteryVoltagePolling.stop();
 }
 
 void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)
@@ -246,4 +257,18 @@ void FormRemoteControl::_slotPushButtonBackClicked(bool)
 
     // Display main menu
     pointerMainWindow->changeView(MainWindow::VIEW_ID_MAIN_MENU);
+}
+
+void FormRemoteControl::_slotTimerBatteryVoltagePollingTimeout()
+{
+    // Retrieve values from robot
+    int voltageMillivolts, chargePercentage;
+    if (CommunicationProtocol::getBatteryValues(&voltageMillivolts, &chargePercentage) != 0)
+    {
+        ui->labelBattery->setText(tr("Battery: <b>ERROR</b>"));
+        return;
+    }
+
+    // Display values
+    ui->labelBattery->setText(tr("Battery: <b>%1% (%2V)</b>").arg(chargePercentage).arg(voltageMillivolts / 1000.));
 }

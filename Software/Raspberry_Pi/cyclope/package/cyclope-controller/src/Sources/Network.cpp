@@ -2,6 +2,7 @@
  * See Network.hpp for description.
  * @author Adrien RICCIARDI
  */
+#include <Adc.hpp>
 #include <arpa/inet.h>
 #include <Configuration.hpp>
 #include <cstdlib>
@@ -46,13 +47,14 @@ namespace Network
 	static void *_serverThread(void *)
 	{
 		// Declare all variables at the beginning to be able to use goto instruction without triggering "jump to label crosses variable initialization" error
-		int serverSocket = -1, isAddressReusingEnabled = 1, clientSocket = -1, i;
+		int serverSocket = -1, isAddressReusingEnabled = 1, clientSocket = -1, i, voltageMillivolts, percentage;
 		struct sockaddr_in address;
 		socklen_t addressSize;
 		bool isErrorExitRequested = true;
 		CommunicationProtocolCommand command;
 		Motor::RobotMotion robotMotion;
-		unsigned char byte;
+		unsigned char byte, buffer[32];
+		unsigned short *pointerWord;
 		
 		LOG(LOG_INFO, "Network thread started, initializing server...");
 		
@@ -121,6 +123,19 @@ namespace Network
 						if (recv(clientSocket, &robotMotion, 1, MSG_WAITALL) != 1) goto Client_Disconnected;
 						// Set new motion
 						if (Motor::setRobotMotion(robotMotion) != 0) LOG(LOG_ERR, "Failed to set new robot motion %d.", robotMotion);
+						break;
+						
+					case NETWORK_COMMUNICATION_PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE:
+						// Retrieve values
+						Adc::getBatteryValues(&voltageMillivolts, &percentage);
+						// Create command answer
+						// First field is battery voltage in millivolts stored on unsigned 16-bit big-endian integer
+						pointerWord = reinterpret_cast<unsigned short *>(buffer);
+						*pointerWord = htons(static_cast<unsigned short>(voltageMillivolts));
+						// Second field is battery percentage
+						buffer[2] = static_cast<unsigned char>(percentage);
+						// Send data
+						if (send(clientSocket, buffer, 3, 0) != 3) LOG(LOG_ERR, "Failed to send answer to 'get battery voltage' command (%s).", strerror(errno));
 						break;
 						
 					case NETWORK_COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED:

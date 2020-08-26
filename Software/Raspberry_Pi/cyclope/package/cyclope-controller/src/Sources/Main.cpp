@@ -23,7 +23,6 @@ int main()
 		LOG(LOG_ERR, "Motors initialization failed, aborting.");
 		return EXIT_FAILURE;
 	}
-	LOG(LOG_INFO, "Motors successfully initialized.");
 	
 	// Configure front board leds
 	if (Light::initialize() != 0)
@@ -31,12 +30,11 @@ int main()
 		LOG(LOG_ERR, "Lights initialization failed, aborting.");
 		return EXIT_FAILURE;
 	}
-	LOG(LOG_INFO, "Lights successfully initialized.");
 	
 	// Initialize server
 	if (Network::initialize() != 0)
 	{
-		LOG(LOG_ERR, "Server initialization failed, aborting.");
+		LOG(LOG_ERR, "Communication protocol server initialization failed, aborting.");
 		return EXIT_FAILURE;
 	}
 	

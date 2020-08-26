@@ -106,3 +106,12 @@ With Raspberry Pi Camera V2 mounted :
 ![Electronic boards 3](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_3.jpg)
 ![Electronic boards 4](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_4.jpg)
 ![Electronic boards 5](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_5.jpg)
+
+### Assembled robot
+
+![Robot front rotated](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Front_Rotated.jpg)
+![Robot bottom rotated](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Bottom_Rotated.jpg)
+![Robot front](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Front.jpg)
+![Robot bottom](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Bottom.jpg)
+![Robot left side](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Left_Side.jpg)
+![Robot right side](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Right_Side.jpg)

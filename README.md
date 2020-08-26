@@ -1,5 +1,5 @@
-![](https://github.com/RICCIARDI-Adrien/Cyclope/workflows/Buildroot%20build/badge.svg)
-![](https://github.com/RICCIARDI-Adrien/Cyclope/workflows/PC%20application%20build/badge.svg)
+[![](https://github.com/RICCIARDI-Adrien/Cyclope/workflows/Buildroot%20build/badge.svg)](https://github.com/RICCIARDI-Adrien/Cyclope/actions)
+[![](https://github.com/RICCIARDI-Adrien/Cyclope/workflows/PC%20application%20build/badge.svg)](https://github.com/RICCIARDI-Adrien/Cyclope/actions)
 
 # Cyclope
 

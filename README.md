@@ -52,12 +52,29 @@ See `Bill_Of_Material.csv` file from [Release](https://github.com/RICCIARDI-Adri
 
 ### Mechanical
 
-* Front castor wheel : [Guitel 55031100](https://fr.rs-online.com/web/p/roulettes-industrielles/3064300)
-* 2x servomotor support : [ASB01](https://www.gotronic.fr/art-support-de-servos-asb01-11637.htm)
-* 2x servomotor wheel : [FS5103R-W](https://www.gotronic.fr/art-roue-pour-servomoteur-fs5103r-25857.htm)
-* 2x front board flat angle bracket : NFLE2012-20
-* 21x chassis plates spacer : [Ettinger 05.04.401](https://fr.farnell.com/ettinger/05-04-401/entretoise-m4x40-vzk/dp/1466794)
-* TODO
+* Front castor wheel : [Guitel 55031100](https://fr.rs-online.com/web/p/roulettes-industrielles/3064300).
+* 2x servomotor support : [ASB01](https://www.gotronic.fr/art-support-de-servos-asb01-11637.htm).
+* 2x servomotor wheel : [FS5103R-W](https://www.gotronic.fr/art-roue-pour-servomoteur-fs5103r-25857.htm).
+* 2x front board flat angle bracket : NFLE2012-20.
+* 21x chassis plates M4x40 hex female spacer : [Ettinger 05.04.401](https://fr.farnell.com/ettinger/05-04-401/entretoise-m4x40-vzk/dp/1466794).
+* 4x M2x20 screw to attach camera to front board (use three nuts per screw). Using such long screws allow to further protect the camera.
+* 12x M2 nut.
+* 4x M2.5x25 screws to attach Raspberry Pi to chassis bottom plate (use three nets per screw).
+* 12x M2.5 nut.
+* 18x M3x10 screw :
+  * 8x to attach both servomotors to their support.
+  * 4x to attach the two supports to chassis bottom plate.
+  * 4x to attach front board flat angle brackets to chassis bottom plate.
+  * 2x to attach front board to flat angle brackets.
+* 4x M3x15 screw to attach motherboard to chassis bottom plate (use three nuts per screw).
+* 30x M3 nut.
+* 47x M4x10 screw :
+  * 21x to attach female spacers to chassis bottom plate.
+  * 4x to attach castor wheel to chassis bottom plate.
+  * 1x to prevent battery pack from escaping from robot bottom.
+  * 21x to attach chassis top plate to chassis.
+* 5x M4 nut.
+* Use flat washers of appropriate dimensions if desired.
 
 ## Photo gallery
 

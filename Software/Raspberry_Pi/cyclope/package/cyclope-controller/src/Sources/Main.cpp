@@ -2,6 +2,7 @@
  * Cyclope middleware entry point and AI program execution.
  * @author Adrien RICCIARDI
  */
+#include <Adc.hpp>
 #include <cstdlib>
 #include <Light.hpp>
 #include <Log.hpp>
@@ -28,6 +29,13 @@ int main()
 	if (Light::initialize() != 0)
 	{
 		LOG(LOG_ERR, "Lights initialization failed, aborting.");
+		return EXIT_FAILURE;
+	}
+	
+	// Configure analog voltages sampling
+	if (Adc::initialize() != 0)
+	{
+		LOG(LOG_ERR, "ADC initialization failed, aborting.");
 		return EXIT_FAILURE;
 	}
 	

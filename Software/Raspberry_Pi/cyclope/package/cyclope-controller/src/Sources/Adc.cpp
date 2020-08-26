@@ -3,15 +3,26 @@
  * @author Adrien RICCIARDI
  */
 #include <Adc.hpp>
+#include <cstring>
+#include <errno.h>
 #include <Log.hpp>
+#include <pthread.h>
 #include <Sysfs.hpp>
+#include <unistd.h>
 
 /** All needed ADC sysfs files are stored in this directory. */
 #define ADC_SYSFS_BASE_PATH "/sys/bus/iio/devices/iio:device0"
 
 namespace Adc
 {
-	int getBatteryValues(int *pointerVoltageMillivolts, int *pointerChargePercentage)
+	/** Hold the last processed battery voltage (in mV). */
+	static int _batteryVoltageMillivolts;
+	/** Hold the last processed battery voltage percentage. */
+	static int _batteryVoltagePercentage;
+	/** Make sure both battery voltage values are coherent. */
+	static pthread_mutex_t _batteryVoltageMutex;
+	
+	static int _getBatteryValues(int *pointerVoltageMillivolts, int *pointerChargePercentage)
 	{
 		// Retrieve raw ADC value
 		int rawValue;
@@ -32,5 +43,53 @@ namespace Adc
 		else if (*pointerChargePercentage > 100) *pointerChargePercentage = 100;
 		
 		return 0;
+	}
+	
+	/** Sample analog data and process them. */
+	static void *_dataProcessingThread(void *)
+	{
+		int currentBatteryVoltageMillivolts, currentBatteryPercentage;
+		
+		while (1)
+		{
+			// Retrieve battery voltage
+			if (_getBatteryValues(&currentBatteryVoltageMillivolts, &currentBatteryPercentage) != 0)
+			{
+				currentBatteryVoltageMillivolts = 0;
+				currentBatteryPercentage = 0;
+				LOG(LOG_ERR, "Failed to retrieve voltage values.");
+			}
+			
+			// Atomically update shared variables
+			pthread_mutex_lock(&_batteryVoltageMutex);
+			_batteryVoltageMillivolts = currentBatteryVoltageMillivolts;
+			_batteryVoltagePercentage = currentBatteryPercentage;
+			pthread_mutex_unlock(&_batteryVoltageMutex);
+			
+			// Sample data each second
+			usleep(1000000);
+		}
+	}
+	
+	int initialize()
+	{
+		// Create the thread
+		pthread_t threadId;
+		if (pthread_create(&threadId, nullptr, _dataProcessingThread, nullptr) != 0)
+		{
+			LOG(LOG_ERR, "Failed to create ADC thread (%s).", strerror(errno));
+			return -1;
+		}
+		
+		return 0;
+	}
+	
+	void getBatteryValues(int *pointerVoltageMillivolts, int *pointerChargePercentage)
+	{
+		// Atomically retrieve values
+		pthread_mutex_lock(&_batteryVoltageMutex);
+		*pointerVoltageMillivolts = _batteryVoltageMillivolts;
+		*pointerChargePercentage = _batteryVoltagePercentage;
+		pthread_mutex_unlock(&_batteryVoltageMutex);
 	}
 }

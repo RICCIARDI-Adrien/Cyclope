@@ -373,7 +373,7 @@ U 1 1 5F467D3F
 P 3550 3750
 F 0 "C20" H 3668 3841 50  0000 L CNN
 F 1 "4700u" H 3668 3750 50  0000 L CNN
-F 2 "Capacitor_THT:CP_Radial_D16.0mm_P7.50mm" H 3588 3600 50  0001 C CNN
+F 2 "Capacitor_THT:C_Rect_L9.0mm_W2.5mm_P7.50mm_MKT" H 3588 3600 50  0001 C CNN
 F 3 "~" H 3550 3750 50  0001 C CNN
 F 4 "35V" H 3668 3659 50  0000 L CNN "Value2"
 F 5 "MCKSK035M472J32S" H 3550 3750 50  0001 C CNN "Value3"
@@ -393,4 +393,6 @@ Connection ~ 3550 4000
 Connection ~ 4100 4000
 Wire Wire Line
 	3550 4000 4100 4000
+Text Notes 3050 4350 0    50   ~ 0
+C20 capacitor must be bent\nover SMD parts and glued.
 $EndSCHEMATC

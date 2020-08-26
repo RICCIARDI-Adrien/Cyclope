@@ -81,8 +81,20 @@ See `Bill_Of_Material.csv` file from [Release](https://github.com/RICCIARDI-Adri
 
 ![Naked PCB top](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Naked_PCB_Top.jpg)
 ![Naked PCB bottom](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Naked_PCB_Bottom.jpg)
+
+### Motherboard
+
+PCB has been soldered by hands (resistors array part was missing, I used normal 0805 resistors) :
 ![Assembled motherboard PCB top](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Motherboard_PCB_Top.jpg)
 ![Assembled motherboard PCB bottom](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Motherboard_PCB_Bottom.jpg)
 
-A big capacitor has been added to keep battery voltage stable when a lot of current is needed :
+A big capacitor has been added to keep battery voltage stable when a lot of current is required :
 ![Motherboard PCB with big capacitor](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Motherboard_PCB_With_Big_Capacitor.jpg)
+
+### Front board
+
+![Assembled front board PCB top](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Front_Board_PCB_Top.jpg)
+![Assembled front board PCB bottom](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Front_Board_PCB_Bottom.jpg)
+
+With Raspberry Pi Camera V2 mounted :
+![Front board with camera](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Front_Board_With_Camera.jpg)

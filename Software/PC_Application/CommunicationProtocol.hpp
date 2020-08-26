@@ -57,6 +57,14 @@ namespace CommunicationProtocol
      */
     int setRobotMotion(RobotMotion robotMotion);
 
+    /** Sample battery voltage from ADC and convert it to usable values.
+     * @param pointerVoltageMillivolts On output, contain the battery voltage in mV.
+     * @param pointerPercentage On output, contain the battery charge percentage. See method implementation for more details about computing charge percentage.
+     * @return -1 if an error occurred,
+     * @return 0 on success.
+     */
+    int getBatteryValues(int *pointerVoltageMillivolts, int *pointerChargePercentage);
+
     /** Turn light on or off.
      * @param isEnabled Set to false to turn light off, set to true to turn light on.
      * @return -1 if an error occurred,

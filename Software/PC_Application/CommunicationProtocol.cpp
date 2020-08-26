@@ -6,6 +6,7 @@
 #include <MainWindow.hpp>
 #include <QMessageBox>
 #include <QTcpSocket>
+#include <QtEndian>
 
 /** How many milliseconds to wait for data to be received from the robot. */
 #define COMMUNICATION_PROTOCOL_RECEPTION_TIMEOUT 3000
@@ -68,6 +69,31 @@ namespace CommunicationProtocol
             lastMotion = robotMotion;
             return 0;
         }
+    }
+
+    int getBatteryValues(int *pointerVoltageMillivolts, int *pointerChargePercentage)
+    {
+        // Create the command to send
+        unsigned char command = COMMUNICATION_PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE;
+
+        // Send command
+        if (_socket.write(reinterpret_cast<char *>(&command), sizeof(command)) != sizeof(command)) return -1;
+
+        // Wait for answer
+        if (!_socket.waitForReadyRead(COMMUNICATION_PROTOCOL_RECEPTION_TIMEOUT)) return -1; // Were some data received in time ?
+
+        // Receive answer
+        char answer[3];
+        if (_socket.read(answer, sizeof(answer)) != sizeof(answer)) return -1;
+
+        // Extract voltage in mV
+        quint16 word = qFromBigEndian<quint16>(answer);
+        *pointerVoltageMillivolts = word;
+
+        // Extract charge percentage
+        *pointerChargePercentage = answer[2];
+
+        return 0;
     }
 
     int setLightEnabled(bool isEnabled)

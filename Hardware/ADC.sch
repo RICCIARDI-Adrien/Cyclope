@@ -159,13 +159,13 @@ F 3 "" H 6000 4200 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	6000 4200 6000 4100
-Text GLabel 7950 3450 2    50   Input ~ 0
+Text GLabel 8250 4400 2    50   Input ~ 0
 ADC_SPI_CS
-Text GLabel 7950 3550 2    50   Input ~ 0
+Text GLabel 8250 4500 2    50   Input ~ 0
 ADC_SPI_SCK
-Text GLabel 7950 3650 2    50   Output ~ 0
+Text GLabel 8250 4600 2    50   Output ~ 0
 ADC_SPI_MISO
-Text GLabel 7950 3750 2    50   Input ~ 0
+Text GLabel 8250 4700 2    50   Input ~ 0
 ADC_SPI_MOSI
 $Comp
 L power:+3.3VA #PWR09
@@ -274,55 +274,90 @@ Wire Wire Line
 Connection ~ 3700 5250
 Wire Wire Line
 	3700 5250 3700 5200
-$Comp
-L Device:R_Pack04 RN1
-U 1 1 5F207575
-P 7450 3650
-F 0 "RN1" V 7033 3650 50  0000 C CNN
-F 1 "R_Pack04" V 7124 3650 50  0000 C CNN
-F 2 "Resistor_SMD:R_Array_Convex_4x1206" V 7725 3650 50  0001 C CNN
-F 3 "~" H 7450 3650 50  0001 C CNN
-F 4 "MP000987" V 7450 3650 50  0001 C CNN "Value2"
-F 5 "Multicomp" V 7450 3650 50  0001 C CNN "Manufacturer"
-	1    7450 3650
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	6700 3700 6850 3700
-Wire Wire Line
-	6850 3700 6850 3650
-Wire Wire Line
-	6850 3650 7250 3650
-Wire Wire Line
-	6950 3800 6950 3750
-Wire Wire Line
-	6950 3750 7250 3750
-Wire Wire Line
-	6700 3800 6950 3800
-Wire Wire Line
-	6700 3500 6850 3500
-Wire Wire Line
-	6850 3500 6850 3550
-Wire Wire Line
-	6850 3550 7250 3550
-Wire Wire Line
-	6700 3400 6950 3400
-Wire Wire Line
-	6950 3400 6950 3450
-Wire Wire Line
-	6950 3450 7250 3450
-Wire Wire Line
-	7650 3750 7950 3750
-Wire Wire Line
-	7650 3650 7950 3650
-Wire Wire Line
-	7650 3550 7950 3550
-Wire Wire Line
-	7650 3450 7950 3450
 Text GLabel 3650 5450 0    50   UnSpc ~ 0
 FRONT_BOARD_LDR
 Wire Wire Line
 	3700 5450 3650 5450
 Wire Wire Line
 	3700 5250 3700 5450
+$Comp
+L Device:R R19
+U 1 1 5F47E9CC
+P 7250 4000
+F 0 "R19" H 7180 3909 50  0000 R CNN
+F 1 "10" H 7180 4000 50  0000 R CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 7180 4000 50  0001 C CNN
+F 3 "~" H 7250 4000 50  0001 C CNN
+F 4 "1%" H 7180 4091 50  0000 R CNN "Value2"
+	1    7250 4000
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R20
+U 1 1 5F47ECFD
+P 7600 4000
+F 0 "R20" H 7530 3909 50  0000 R CNN
+F 1 "10" H 7530 4000 50  0000 R CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 7530 4000 50  0001 C CNN
+F 3 "~" H 7600 4000 50  0001 C CNN
+F 4 "1%" H 7530 4091 50  0000 R CNN "Value2"
+	1    7600 4000
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R21
+U 1 1 5F47F244
+P 7950 4000
+F 0 "R21" H 8020 4091 50  0000 L CNN
+F 1 "10" H 8020 4000 50  0000 L CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 7880 4000 50  0001 C CNN
+F 3 "~" H 7950 4000 50  0001 C CNN
+F 4 "1%" H 8020 3909 50  0000 L CNN "Value2"
+	1    7950 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R18
+U 1 1 5F47B7CA
+P 6900 4000
+F 0 "R18" H 6830 3909 50  0000 R CNN
+F 1 "10" H 6830 4000 50  0000 R CNN
+F 2 "Resistor_SMD:R_1206_3216Metric_Pad1.42x1.75mm_HandSolder" V 6830 4000 50  0001 C CNN
+F 3 "~" H 6900 4000 50  0001 C CNN
+F 4 "1%" H 6830 4091 50  0000 R CNN "Value2"
+	1    6900 4000
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6700 3800 6900 3800
+Wire Wire Line
+	6900 3800 6900 3850
+Wire Wire Line
+	7250 3700 7250 3850
+Wire Wire Line
+	6700 3700 7250 3700
+Wire Wire Line
+	6700 3500 7600 3500
+Wire Wire Line
+	7600 3500 7600 3850
+Wire Wire Line
+	6700 3400 7950 3400
+Wire Wire Line
+	7950 3400 7950 3850
+Wire Wire Line
+	7950 4150 7950 4400
+Wire Wire Line
+	7950 4400 8250 4400
+Wire Wire Line
+	7600 4500 8250 4500
+Wire Wire Line
+	7600 4150 7600 4500
+Wire Wire Line
+	7250 4150 7250 4600
+Wire Wire Line
+	7250 4600 8250 4600
+Wire Wire Line
+	8250 4700 6900 4700
+Wire Wire Line
+	6900 4700 6900 4150
 $EndSCHEMATC

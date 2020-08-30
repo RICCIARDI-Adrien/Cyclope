@@ -13,6 +13,9 @@
 /** All needed ADC sysfs files are stored in this directory. */
 #define ADC_SYSFS_BASE_PATH "/sys/bus/iio/devices/iio:device0"
 
+/** The amount of samples used to compute battery voltage moving average. */
+#define ADC_BATTERY_VOLTAGE_MOVING_AVERAGE_SAMPLES_COUNT 4
+
 namespace Adc
 {
 	/** Hold the last processed battery voltage (in mV). */
@@ -48,21 +51,53 @@ namespace Adc
 	/** Sample analog data and process them. */
 	static void *_dataProcessingThread(void *)
 	{
-		int currentBatteryVoltageMillivolts, currentBatteryPercentage;
+		int currentBatteryVoltage, currentBatteryPercentage, batteryVoltageSamples[ADC_BATTERY_VOLTAGE_MOVING_AVERAGE_SAMPLES_COUNT], batteryPercentageSamples[ADC_BATTERY_VOLTAGE_MOVING_AVERAGE_SAMPLES_COUNT], batterySampleIndex = 0, i;
+		
+		// Initialize samples with current battery value to get compute a coherent average value since the beginning
+		if (_getBatteryValues(&currentBatteryVoltage, &currentBatteryPercentage) != 0)
+		{
+			currentBatteryVoltage = 0;
+			currentBatteryPercentage = 0;
+			LOG(LOG_ERR, "Failed to retrieve battery initialization values.");
+		}
+		for (i = 0; i < ADC_BATTERY_VOLTAGE_MOVING_AVERAGE_SAMPLES_COUNT; i++)
+		{
+			batteryVoltageSamples[i] = currentBatteryVoltage;
+			batteryPercentageSamples[i] = currentBatteryPercentage;
+		}
 		
 		while (1)
 		{
-			// Retrieve battery voltage
-			if (_getBatteryValues(&currentBatteryVoltageMillivolts, &currentBatteryPercentage) != 0)
+			// Retrieve battery voltage and percentage
+			if (_getBatteryValues(&currentBatteryVoltage, &currentBatteryPercentage) != 0)
 			{
-				currentBatteryVoltageMillivolts = 0;
+				currentBatteryVoltage = 0;
 				currentBatteryPercentage = 0;
 				LOG(LOG_ERR, "Failed to retrieve voltage values.");
 			}
 			
+			// Add current samples to samples circular buffers tail
+			batteryVoltageSamples[batterySampleIndex] = currentBatteryVoltage;
+			batteryPercentageSamples[batterySampleIndex] = currentBatteryPercentage;
+			
+			// Compute next circular buffer index
+			if (batterySampleIndex >= ADC_BATTERY_VOLTAGE_MOVING_AVERAGE_SAMPLES_COUNT - 1) batterySampleIndex = 0; // Return to buffer beginning
+			else batterySampleIndex++;
+			
+			// Compute both averages in the same time
+			currentBatteryVoltage = 0;
+			currentBatteryPercentage = 0;
+			for (i = 0; i < ADC_BATTERY_VOLTAGE_MOVING_AVERAGE_SAMPLES_COUNT; i++)
+			{
+				currentBatteryVoltage += batteryVoltageSamples[i];
+				currentBatteryPercentage += batteryPercentageSamples[i];
+			}
+			currentBatteryVoltage /= ADC_BATTERY_VOLTAGE_MOVING_AVERAGE_SAMPLES_COUNT;
+			currentBatteryPercentage /= ADC_BATTERY_VOLTAGE_MOVING_AVERAGE_SAMPLES_COUNT;
+			
 			// Atomically update shared variables
 			pthread_mutex_lock(&_batteryVoltageMutex);
-			_batteryVoltageMillivolts = currentBatteryVoltageMillivolts;
+			_batteryVoltageMillivolts = currentBatteryVoltage;
 			_batteryVoltagePercentage = currentBatteryPercentage;
 			pthread_mutex_unlock(&_batteryVoltageMutex);
 			

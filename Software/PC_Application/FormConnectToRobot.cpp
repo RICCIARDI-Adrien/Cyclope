@@ -21,8 +21,8 @@ FormConnectToRobot::FormConnectToRobot(QWidget *parent) :
     connect(ui->pushButtonConnect, &QPushButton::clicked, this, &FormConnectToRobot::_slotPushButtonConnectClicked);
 
     // Auto fill last used address (do that after connecting slots so line edit signals can be received)
-    QString wrenchAddress = Configuration::getValue("LastUsedIpAddress", "").toString();
-    ui->lineEditIpAddress->setText(wrenchAddress);
+    QString ipAddress = Configuration::getValue("LastUsedIpAddress", "").toString();
+    ui->lineEditIpAddress->setText(ipAddress);
 }
 
 FormConnectToRobot::~FormConnectToRobot()
@@ -54,7 +54,7 @@ void FormConnectToRobot::_slotPushButtonConnectClicked(bool)
     QString errorMessage;
     if (CommunicationProtocol::connectToRobot(ui->lineEditIpAddress->text(), errorMessage) != 0)
     {
-        QMessageBox::critical(this, tr("Connection error"), tr("Error: can't connect to wrench.\n%1.").arg(errorMessage));
+        QMessageBox::critical(this, tr("Connection error"), tr("Error: can't connect to robot.\n%1.").arg(errorMessage));
         return;
     }
 

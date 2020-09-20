@@ -5,6 +5,7 @@
 #include <CommunicationProtocol.hpp>
 #include <FormMainMenu.hpp>
 #include <MainWindow.hpp>
+#include <QMessageBox>
 #include <ui_FormMainMenu.h>
 
 FormMainMenu::FormMainMenu(QWidget *parent) :
@@ -37,6 +38,10 @@ void FormMainMenu::_slotPushButtonRemoteControlClicked(bool)
 
 void FormMainMenu::_slotPushButtonPowerRobotOffClicked(bool)
 {
+    // Ask user to avoid any mistake
+    if (QMessageBox::question(this, tr("Powering off confirmation"), tr("Are you sure you want to power robot off?"), QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) return;
+
+    // Cleanfully turn robot off
     if (CommunicationProtocol::powerRobotOff() != 0)
     {
         CommunicationProtocol::displayConnectionLostMessage(this);

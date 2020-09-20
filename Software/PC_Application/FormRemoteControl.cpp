@@ -5,6 +5,8 @@
 #include <CommunicationProtocol.hpp>
 #include <FormRemoteControl.hpp>
 #include <MainWindow.hpp>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include <QKeyEvent>
 #include <ui_FormRemoteControl.h>
 
@@ -21,6 +23,13 @@ FormRemoteControl::FormRemoteControl(QWidget *parent) :
 
 FormRemoteControl::~FormRemoteControl()
 {
+    // Cleanfully stop video playing
+    if (_pointerMediaPlayer != nullptr)
+    {
+        _pointerMediaPlayer->stop();
+        delete _pointerMediaPlayer;
+    }
+
     delete ui;
 }
 
@@ -43,6 +52,12 @@ void FormRemoteControl::enterView()
     }
     ui->labelLightState->setText(tr("State: <b>OFF</b>"));
 
+    // Connect to video stream
+    _pointerMediaPlayer = new QMediaPlayer(nullptr, QMediaPlayer::LowLatency);
+    _pointerMediaPlayer->setVideoOutput(ui->videoWidget);
+    _pointerMediaPlayer->setMedia(QUrl("gst-pipeline: tcpclientsrc host=\"192.168.5.1\" port=1234 ! decodebin latency=0 ! xvimagesink name=\"qtvideosink\"")); // TEST
+    _pointerMediaPlayer->play();
+
     // Start displaying voltage
     _timerBatteryVoltagePolling.start(3000);
     _slotTimerBatteryVoltagePollingTimeout(); // Immediately display values
@@ -52,6 +67,11 @@ void FormRemoteControl::exitView()
 {
     // Battery voltage is no more needed
     _timerBatteryVoltagePolling.stop();
+
+    // Stop video playing
+    _pointerMediaPlayer->stop();
+    delete _pointerMediaPlayer;
+    _pointerMediaPlayer = nullptr;
 }
 
 void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)

@@ -6,6 +6,7 @@
 #define FORMREMOTECONTROL_HPP
 
 #include <FormBase.hpp>
+#include <QMediaPlayer>
 #include <QTimer>
 
 namespace Ui
@@ -54,6 +55,9 @@ protected:
     void keyReleaseEvent(QKeyEvent *pointerEvent);
 
 private:
+    /** TODO */
+    QMediaPlayer *_pointerMediaPlayer;
+
     /** Set best robot motion according to pressed keyboard keys. */
     void _selectRobotMotion();
 

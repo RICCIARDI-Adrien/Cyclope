@@ -3,6 +3,7 @@
  * @author Adrien RICCIARDI
  */
 #include <CommunicationProtocol.hpp>
+#include <Configuration.hpp>
 #include <FormRemoteControl.hpp>
 #include <MainWindow.hpp>
 #include <QMediaPlayer>
@@ -54,7 +55,8 @@ void FormRemoteControl::enterView()
     ui->labelLightState->setText(tr("State: <b>OFF</b>"));
 
     // Connect to video stream
-    _pointerMediaPlayer->setMedia(QUrl("gst-pipeline: tcpclientsrc host=\"192.168.5.1\" port=1234 ! decodebin latency=0 ! xvimagesink name=\"qtvideosink\"")); // TEST
+    QString ipAddress = Configuration::getValue("LastUsedIpAddress", "127.0.0.1").toString();
+    _pointerMediaPlayer->setMedia(QUrl("gst-pipeline: tcpclientsrc host=\"" + ipAddress + "\" port=1234 ! decodebin latency=0 ! xvimagesink name=\"qtvideosink\""));
     _pointerMediaPlayer->play();
 
     // Start displaying voltage

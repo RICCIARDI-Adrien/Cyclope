@@ -16,6 +16,10 @@ FormRemoteControl::FormRemoteControl(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Configure media player once
+    _pointerMediaPlayer = new QMediaPlayer(nullptr, QMediaPlayer::LowLatency);
+    _pointerMediaPlayer->setVideoOutput(ui->videoWidget);
+
     // Connect slots
     connect(ui->pushButtonBack, &QPushButton::clicked, this, &FormRemoteControl::_slotPushButtonBackClicked);
     connect(&_timerBatteryVoltagePolling, &QTimer::timeout, this, &FormRemoteControl::_slotTimerBatteryVoltagePollingTimeout);
@@ -24,11 +28,8 @@ FormRemoteControl::FormRemoteControl(QWidget *parent) :
 FormRemoteControl::~FormRemoteControl()
 {
     // Cleanfully stop video playing
-    if (_pointerMediaPlayer != nullptr)
-    {
-        _pointerMediaPlayer->stop();
-        delete _pointerMediaPlayer;
-    }
+    _pointerMediaPlayer->stop();
+    delete _pointerMediaPlayer;
 
     delete ui;
 }
@@ -53,8 +54,6 @@ void FormRemoteControl::enterView()
     ui->labelLightState->setText(tr("State: <b>OFF</b>"));
 
     // Connect to video stream
-    _pointerMediaPlayer = new QMediaPlayer(nullptr, QMediaPlayer::LowLatency);
-    _pointerMediaPlayer->setVideoOutput(ui->videoWidget);
     _pointerMediaPlayer->setMedia(QUrl("gst-pipeline: tcpclientsrc host=\"192.168.5.1\" port=1234 ! decodebin latency=0 ! xvimagesink name=\"qtvideosink\"")); // TEST
     _pointerMediaPlayer->play();
 
@@ -70,8 +69,6 @@ void FormRemoteControl::exitView()
 
     // Stop video playing
     _pointerMediaPlayer->stop();
-    delete _pointerMediaPlayer;
-    _pointerMediaPlayer = nullptr;
 }
 
 void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)

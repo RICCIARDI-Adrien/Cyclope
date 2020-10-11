@@ -3,6 +3,7 @@
  * @author Adrien RICCIARDI
  */
 #include <Adc.hpp>
+#include <ArtificialIntelligenceProgram.hpp>
 #include <cstdlib>
 #include <Light.hpp>
 #include <Log.hpp>
@@ -53,9 +54,24 @@ int main()
 		LOG(LOG_INFO, "Waiting for an AI program to execute...");
 		int programIndex = Network::waitForProgramExecutionRequest(); // TODO cast to an enum type later ?
 		
+		// Turn off camera streaming to make camera available for AI program
+		system("/etc/init.d/S99camera stop");
+		
 		// Execute the requested program
-		LOG(LOG_INFO, "Beginning execution of program %d.\n", programIndex); // TODO also display a string with the program name
-		// TODO
+		LOG(LOG_INFO, "Beginning execution of AI program %d.\n", programIndex); // TODO also display a string with the program name
+		switch (programIndex)
+		{
+			case 0:
+				ArtificialIntelligenceProgram::followObject();
+				break;
+				
+			default:
+				LOG(LOG_ERR, "Unknown AI program requested, aborting.");
+				break;
+		}
+		
+		// Restart camera streaming
+		system("/etc/init.d/S99camera start"); // TODO control camera when manual driving mode is enabled ?
 	}
 	
 	return EXIT_SUCCESS;

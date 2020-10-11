@@ -151,6 +151,16 @@ namespace Network
 						isErrorExitRequested = false;
 						goto Exit;
 						
+					case NETWORK_COMMUNICATION_PROTOCOL_COMMAND_START_AI_PROGRAM:
+						// Retrieve program number
+						if (recv(clientSocket, &byte, 1, MSG_WAITALL) != 1) goto Client_Disconnected;
+						// Unlock waitForProgramExecutionRequest() in main thread
+						pthread_mutex_lock(&_programExecutionWaitConditionMutex);
+						_programToExecuteIndex = byte;
+						pthread_cond_signal(&_programExecutionWaitCondition);
+						pthread_mutex_unlock(&_programExecutionWaitConditionMutex);
+						break;
+						
 					default:
 						LOG(LOG_ERR, "Unknown command code received : %d, ignoring it.", command);
 						break;
@@ -188,11 +198,17 @@ namespace Network
 	
 	int waitForProgramExecutionRequest()
 	{
+		int programIndex;
+		
 		// Wait for the communication protocol command telling to begin program execution
 		pthread_mutex_lock(&_programExecutionWaitConditionMutex);
 		while (_programToExecuteIndex == -1) pthread_cond_wait(&_programExecutionWaitCondition, &_programExecutionWaitConditionMutex);
+		
+		// Cache program index and reset it, so this method will block the next time it will be called
+		programIndex = _programToExecuteIndex;
+		_programToExecuteIndex = -1;
 		pthread_mutex_unlock(&_programExecutionWaitConditionMutex);
 		
-		return _programToExecuteIndex;
+		return programIndex;
 	}
 }

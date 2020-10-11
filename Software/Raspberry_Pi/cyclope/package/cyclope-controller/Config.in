@@ -1,4 +1,8 @@
 config BR2_PACKAGE_CYCLOPE_CONTROLLER
 	bool "Cyclope robot controller"
+	select BR2_PACKAGE_OPENCV3
+	select BR2_PACKAGE_OPENCV3_LIB_IMGCODECS
+	select BR2_PACKAGE_OPENCV3_LIB_IMGPROC
+	select BR2_PACKAGE_OPENCV3_LIB_VIDEOIO
 	help
 		Handle robot hardware and communicate with PC application.

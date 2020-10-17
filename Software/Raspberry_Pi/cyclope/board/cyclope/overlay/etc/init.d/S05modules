@@ -12,6 +12,10 @@ case "$1" in
 		modprobe spi-bcm2835
 		modprobe spidev
 		modprobe mcp320x
+		
+		# Create /dev/video device to make OpenCV detect the camera
+		modprobe bcm2835-v4l2
+		modprobe bcm2835_codec
 		;;
 
 	stop)

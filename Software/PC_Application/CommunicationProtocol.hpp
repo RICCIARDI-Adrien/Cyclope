@@ -77,6 +77,13 @@ namespace CommunicationProtocol
      * @return 0 on success.
      */
     int powerRobotOff();
+
+    /** Run a specific AI program on the robot.
+     * @param programIndex The program to run. Robot does nothing if it does not know the requested program.
+     * @return -1 if an error occurred,
+     * @return 0 on success.
+     */
+    int startArtificialIntelligenceProgram(int programIndex);
 }
 
 #endif // COMMUNICATIONPROTOCOL_HPP

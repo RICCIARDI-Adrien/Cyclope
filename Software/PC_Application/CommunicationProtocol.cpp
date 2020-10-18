@@ -121,4 +121,16 @@ namespace CommunicationProtocol
 
         return 0;
     }
+
+    int startArtificialIntelligenceProgram(int programIndex)
+    {
+        // Create the command to send
+        unsigned char command[2];
+        command[0] = COMMUNICATION_PROTOCOL_COMMAND_START_AI_PROGRAM;
+        command[1] = static_cast<unsigned char>(programIndex);
+
+        // Send command
+        if (_socket.write(reinterpret_cast<char *>(command), sizeof(command)) != sizeof(command)) return -1;
+        return 0;
+    }
 }

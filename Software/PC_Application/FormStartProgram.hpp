@@ -1,7 +1,12 @@
+/** @file FormStartProgram.hpp
+ * Allow to choose an AI program to start from a list.
+ * @author Adrien RICCIARDI
+ */
 #ifndef FORMSTARTPROGRAM_HPP
 #define FORMSTARTPROGRAM_HPP
 
 #include <FormBase.hpp>
+#include <QListWidgetItem>
 
 namespace Ui
 {
@@ -21,6 +26,13 @@ public:
 
 private:
     Ui::FormStartProgram *ui;
+
+private slots:
+    /** Called when an item of the list is clicked. */
+    void _slotListWidgetItemClicked(QListWidgetItem *);
+
+    /** Called when "back" button is clicked. */
+    void _slotPushButtonBackClicked(bool);
 };
 
 #endif // FORMSTARTPROGRAM_HPP

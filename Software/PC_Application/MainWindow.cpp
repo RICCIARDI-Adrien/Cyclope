@@ -3,6 +3,7 @@
  * @author Adrien RICCIARDI
  */
 #include <FormConnectToRobot.hpp>
+#include <FormExecuteProgram.hpp>
 #include <FormMainMenu.hpp>
 #include <FormRemoteControl.hpp>
 #include <FormStartProgram.hpp>
@@ -23,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget->addWidget(new FormMainMenu(this));
     ui->stackedWidget->addWidget(new FormRemoteControl(this));
     ui->stackedWidget->addWidget(new FormStartProgram(this));
+    ui->stackedWidget->addWidget(new FormExecuteProgram(this));
 }
 
 MainWindow::~MainWindow()

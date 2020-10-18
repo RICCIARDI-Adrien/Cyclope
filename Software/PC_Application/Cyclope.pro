@@ -20,6 +20,7 @@ SOURCES += \
     Configuration.cpp \
     FormBase.cpp \
     FormConnectToRobot.cpp \
+    FormExecuteProgram.cpp \
     FormMainMenu.cpp \
     FormRemoteControl.cpp \
     FormStartProgram.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     Configuration.hpp \
     FormBase.hpp \
     FormConnectToRobot.hpp \
+    FormExecuteProgram.hpp \
     FormMainMenu.hpp \
     FormRemoteControl.hpp \
     FormStartProgram.hpp \
@@ -38,6 +40,7 @@ HEADERS += \
 
 FORMS += \
     FormConnectToRobot.ui \
+    FormExecuteProgram.ui \
     FormMainMenu.ui \
     FormRemoteControl.ui \
     FormStartProgram.ui \

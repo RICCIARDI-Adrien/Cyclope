@@ -31,6 +31,8 @@ private slots:
     /** Called when an item of the list is clicked. */
     void _slotListWidgetItemClicked(QListWidgetItem *);
 
+    /** Called when "run" button is clicked. */
+    void _slotPushButtonRunClicked(bool);
     /** Called when "back" button is clicked. */
     void _slotPushButtonBackClicked(bool);
 };

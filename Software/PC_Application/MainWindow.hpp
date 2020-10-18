@@ -24,6 +24,7 @@ public:
         VIEW_ID_MAIN_MENU,
         VIEW_ID_REMOTE_CONTROL,
         VIEW_ID_START_PROGRAM,
+        VIEW_ID_EXECUTE_PROGRAM,
         VIEW_IDS_COUNT
     } ViewId;
 

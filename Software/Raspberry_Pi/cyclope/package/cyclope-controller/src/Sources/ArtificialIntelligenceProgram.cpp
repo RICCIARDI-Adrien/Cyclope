@@ -43,11 +43,14 @@ namespace ArtificialIntelligenceProgram
 		// Wait some time for the camera to stabilize
 		usleep(3000000);
 		
-		cv::Mat matCameraFrame, matHsvFrame, matBinaryMask;
-		cv::Moments moments;
-		cv::Point pointBallCenter;
-		int i = 0;
+		cv::Mat matCameraFrame, matHsvFrame, matBinaryMask, matTemporary;
+		//cv::Moments moments;
+		//cv::Point pointBallCenter;
+		cv::Rect rectangleBiggestContour, rectangle;
+		unsigned int i, count, j = 0;
 		char stringFileName[128];
+		int area;
+		std::vector<std::vector<cv::Point>> contours;
 		while (Network::isProgramRunning())
 		{
 			// Get next frame
@@ -65,24 +68,49 @@ namespace ArtificialIntelligenceProgram
 			// Convert it to HSV color space to more easily track a specific color
 			cv::cvtColor(matCameraFrame, matHsvFrame, cv::COLOR_BGR2HSV);
 			
+			// TEST
+			//cv::GaussianBlur(matHsvFrame, matHsvFrame, cv::Size(5, 5), 0, 0);
+			
 			// Isolate tennis ball color in a binary mask (ball color pixels will be white and everything else will be black)
 			cv::inRange(matHsvFrame, cv::Scalar(25, 50, 50), cv::Scalar(45, 255, 255), matBinaryMask); // Ball color hue is about 70° (which stands for 35 in OpenCV), use a +10/-10 range
 			
+			// Retrieve all object contours
+			cv::findContours(matBinaryMask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+			
+			// Keep the biggest one, this should be the ball
+			count = contours.size();
+			rectangleBiggestContour.width = 0; // Make sure every found rectangle will be bigger at the beginning
+			rectangleBiggestContour.height = 0;
+			for (i = 0; i < count; i++)
+			{
+				// Retrieve next rectangle area
+				rectangle = cv::boundingRect(contours[i]);
+				area = rectangle.width * rectangle.height;
+				
+				// Discard rectangle if it is too small
+				if (area < 1000) continue;
+				
+				// Is this rectangle area bigger than the biggest found one ?
+				if (area > (rectangleBiggestContour.width * rectangleBiggestContour.height)) rectangleBiggestContour = rectangle;
+			}
+			
 			// Detect ball center
-			moments = cv::moments(matBinaryMask, true);
+			/*moments = cv::moments(matBinaryMask, true);
 			pointBallCenter.x = moments.m10 / moments.m00;
 			pointBallCenter.y = moments.m01 / moments.m00;
 			
 			// TEST
-			if ((pointBallCenter.x > 0) && (pointBallCenter.y > 0))
+			if ((pointBallCenter.x > 0) && (pointBallCenter.y > 0))*/
+			if (rectangleBiggestContour.width * rectangleBiggestContour.height > 1000)
 			{
 				Light::setEnabled(true);
-				cv::circle(matCameraFrame, pointBallCenter, 5, cv::Scalar(255, 0, 0), -1);
-				sprintf(stringFileName, "/media/data/test/test_raw%d.jpg", i);
+				//cv::circle(matCameraFrame, pointBallCenter, 5, cv::Scalar(255, 0, 0), -1);
+				cv::rectangle(matCameraFrame, rectangleBiggestContour, cv::Scalar(0, 0, 255));
+				sprintf(stringFileName, "/media/data/test/test_raw%d.jpg", j);
 				imwrite(stringFileName, matCameraFrame);
-				sprintf(stringFileName, "/media/data/test/test_bin%d.jpg", i);
+				sprintf(stringFileName, "/media/data/test/test_bin%d.jpg", j);
 				imwrite(stringFileName, matBinaryMask);
-				i++;
+				j++;
 			}
 			else Light::setEnabled(false);
 			

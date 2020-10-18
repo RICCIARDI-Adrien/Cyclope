@@ -2,8 +2,10 @@
  * See FormStartProgram.hpp for description.
  * @author Adrien RICCIARDI
  */
+#include <CommunicationProtocol.hpp>
 #include <FormStartProgram.hpp>
 #include <MainWindow.hpp>
+#include <QMessageBox>
 #include <ui_FormStartProgram.h>
 
 FormStartProgram::FormStartProgram(QWidget *parent) :
@@ -50,8 +52,17 @@ void FormStartProgram::_slotListWidgetItemDoubleClicked(QListWidgetItem *)
 
 void FormStartProgram::_slotPushButtonRunClicked(bool)
 {
-    // TODO start program
+    // Retrieve program index
+    int programIndex = ui->listWidget->currentRow();
 
+    // Try to start program
+    if (CommunicationProtocol::startArtificialIntelligenceProgram(programIndex) != 0)
+    {
+        CommunicationProtocol::displayConnectionLostMessage(this);
+        return;
+    }
+
+    // Display robot status while program is executing
     pointerMainWindow->changeView(MainWindow::VIEW_ID_EXECUTE_PROGRAM);
 }
 

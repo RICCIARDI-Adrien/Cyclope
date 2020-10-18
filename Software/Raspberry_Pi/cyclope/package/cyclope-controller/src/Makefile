@@ -1,13 +1,13 @@
-CC = g++
-CCFLAGS = -W -Wall
+CXX ?= g++
+CXXFLAGS += -W -Wall
 
 BINARY = cyclope-controller
 INCLUDES = -IIncludes
-LIBRARIES = -pthread
+LIBRARIES = -pthread -lopencv_videoio -lopencv_imgcodecs -lopencv_imgproc -lopencv_core
 SOURCES = $(shell find Sources -iname "*.cpp")
 
 all:
-	$(CC) $(CCFLAGS) $(INCLUDES) $(SOURCES) $(LIBRARIES) -o $(BINARY)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $(SOURCES) $(LIBRARIES) -o $(BINARY)
 
 clean:
 	rm -f $(BINARY)

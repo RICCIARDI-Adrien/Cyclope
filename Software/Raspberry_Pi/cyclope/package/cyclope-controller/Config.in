@@ -4,5 +4,6 @@ config BR2_PACKAGE_CYCLOPE_CONTROLLER
 	select BR2_PACKAGE_OPENCV3_LIB_IMGCODECS
 	select BR2_PACKAGE_OPENCV3_LIB_IMGPROC
 	select BR2_PACKAGE_OPENCV3_LIB_VIDEOIO
+	select BR2_PACKAGE_OPENCV3_WITH_V4L
 	help
 		Handle robot hardware and communicate with PC application.

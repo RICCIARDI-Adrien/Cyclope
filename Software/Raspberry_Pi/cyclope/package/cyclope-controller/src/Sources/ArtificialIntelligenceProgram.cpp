@@ -40,16 +40,13 @@ namespace ArtificialIntelligenceProgram
 			return;
 		}*/
 		
-		// TEST
 		// Wait some time for the camera to stabilize
 		usleep(3000000);
 		
 		cv::Mat matCameraFrame, matHsvFrame, matBinaryMask, matTemporary;
-		//cv::Moments moments;
 		cv::Point pointBallCenter;
 		cv::Rect rectangleBiggestContour, rectangle;
-		unsigned int i, count, j = 0;
-		char stringFileName[128];
+		unsigned int i, count/*, j = 0*/;
 		int area, ballHorizontalPositionPercentage;
 		std::vector<std::vector<cv::Point>> contours;
 		while (Network::isProgramRunning())
@@ -68,9 +65,6 @@ namespace ArtificialIntelligenceProgram
 			
 			// Convert it to HSV color space to more easily track a specific color
 			cv::cvtColor(matCameraFrame, matHsvFrame, cv::COLOR_BGR2HSV);
-			
-			// TEST
-			//cv::GaussianBlur(matHsvFrame, matHsvFrame, cv::Size(5, 5), 0, 0);
 			
 			// Isolate tennis ball color in a binary mask (ball color pixels will be white and everything else will be black)
 			cv::inRange(matHsvFrame, cv::Scalar(25, 50, 50), cv::Scalar(45, 255, 255), matBinaryMask); // Ball color hue is about 70° (which stands for 35 in OpenCV), use a +10/-10 range
@@ -95,27 +89,17 @@ namespace ArtificialIntelligenceProgram
 				if (area > (rectangleBiggestContour.width * rectangleBiggestContour.height)) rectangleBiggestContour = rectangle;
 			}
 			
-			// Detect ball center
-			/*moments = cv::moments(matBinaryMask, true);
-			pointBallCenter.x = moments.m10 / moments.m00;
-			pointBallCenter.y = moments.m01 / moments.m00;
-			
-			// TEST
-			if ((pointBallCenter.x > 0) && (pointBallCenter.y > 0))*/
+			// Make robot move only if detected object is big enough
 			if (rectangleBiggestContour.width * rectangleBiggestContour.height > 1000)
 			{
 				// Compute ball center
 				pointBallCenter.x = rectangleBiggestContour.x + (rectangleBiggestContour.width / 2);
 				pointBallCenter.y = rectangleBiggestContour.y + (rectangleBiggestContour.height / 2);
 				
-					printf("pointBallCenter.x=%d, pointBallCenter.y=%d\n", pointBallCenter.x, pointBallCenter.y);
-				
 				// Convert ball center X coordinate to a percentage telling where the ball is on the horizontal axis (0% when the ball is at the leftmost position, 100% when the ball is at the rightmost position)
-				ballHorizontalPositionPercentage = (100 * pointBallCenter.x) / 640; // TODO use a variable for capture width
+				ballHorizontalPositionPercentage = (100 * pointBallCenter.x) / matCameraFrame.cols;
 				if (ballHorizontalPositionPercentage < 0) ballHorizontalPositionPercentage = 0;
 				else if (ballHorizontalPositionPercentage > 100) ballHorizontalPositionPercentage = 100;
-				
-					printf("ballHorizontalPositionPercentage=%d\n", ballHorizontalPositionPercentage);
 				
 				// Go straight if ball is quite centered
 				if ((ballHorizontalPositionPercentage >= 40) && (ballHorizontalPositionPercentage <= 60)) Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD);
@@ -124,28 +108,32 @@ namespace ArtificialIntelligenceProgram
 				// Ball is located too far on the right, try to center it better
 				else if (ballHorizontalPositionPercentage >= 75) Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_RIGHT);
 				
-				// TEST
+				// Tell human that ball is detected
 				Light::setEnabled(true);
-				cv::circle(matCameraFrame, pointBallCenter, 5, cv::Scalar(255, 0, 0), -1);
-				cv::rectangle(matCameraFrame, rectangleBiggestContour, cv::Scalar(0, 0, 255));
-				sprintf(stringFileName, "/media/data/test/test_raw%d.jpg", j);
-				imwrite(stringFileName, matCameraFrame);
-				sprintf(stringFileName, "/media/data/test/test_bin%d.jpg", j);
-				imwrite(stringFileName, matBinaryMask);
-				j++;
+				
+				// TEST
+				/*{
+					char stringFileName[128];
+					
+					cv::circle(matCameraFrame, pointBallCenter, 5, cv::Scalar(255, 0, 0), -1);
+					cv::rectangle(matCameraFrame, rectangleBiggestContour, cv::Scalar(0, 0, 255));
+					sprintf(stringFileName, "/media/data/test/test_raw%d.jpg", j);
+					imwrite(stringFileName, matCameraFrame);
+					sprintf(stringFileName, "/media/data/test/test_bin%d.jpg", j);
+					imwrite(stringFileName, matBinaryMask);
+					j++;
+				}*/
 			}
 			else
 			{
 				Motor::setRobotMotion(Motor::ROBOT_MOTION_STOP);
 				
-				// TEST
+				// Tell human that ball is no more detected
 				Light::setEnabled(false);
 			}
-			
-			// TODO
 		}
 		
-		// TEST
+		// Make sure light is turned off before leaving
 		Light::setEnabled(false);
 	}
 }

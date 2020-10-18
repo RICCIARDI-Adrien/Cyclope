@@ -27,6 +27,8 @@ private:
     Ui::FormMainMenu *ui;
 
 private slots:
+    /** Called when "start AI program" button is clicked. */
+    void _slotPushButtonStartProgramClicked(bool);
     /** Called when "remote control" button is clicked. */
     void _slotPushButtonRemoteControlClicked(bool);
     /** Called when "power robot off" button is clicked. */

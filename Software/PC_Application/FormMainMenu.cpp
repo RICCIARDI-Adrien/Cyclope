@@ -15,6 +15,7 @@ FormMainMenu::FormMainMenu(QWidget *parent) :
     ui->setupUi(this);
 
     // Connect slots
+    connect(ui->pushButtonStartProgram, &QPushButton::clicked, this, &FormMainMenu::_slotPushButtonStartProgramClicked);
     connect(ui->pushButtonRemoteControl, &QPushButton::clicked, this, &FormMainMenu::_slotPushButtonRemoteControlClicked);
     connect(ui->pushButtonPowerRobotOff, &QPushButton::clicked, this, &FormMainMenu::_slotPushButtonPowerRobotOffClicked);
     connect(ui->pushButtonExit, &QPushButton::clicked, this, &FormMainMenu::_slotPushButtonExitClicked);
@@ -29,6 +30,11 @@ void FormMainMenu::enterView()
 {
     // Focus first button
     ui->pushButtonStartProgram->setFocus();
+}
+
+void FormMainMenu::_slotPushButtonStartProgramClicked(bool)
+{
+    pointerMainWindow->changeView(MainWindow::VIEW_ID_START_PROGRAM);
 }
 
 void FormMainMenu::_slotPushButtonRemoteControlClicked(bool)

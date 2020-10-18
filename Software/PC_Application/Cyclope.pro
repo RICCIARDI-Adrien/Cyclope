@@ -22,6 +22,7 @@ SOURCES += \
     FormConnectToRobot.cpp \
     FormMainMenu.cpp \
     FormRemoteControl.cpp \
+    FormStartProgram.cpp \
     Main.cpp \
     MainWindow.cpp
 
@@ -32,12 +33,14 @@ HEADERS += \
     FormConnectToRobot.hpp \
     FormMainMenu.hpp \
     FormRemoteControl.hpp \
+    FormStartProgram.hpp \
     MainWindow.hpp
 
 FORMS += \
     FormConnectToRobot.ui \
     FormMainMenu.ui \
     FormRemoteControl.ui \
+    FormStartProgram.ui \
     MainWindow.ui
 
 # Default rules for deployment.

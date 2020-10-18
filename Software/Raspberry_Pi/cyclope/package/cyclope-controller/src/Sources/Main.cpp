@@ -70,6 +70,9 @@ int main()
 				break;
 		}
 		
+		// Make sure robot is stopped
+		Motor::setRobotMotion(Motor::ROBOT_MOTION_STOP);
+		
 		// Restart camera streaming
 		system("/etc/init.d/S99camera start"); // TODO control camera when manual driving mode is enabled ?
 	}

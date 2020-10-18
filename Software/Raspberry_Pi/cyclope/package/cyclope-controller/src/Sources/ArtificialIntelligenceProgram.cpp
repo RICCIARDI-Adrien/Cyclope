@@ -67,7 +67,7 @@ namespace ArtificialIntelligenceProgram
 			cv::cvtColor(matCameraFrame, matHsvFrame, cv::COLOR_BGR2HSV);
 			
 			// Isolate tennis ball color in a binary mask (ball color pixels will be white and everything else will be black)
-			cv::inRange(matHsvFrame, cv::Scalar(25, 50, 50), cv::Scalar(45, 255, 255), matBinaryMask); // Ball color hue is about 70° (which stands for 35 in OpenCV), use a +10/-10 range
+			cv::inRange(matHsvFrame, cv::Scalar(50, 50, 50), cv::Scalar(70, 255, 255), matBinaryMask); // TEST follow green plastic box cap for now as it works better // Ball color hue is about 70° (which stands for 35 in OpenCV), use a +10/-10 range
 			
 			// Retrieve all object contours
 			cv::findContours(matBinaryMask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
@@ -101,12 +101,12 @@ namespace ArtificialIntelligenceProgram
 				if (ballHorizontalPositionPercentage < 0) ballHorizontalPositionPercentage = 0;
 				else if (ballHorizontalPositionPercentage > 100) ballHorizontalPositionPercentage = 100;
 				
-				// Go straight if ball is quite centered
-				if ((ballHorizontalPositionPercentage >= 40) && (ballHorizontalPositionPercentage <= 60)) Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD);
 				// Ball is located too far on the left, try to center it better
-				else if (ballHorizontalPositionPercentage <= 25) Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_LEFT);
+				if (ballHorizontalPositionPercentage <= 35) Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_LEFT);
 				// Ball is located too far on the right, try to center it better
-				else if (ballHorizontalPositionPercentage >= 75) Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_RIGHT);
+				else if (ballHorizontalPositionPercentage >= 65) Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_RIGHT);
+				// Go straight if ball is quite centered
+				else Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD);
 				
 				// Tell human that ball is detected
 				Light::setEnabled(true);

@@ -17,6 +17,12 @@ namespace Network
 	 * @return The program to execute index.
 	 */
 	int waitForProgramExecutionRequest();
+	
+	/** Tell whether currently running AI program must continue execution or quit.
+	 * @return false if AI program execution must terminate,
+	 * @return true if AI program must continue execution.
+	 */
+	bool isProgramRunning();
 }
 
 #endif

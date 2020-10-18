@@ -8,42 +8,58 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/videoio.hpp>
+#include <Network.hpp>
 #include <unistd.h>
 
 namespace ArtificialIntelligenceProgram
 {
-	void followObject()
+	void followTennisBall()
 	{
 		// Grab camera stream
 		cv::VideoCapture videoCapture(0);
 		if (!videoCapture.isOpened())
 		{
-			LOG(LOG_ERR, "Failed to open camera stream.");
+			LOG(LOG_ERR, "Failed to open camera stream.\n");
 			return;
 		}
+		
+		// Set frame size to HD (not working for now)
+		/*// Frame width
+		if (!videoCapture.set(cv::CAP_PROP_FRAME_WIDTH, 1280))
+		{
+			LOG(LOG_ERR, "Failed to set stream frame width.");
+			return;
+		}
+		// Frame height
+		if (!videoCapture.set(cv::CAP_PROP_FRAME_HEIGHT, 720))
+		{
+			LOG(LOG_ERR, "Failed to set stream frame width.");
+			return;
+		}*/
 		
 		// TEST
 		// Wait some time for the camera to stabilize
 		usleep(3000000);
-		cv::Mat mat;
-		if (!videoCapture.read(mat))
+		
+		cv::Mat matCameraFrame;
+		while (Network::isProgramRunning())
 		{
-			LOG(LOG_ERR, "missed frame");
-			return;
-		}
-		if (mat.empty())
-		{
-			LOG(LOG_ERR, "empty frame");
-			return;
+			// Get next frame
+			if (!videoCapture.read(matCameraFrame))
+			{
+				LOG(LOG_INFO, "Frame was missed.\n");
+				continue;
+			}
+			if (matCameraFrame.empty())
+			{
+				LOG(LOG_ERR, "Captured frame is empty.\n");
+				continue;
+			}
+			
+			// TODO
 		}
 		
 		// TEST
-		imwrite("/tmp/test.jpg", mat);
-		return;
-		
-		while (1) // TODO use communication protocol method to ask for program exit
-		{
-			
-		}
+		imwrite("/tmp/test.jpg", matCameraFrame);
 	}
 }

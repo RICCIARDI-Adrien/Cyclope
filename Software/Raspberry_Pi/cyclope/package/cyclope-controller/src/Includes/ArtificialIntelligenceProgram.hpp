@@ -7,8 +7,8 @@
 
 namespace ArtificialIntelligenceProgram
 {
-	/** Follow a green object while it is visible by the robot and it is not too close. */
-	void followObject();
+	/** Follow a tennis ball while it is visible by the robot and it is not too close. */
+	void followTennisBall();
 }
 
 #endif

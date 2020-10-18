@@ -62,7 +62,7 @@ int main()
 		switch (programIndex)
 		{
 			case 0:
-				ArtificialIntelligenceProgram::followObject();
+				ArtificialIntelligenceProgram::followTennisBall();
 				break;
 				
 			default:

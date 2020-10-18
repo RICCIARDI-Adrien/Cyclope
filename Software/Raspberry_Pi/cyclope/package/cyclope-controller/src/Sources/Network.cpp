@@ -43,6 +43,9 @@ namespace Network
 	/** The program execution wait condition variable, it holds the program index to execute or -1 if no program must be executed. */
 	static volatile int _programToExecuteIndex = -1;
 	
+	/** Tell whether currently running program must terminate. */
+	static volatile bool _isProgramRunning;
+	
 	/** Network server thread. */
 	static void *_serverThread(void *)
 	{
@@ -161,6 +164,10 @@ namespace Network
 						pthread_mutex_unlock(&_programExecutionWaitConditionMutex);
 						break;
 						
+					case NETWORK_COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM:
+						_isProgramRunning = false;
+						break;
+						
 					default:
 						LOG(LOG_ERR, "Unknown command code received : %d, ignoring it.", command);
 						break;
@@ -209,6 +216,14 @@ namespace Network
 		_programToExecuteIndex = -1;
 		pthread_mutex_unlock(&_programExecutionWaitConditionMutex);
 		
+		// Tell isProgramRunning() method that program must run
+		_isProgramRunning = true;
+		
 		return programIndex;
+	}
+	
+	bool isProgramRunning()
+	{
+		return _isProgramRunning;
 	}
 }

@@ -17,6 +17,7 @@ FormStartProgram::FormStartProgram(QWidget *parent) :
 
     // Connect slots
     connect(ui->listWidget, &QListWidget::itemClicked, this, &FormStartProgram::_slotListWidgetItemClicked);
+    connect(ui->listWidget, &QListWidget::itemDoubleClicked, this, &FormStartProgram::_slotListWidgetItemDoubleClicked);
     connect(ui->pushButtonRun, &QPushButton::clicked, this, &FormStartProgram::_slotPushButtonRunClicked);
     connect(ui->pushButtonBack, &QPushButton::clicked, this, &FormStartProgram::_slotPushButtonBackClicked);
 }
@@ -39,6 +40,12 @@ void FormStartProgram::_slotListWidgetItemClicked(QListWidgetItem *)
 {
     // Allow user to run the selected program
     ui->pushButtonRun->setEnabled(true);
+}
+
+void FormStartProgram::_slotListWidgetItemDoubleClicked(QListWidgetItem *)
+{
+    // Run the selected program
+    _slotPushButtonRunClicked(false);
 }
 
 void FormStartProgram::_slotPushButtonRunClicked(bool)

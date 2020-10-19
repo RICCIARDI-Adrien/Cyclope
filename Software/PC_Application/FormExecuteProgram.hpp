@@ -6,6 +6,7 @@
 #define FORMEXECUTEPROGRAM_HPP
 
 #include <FormBase.hpp>
+#include <QTimer>
 
 namespace Ui
 {
@@ -19,12 +20,22 @@ class FormExecuteProgram : public FormBase
     // See base class documentation
     virtual void enterView();
 
+    // See base class documentation
+    virtual void exitView();
+
 public:
     explicit FormExecuteProgram(QWidget *parent = nullptr);
     ~FormExecuteProgram();
 
 private:
     Ui::FormExecuteProgram *ui;
+
+    /** Retrieve battery voltage from robot and display it. */
+    QTimer _timerBatteryVoltagePolling;
+
+private slots:
+    /** Called when battery voltage polling timer times out. */
+    void _slotTimerBatteryVoltagePollingTimeout();
 };
 
 #endif // FORMEXECUTEPROGRAM_HPP

@@ -84,6 +84,12 @@ namespace CommunicationProtocol
      * @return 0 on success.
      */
     int startArtificialIntelligenceProgram(int programIndex);
+
+    /** Stop currently running AI program.
+     * @return -1 if an error occurred,
+     * @return 0 on success.
+     */
+    int stopArtificialIntelligenceProgram();
 }
 
 #endif // COMMUNICATIONPROTOCOL_HPP

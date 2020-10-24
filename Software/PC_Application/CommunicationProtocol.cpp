@@ -133,4 +133,14 @@ namespace CommunicationProtocol
         if (_socket.write(reinterpret_cast<char *>(command), sizeof(command)) != sizeof(command)) return -1;
         return 0;
     }
+
+    int stopArtificialIntelligenceProgram()
+    {
+        // Create the command to send
+        unsigned char command = COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM;
+
+        // Send command
+        if (_socket.write(reinterpret_cast<char *>(&command), sizeof(command)) != sizeof(command)) return -1;
+        return 0;
+    }
 }

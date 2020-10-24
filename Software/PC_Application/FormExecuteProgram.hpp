@@ -36,6 +36,9 @@ private:
 private slots:
     /** Called when battery voltage polling timer times out. */
     void _slotTimerBatteryVoltagePollingTimeout();
+
+    /** Called when "stop" button is clicked. */
+    void _slotPushButtonStopClicked(bool);
 };
 
 #endif // FORMEXECUTEPROGRAM_HPP

@@ -4,6 +4,7 @@
  */
 #include <CommunicationProtocol.hpp>
 #include <FormExecuteProgram.hpp>
+#include <MainWindow.hpp>
 #include <ui_FormExecuteProgram.h>
 
 FormExecuteProgram::FormExecuteProgram(QWidget *parent) :
@@ -14,6 +15,7 @@ FormExecuteProgram::FormExecuteProgram(QWidget *parent) :
 
     // Connect slots
     connect(&_timerBatteryVoltagePolling, &QTimer::timeout, this, &FormExecuteProgram::_slotTimerBatteryVoltagePollingTimeout);
+    connect(ui->pushButtonStop, &QPushButton::clicked, this, &FormExecuteProgram::_slotPushButtonStopClicked);
 }
 
 FormExecuteProgram::~FormExecuteProgram()
@@ -46,4 +48,16 @@ void FormExecuteProgram::_slotTimerBatteryVoltagePollingTimeout()
 
     // Display values
     ui->labelBattery->setText(tr("Battery: <b>%1% (%2V)</b>").arg(chargePercentage).arg(voltageMillivolts / 1000.));
+}
+
+void FormExecuteProgram::_slotPushButtonStopClicked(bool)
+{
+    // Tell robot to stop current program
+    if (CommunicationProtocol::stopArtificialIntelligenceProgram() != 0)
+    {
+        CommunicationProtocol::displayConnectionLostMessage(this);
+        return;
+    }
+
+    pointerMainWindow->changeView(MainWindow::VIEW_ID_MAIN_MENU);
 }

@@ -45,7 +45,10 @@ cd %RELEASE_DIRECTORY%\Cyclope
 @REM Do not use --release flag anymore with Qt 5.15.x (see QTBUG-84567)
 %QT_BINARIES_PATH%\windeployqt --compiler-runtime Cyclope.exe
 
-@REM TODO Compress application to a ZIP archive
+@REM Compress application to a ZIP archive
+@set ARCHIVE_NAME=%USERPROFILE%\Desktop\Cyclope_%1%_Bits.zip
+del %ARCHIVE_NAME%
+powershell Compress-Archive -LiteralPath %RELEASE_DIRECTORY%\Cyclope -DestinationPath %ARCHIVE_NAME%
 
 @REM Return to original directory
 @cd %SOURCES_DIRECTORY%\Build_Scripts

@@ -4,13 +4,9 @@
 @REM Select toolchain according to build target
 @if "%1" == "32" (
 	@set QT_BINARIES_PATH=C:\Qt\%DETECTED_QT_VERSION%\mingw81_32\bin
-	@set BUILD_DIRECTORY=%TEMP%\Cyclope_Build_32_Bits
-	@set RELEASE_DIRECTORY=%TEMP%\Cyclope_Release_32_Bits
 	@set "PATH=C:\Qt\Tools\mingw810_32\bin;C:\Qt\%DETECTED_QT_VERSION%\mingw81_32\bin;%PATH%"
 ) else if "%1" == "64" (
 	@set QT_BINARIES_PATH=C:\Qt\%DETECTED_QT_VERSION%\mingw81_64\bin
-	@set BUILD_DIRECTORY=%TEMP%\Cyclope_Build_64_Bits
-	@set RELEASE_DIRECTORY=%TEMP%\Cyclope_Release_64_Bits
 	@set "PATH=C:\Qt\Tools\mingw810_64\bin;C:\Qt\%DETECTED_QT_VERSION%\mingw81_64\bin;%PATH%"
 ) else (
 	@echo Please specify build target architecture bits. Put "32" or "64" as first command line argument.
@@ -19,11 +15,13 @@
 @REM Make sure QT_BINARIES_PATH path is valid
 @echo Detected Qt version : %DETECTED_QT_VERSION%, detected Qt binaries path : %QT_BINARIES_PATH%
 @if not exist %QT_BINARIES_PATH%\qmake.exe (
-	@echo Invalid Qt "bin" directory. Make sure Qt is installed in "C:\Qt" directory.
+	@echo Invalid Qt "bin" directory. Make sure Qt 5.15.x is installed in "C:\Qt" directory.
 	@goto End
 )
 
 @set SOURCES_DIRECTORY=%CD%\..
+@set BUILD_DIRECTORY=%TEMP%\Cyclope_Build_%1%_Bits
+@set RELEASE_DIRECTORY=%TEMP%\Cyclope_Release_%1%_Bits
 
 @REM Prepare directories
 rmdir /Q /S %BUILD_DIRECTORY%

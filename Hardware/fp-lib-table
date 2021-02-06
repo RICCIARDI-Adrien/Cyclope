@@ -4,4 +4,5 @@
   (lib (name 158301250)(type KiCad)(uri ${KIPRJMOD}/158301250.pretty)(options "")(descr ""))
   (lib (name IHLP3232DZER3R3M01)(type KiCad)(uri ${KIPRJMOD}/IHLP3232DZER3R3M01.pretty)(options "")(descr ""))
   (lib (name Break_Tab)(type KiCad)(uri ${KIPRJMOD}/Break_Tab.pretty)(options "")(descr ""))
+  (lib (name 022035075)(type KiCad)(uri ${KIPRJMOD}/022035075.pretty)(options "")(descr ""))
 )

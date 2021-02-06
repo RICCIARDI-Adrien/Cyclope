@@ -474,6 +474,11 @@
       (scale (xyz 1 1 1))
       (rotate (xyz 0 0 0))
     )
+    (model ${KIPRJMOD}/022035075.pretty/022035075.stp
+      (offset (xyz 7.5 0.6 3))
+      (scale (xyz 1 1 1))
+      (rotate (xyz -90 0 180))
+    )
   )
 
   (module Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder (layer F.Cu) (tedit 5B301BBE) (tstamp 601F0F77)

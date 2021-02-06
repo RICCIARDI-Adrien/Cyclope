@@ -62,7 +62,6 @@ F 2 "Capacitor_SMD:C_1210_3225Metric_Pad1.42x2.65mm_HandSolder" H 2138 6400 50  
 F 3 "~" H 2100 6550 50  0001 C CNN
 F 4 "25V" H 1985 6595 50  0000 R CNN "Value2"
 F 5 "X7R" H 1985 6686 50  0000 R CNN "Value3"
-F 6 "CC1206KRX7R9BB104" V 2100 6550 50  0001 C CNN "ManufacturerReference"
 	1    2100 6550
 	1    0    0    1   
 $EndComp
@@ -126,7 +125,6 @@ F 2 "Capacitor_SMD:C_1210_3225Metric_Pad1.42x2.65mm_HandSolder" H 2138 3900 50  
 F 3 "~" H 2100 4050 50  0001 C CNN
 F 4 "25V" H 1985 4095 50  0000 R CNN "Value2"
 F 5 "X7R" H 1985 4186 50  0000 R CNN "Value3"
-F 6 "CC1206KRX7R9BB104" V 2100 4050 50  0001 C CNN "ManufacturerReference"
 	1    2100 4050
 	1    0    0    1   
 $EndComp

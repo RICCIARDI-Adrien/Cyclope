@@ -45,6 +45,7 @@ F 0 "H7" H 2150 6849 50  0000 L CNN
 F 1 "Motherboard" H 2150 6758 50  0000 L CNN
 F 2 "MountingHole:MountingHole_3.2mm_M3_Pad" H 2050 6800 50  0001 C CNN
 F 3 "~" H 2050 6800 50  0001 C CNN
+F 4 "DNP" H 2050 6800 50  0001 C CNN "Populate"
 	1    2050 6800
 	1    0    0    -1  
 $EndComp
@@ -56,6 +57,7 @@ F 0 "H8" H 2850 6849 50  0000 L CNN
 F 1 "Motherboard" H 2850 6758 50  0000 L CNN
 F 2 "MountingHole:MountingHole_3.2mm_M3_Pad" H 2750 6800 50  0001 C CNN
 F 3 "~" H 2750 6800 50  0001 C CNN
+F 4 "DNP" H 2750 6800 50  0001 C CNN "Populate"
 	1    2750 6800
 	1    0    0    -1  
 $EndComp
@@ -67,6 +69,7 @@ F 0 "H9" H 3550 6849 50  0000 L CNN
 F 1 "Motherboard" H 3550 6758 50  0000 L CNN
 F 2 "MountingHole:MountingHole_3.2mm_M3_Pad" H 3450 6800 50  0001 C CNN
 F 3 "~" H 3450 6800 50  0001 C CNN
+F 4 "DNP" H 3450 6800 50  0001 C CNN "Populate"
 	1    3450 6800
 	1    0    0    -1  
 $EndComp
@@ -78,6 +81,7 @@ F 0 "H10" H 4250 6849 50  0000 L CNN
 F 1 "Motherboard" H 4250 6758 50  0000 L CNN
 F 2 "MountingHole:MountingHole_3.2mm_M3_Pad" H 4150 6800 50  0001 C CNN
 F 3 "~" H 4150 6800 50  0001 C CNN
+F 4 "DNP" H 4150 6800 50  0001 C CNN "Populate"
 	1    4150 6800
 	1    0    0    -1  
 $EndComp

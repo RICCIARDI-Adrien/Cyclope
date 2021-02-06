@@ -109,7 +109,6 @@ F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 8738 3600 50  
 F 3 "~" H 8700 3750 50  0001 C CNN
 F 4 "25V" H 8585 3795 50  0000 R CNN "Value2"
 F 5 "X7R" H 8585 3886 50  0000 R CNN "Value3"
-F 6 "CC1206KRX7R9BB104" V 8700 3750 50  0001 C CNN "ManufacturerReference"
 	1    8700 3750
 	-1   0    0    1   
 $EndComp
@@ -123,7 +122,6 @@ F 2 "Capacitor_SMD:C_1210_3225Metric_Pad1.42x2.65mm_HandSolder" H 9188 3600 50  
 F 3 "~" H 9150 3750 50  0001 C CNN
 F 4 "25V" H 9035 3795 50  0000 R CNN "Value2"
 F 5 "X7R" H 9035 3886 50  0000 R CNN "Value3"
-F 6 "CC1206KRX7R9BB104" V 9150 3750 50  0001 C CNN "ManufacturerReference"
 	1    9150 3750
 	-1   0    0    1   
 $EndComp
@@ -137,7 +135,6 @@ F 2 "Capacitor_SMD:C_1210_3225Metric_Pad1.42x2.65mm_HandSolder" H 9638 3600 50  
 F 3 "~" H 9600 3750 50  0001 C CNN
 F 4 "25V" H 9485 3795 50  0000 R CNN "Value2"
 F 5 "X7R" H 9485 3886 50  0000 R CNN "Value3"
-F 6 "CC1206KRX7R9BB104" V 9600 3750 50  0001 C CNN "ManufacturerReference"
 	1    9600 3750
 	-1   0    0    1   
 $EndComp
@@ -149,6 +146,7 @@ F 0 "H2" V 2487 4003 50  0000 C CNN
 F 1 "BATTERY-" V 2396 4003 50  0000 C CNN
 F 2 "MountingHole:MountingHole_2.2mm_M2_Pad" H 2250 4000 50  0001 C CNN
 F 3 "~" H 2250 4000 50  0001 C CNN
+F 4 "DNP" H 2250 4000 50  0001 C CNN "Populate"
 	1    2250 4000
 	0    -1   -1   0   
 $EndComp
@@ -160,6 +158,7 @@ F 0 "H1" V 2487 3403 50  0000 C CNN
 F 1 "BATTERY+" V 2396 3403 50  0000 C CNN
 F 2 "MountingHole:MountingHole_2.2mm_M2_Pad" H 2250 3400 50  0001 C CNN
 F 3 "~" H 2250 3400 50  0001 C CNN
+F 4 "DNP" H 2250 3400 50  0001 C CNN "Populate"
 	1    2250 3400
 	0    -1   -1   0   
 $EndComp
@@ -235,7 +234,6 @@ F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 6938 3550 50  
 F 3 "~" H 6900 3700 50  0001 C CNN
 F 4 "25V" V 6550 3700 50  0000 C CNN "Value2"
 F 5 "X7R" V 6650 3700 50  0000 C CNN "Value3"
-F 6 "CC1206KRX7R9BB104" V 6900 3700 50  0001 C CNN "ManufacturerReference"
 	1    6900 3700
 	0    1    1    0   
 $EndComp

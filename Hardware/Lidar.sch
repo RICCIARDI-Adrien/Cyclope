@@ -270,7 +270,6 @@ F 2 "Capacitor_SMD:C_1206_3216Metric_Pad1.42x1.75mm_HandSolder" H 4838 4100 50  
 F 3 "~" H 4800 4250 50  0001 C CNN
 F 4 "25V" H 4685 4295 50  0000 R CNN "Value2"
 F 5 "X7R" H 4685 4386 50  0000 R CNN "Value3"
-F 6 "CC1206KRX7R9BB104" V 4800 4250 50  0001 C CNN "ManufacturerReference"
 	1    4800 4250
 	-1   0    0    1   
 $EndComp

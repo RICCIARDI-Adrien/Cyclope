@@ -222,6 +222,7 @@ F 0 "H3" H 4600 2396 50  0000 L CNN
 F 1 "Camera" H 4600 2305 50  0000 L CNN
 F 2 "MountingHole:MountingHole_2.2mm_M2" H 4500 2350 50  0001 C CNN
 F 3 "~" H 4500 2350 50  0001 C CNN
+F 4 "DNP" H 4500 2350 50  0001 C CNN "Populate"
 	1    4500 2350
 	1    0    0    -1  
 $EndComp
@@ -233,6 +234,7 @@ F 0 "H4" H 5350 2396 50  0000 L CNN
 F 1 "Camera" H 5350 2305 50  0000 L CNN
 F 2 "MountingHole:MountingHole_2.2mm_M2" H 5250 2350 50  0001 C CNN
 F 3 "~" H 5250 2350 50  0001 C CNN
+F 4 "DNP" H 5250 2350 50  0001 C CNN "Populate"
 	1    5250 2350
 	1    0    0    -1  
 $EndComp
@@ -244,6 +246,7 @@ F 0 "H5" H 4600 2696 50  0000 L CNN
 F 1 "Camera" H 4600 2605 50  0000 L CNN
 F 2 "MountingHole:MountingHole_2.2mm_M2" H 4500 2650 50  0001 C CNN
 F 3 "~" H 4500 2650 50  0001 C CNN
+F 4 "DNP" H 4500 2650 50  0001 C CNN "Populate"
 	1    4500 2650
 	1    0    0    -1  
 $EndComp
@@ -255,6 +258,7 @@ F 0 "H6" H 5350 2696 50  0000 L CNN
 F 1 "Camera" H 5350 2605 50  0000 L CNN
 F 2 "MountingHole:MountingHole_2.2mm_M2" H 5250 2650 50  0001 C CNN
 F 3 "~" H 5250 2650 50  0001 C CNN
+F 4 "DNP" H 5250 2650 50  0001 C CNN "Populate"
 	1    5250 2650
 	1    0    0    -1  
 $EndComp
@@ -476,6 +480,7 @@ F 0 "H11" H 4600 2996 50  0000 L CNN
 F 1 "Front_Board" H 4600 2905 50  0000 L CNN
 F 2 "MountingHole:MountingHole_3.2mm_M3" H 4500 2950 50  0001 C CNN
 F 3 "~" H 4500 2950 50  0001 C CNN
+F 4 "DNP" H 4500 2950 50  0001 C CNN "Populate"
 	1    4500 2950
 	1    0    0    -1  
 $EndComp
@@ -487,6 +492,7 @@ F 0 "H12" H 5350 2996 50  0000 L CNN
 F 1 "Front_Board" H 5350 2905 50  0000 L CNN
 F 2 "MountingHole:MountingHole_3.2mm_M3" H 5250 2950 50  0001 C CNN
 F 3 "~" H 5250 2950 50  0001 C CNN
+F 4 "DNP" H 5250 2950 50  0001 C CNN "Populate"
 	1    5250 2950
 	1    0    0    -1  
 $EndComp
@@ -498,6 +504,7 @@ F 0 "BT1" H 5650 4346 50  0000 L CNN
 F 1 "BreakTab" H 5650 4255 50  0000 L CNN
 F 2 "Break_Tab:Break_Tab" H 5550 4300 50  0001 C CNN
 F 3 "~" H 5550 4300 50  0001 C CNN
+F 4 "DNP" H 5550 4300 50  0001 C CNN "Populate"
 	1    5550 4300
 	1    0    0    -1  
 $EndComp
@@ -509,6 +516,7 @@ F 0 "BT2" H 5650 4596 50  0000 L CNN
 F 1 "BreakTab" H 5650 4505 50  0000 L CNN
 F 2 "Break_Tab:Break_Tab" H 5550 4550 50  0001 C CNN
 F 3 "~" H 5550 4550 50  0001 C CNN
+F 4 "DNP" H 5550 4550 50  0001 C CNN "Populate"
 	1    5550 4550
 	1    0    0    -1  
 $EndComp
@@ -520,6 +528,7 @@ F 0 "BT3" H 5650 4846 50  0000 L CNN
 F 1 "BreakTab" H 5650 4755 50  0000 L CNN
 F 2 "Break_Tab:Break_Tab" H 5550 4800 50  0001 C CNN
 F 3 "~" H 5550 4800 50  0001 C CNN
+F 4 "DNP" H 5550 4800 50  0001 C CNN "Populate"
 	1    5550 4800
 	1    0    0    -1  
 $EndComp
@@ -531,6 +540,7 @@ F 0 "BT4" H 6900 4346 50  0000 L CNN
 F 1 "BreakTab" H 6900 4255 50  0000 L CNN
 F 2 "Break_Tab:Break_Tab" H 6800 4300 50  0001 C CNN
 F 3 "~" H 6800 4300 50  0001 C CNN
+F 4 "DNP" H 6800 4300 50  0001 C CNN "Populate"
 	1    6800 4300
 	1    0    0    -1  
 $EndComp
@@ -542,6 +552,7 @@ F 0 "BT5" H 6900 4596 50  0000 L CNN
 F 1 "BreakTab" H 6900 4505 50  0000 L CNN
 F 2 "Break_Tab:Break_Tab" H 6800 4550 50  0001 C CNN
 F 3 "~" H 6800 4550 50  0001 C CNN
+F 4 "DNP" H 6800 4550 50  0001 C CNN "Populate"
 	1    6800 4550
 	1    0    0    -1  
 $EndComp
@@ -553,6 +564,7 @@ F 0 "BT6" H 6900 4846 50  0000 L CNN
 F 1 "BreakTab" H 6900 4755 50  0000 L CNN
 F 2 "Break_Tab:Break_Tab" H 6800 4800 50  0001 C CNN
 F 3 "~" H 6800 4800 50  0001 C CNN
+F 4 "DNP" H 6800 4800 50  0001 C CNN "Populate"
 	1    6800 4800
 	1    0    0    -1  
 $EndComp

@@ -3,10 +3,10 @@ EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 5
+Sheet 2 6
 Title "DC/DC power supply"
-Date "2020-07-27"
-Rev "1.0"
+Date "2021-02-05"
+Rev "1.1"
 Comp "Cyclope robot by Adrien RICCIARDI"
 Comment1 ""
 Comment2 ""

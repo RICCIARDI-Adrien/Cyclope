@@ -27,3 +27,7 @@ if [ -z "$DATA_PARTITION" ]
 then
 	echo "/dev/mmcblk0p4	/media/data	ext4	defaults,noatime	0	0" >> "${TARGET_DIR}"/etc/fstab
 fi
+
+# Remove Lidar serial port tty if not removed yet
+sed -i '/# Put a getty on the serial port/d' "${TARGET_DIR}"/etc/inittab
+sed -i '/console::respawn:\/sbin\/getty -L  console 0 vt100 # GENERIC_SERIAL/d' "${TARGET_DIR}"/etc/inittab

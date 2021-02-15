@@ -56,8 +56,28 @@ namespace Lidar
 		// GPIO chip access is no more needed
 		close(gpioChipFileDescriptor);
 		
+		// Make sure lidar is stopped
+		setEnabled(false);
+		
 		// Automatically release resources on application exit
 		atexit(_applicationExit);
+		
+		return 0;
+	}
+	
+	int setEnabled(bool isEnabled)
+	{
+		// Set output level according to enabling state
+		struct gpiohandle_data gpioData;
+		if (isEnabled) gpioData.values[0] = 1;
+		else gpioData.values[0] = 0;
+		
+		// Set new GPIO value
+		if (ioctl(_gpioFileDescriptor, GPIOHANDLE_SET_LINE_VALUES_IOCTL, &gpioData) < 0)
+		{
+			LOG(LOG_ERR, "Could not set lidar state to %d (%s).", isEnabled, strerror(errno));
+			return -1;
+		}
 		
 		return 0;
 	}

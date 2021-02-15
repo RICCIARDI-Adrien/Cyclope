@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-CYCLOPE_CONTROLLER_VERSION = 1.0
+CYCLOPE_CONTROLLER_VERSION = 1.1
 
 # Sources are provided within the package
 CYCLOPE_CONTROLLER_SITE_METHOD = local

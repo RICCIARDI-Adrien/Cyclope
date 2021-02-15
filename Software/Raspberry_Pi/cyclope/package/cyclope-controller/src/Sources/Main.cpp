@@ -5,6 +5,7 @@
 #include <Adc.hpp>
 #include <ArtificialIntelligenceProgram.hpp>
 #include <cstdlib>
+#include <Lidar.hpp>
 #include <Light.hpp>
 #include <Log.hpp>
 #include <Motor.hpp>
@@ -37,6 +38,13 @@ int main()
 	if (Adc::initialize() != 0)
 	{
 		LOG(LOG_ERR, "ADC initialization failed, aborting.");
+		return EXIT_FAILURE;
+	}
+	
+	// Configure Lidar module
+	if (Lidar::initialize() != 0)
+	{
+		LOG(LOG_ERR, "Lidar initialization failed, aborting.");
 		return EXIT_FAILURE;
 	}
 	

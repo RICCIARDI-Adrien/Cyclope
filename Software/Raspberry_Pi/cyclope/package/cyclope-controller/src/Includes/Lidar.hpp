@@ -15,10 +15,8 @@ namespace Lidar
 	
 	/** Turn lidar on or off.
 	 * @param isEnabled Set to false to turn lidar off, set to true to turn lidar on.
-	 * @return -1 if an error occurred,
-	 * @return 0 on success.
 	 */
-	int setEnabled(bool isEnabled);
+	void setEnabled(bool isEnabled);
 }
 
 #endif

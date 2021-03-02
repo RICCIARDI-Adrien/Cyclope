@@ -16,9 +16,15 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include <stdio.h>
+
 namespace Lidar
 {
-	/** */
+	/** Make the thread sleep until distance sampling is enabled. */
+	static pthread_cond_t _waitConditionDistanceSampling = PTHREAD_COND_INITIALIZER;
+	/** The wait condition mutex. */
+	static pthread_mutex_t _mutexWaitConditionDistanceSampling = PTHREAD_MUTEX_INITIALIZER;
+	/** Tell whether the wait condition is still blocking. */
 	static bool _isDistanceSamplingEnabled = false;
 	
 	/** The distance sampling thread. */
@@ -26,6 +32,7 @@ namespace Lidar
 	{
 		int gpioChipFileDescriptor, gpioFileDescriptor = -1;
 		struct gpiohandle_request gpioRequest;
+		struct gpiohandle_data gpioData;
 		
 		// TODO serial port
 		
@@ -54,7 +61,6 @@ namespace Lidar
 		gpioChipFileDescriptor = -1;
 		
 		// Make sure lidar is disabled
-		struct gpiohandle_data gpioData;
 		gpioData.values[0] = 0;
 		if (ioctl(gpioFileDescriptor, GPIOHANDLE_SET_LINE_VALUES_IOCTL, &gpioData) < 0)
 		{
@@ -64,7 +70,37 @@ namespace Lidar
 		
 		while (1)
 		{
-			// TODO
+			// Wait for the lidar to be enabled
+			pthread_mutex_lock(&_mutexWaitConditionDistanceSampling);
+			while (!_isDistanceSamplingEnabled) pthread_cond_wait(&_waitConditionDistanceSampling, &_mutexWaitConditionDistanceSampling); // Wait for a wake-up signal, avoiding spurious ones by checking the condition variable
+			pthread_mutex_unlock(&_mutexWaitConditionDistanceSampling);
+			
+			// Enable lidar power
+			gpioData.values[0] = 1;
+			if (ioctl(gpioFileDescriptor, GPIOHANDLE_SET_LINE_VALUES_IOCTL, &gpioData) < 0)
+			{
+				LOG(LOG_ERR, "Could not enable lidar power (%s).", strerror(errno));
+				goto Exit;
+			}
+			
+			// Wait 3 seconds for the motor to spin
+			usleep(3000000);
+			
+			// Sample data until lidar is disabled
+			do
+			{
+				printf("distance sampling thread is running.\n");
+				usleep(2000000);
+				// TODO
+			} while (_isDistanceSamplingEnabled);
+			
+			// Disable lidar power
+			gpioData.values[0] = 0;
+			if (ioctl(gpioFileDescriptor, GPIOHANDLE_SET_LINE_VALUES_IOCTL, &gpioData) < 0)
+			{
+				LOG(LOG_ERR, "Could not disable lidar power (%s).", strerror(errno));
+				goto Exit;
+			}
 		}
 		
 	Exit:
@@ -84,28 +120,18 @@ namespace Lidar
 			return -1;
 		}
 		
-		// Make sure lidar is stopped
-		//setEnabled(false);
-		
 		return 0;
 	}
 	
-	int setEnabled(bool isEnabled)
+	void setEnabled(bool isEnabled)
 	{
 		if (isEnabled)
 		{
-			// Wait 3 seconds for the motor to spin
-			usleep(3000000);
-			
-			// Tell thread to start sampling data
-			// TODO
+			pthread_mutex_lock(&_mutexWaitConditionDistanceSampling);
+			_isDistanceSamplingEnabled = isEnabled;
+			pthread_cond_signal(&_waitConditionDistanceSampling);
+			pthread_mutex_unlock(&_mutexWaitConditionDistanceSampling);
 		}
-		else
-		{
-			// Tell thread to stop sampling data
-			// TODO
-		}
-		
-		return 0;
+		else _isDistanceSamplingEnabled = false;
 	}
 }

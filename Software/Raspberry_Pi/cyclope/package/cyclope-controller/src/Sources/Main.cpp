@@ -11,6 +11,8 @@
 #include <Motor.hpp>
 #include <Network.hpp>
 
+#include <unistd.h>
+
 //-------------------------------------------------------------------------------------------------
 // Entry point
 //-------------------------------------------------------------------------------------------------
@@ -54,6 +56,9 @@ int main()
 		LOG(LOG_ERR, "Communication protocol server initialization failed, aborting.");
 		return EXIT_FAILURE;
 	}
+	
+	// TEST
+	Lidar::setEnabled(true);
 	
 	// Execute AI programs
 	while (1)

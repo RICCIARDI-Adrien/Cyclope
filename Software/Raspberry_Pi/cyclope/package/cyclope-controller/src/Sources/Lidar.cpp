@@ -27,14 +27,74 @@ namespace Lidar
 	/** Tell whether the wait condition is still blocking. */
 	static bool _isDistanceSamplingEnabled = false;
 	
+	/** Configure the serial port connected to the lidar.
+	 * @return -1 if an error occurred,
+	 * @return A positive number on success corresponding to the serial port file descriptor.
+	 */
+	static int _configureSerialPort()
+	{
+		int fileDescriptorSerialPort = -1;
+		struct termios serialPortSettings;
+		
+		// Initialize serial port at 115200 8N1
+		// Try to open device file
+		fileDescriptorSerialPort = open("/dev/ttyAMA0", O_RDWR);
+		if (fileDescriptorSerialPort == -1)
+		{
+			LOG(LOG_ERR, "Error : failed to open lidar serial port file (%s).\n", strerror(errno));
+			goto Exit_Error;
+		}
+		
+		// Configure new parameters
+		memset(&serialPortSettings, 0, sizeof(serialPortSettings));
+		serialPortSettings.c_iflag = IGNBRK | IGNPAR | ISTRIP | ICRNL; // Ignore break and parity errors
+		serialPortSettings.c_oflag = 0;
+		serialPortSettings.c_cflag = CS8 | CREAD | CLOCAL; // 8 data bits, receiver enabled, ignore modem control lines
+		serialPortSettings.c_lflag = 0; // Use raw mode
+		serialPortSettings.c_cc[VMIN] = 1; // Make read() block until at least one byte is received
+		
+		// Set read and write speeds
+		if (cfsetispeed(&serialPortSettings, B115200) == -1)
+		{
+			LOG(LOG_ERR, "Error : failed to set serial port reception speed (%s).\n", strerror(errno));
+			goto Exit_Error;
+		}
+		if (cfsetospeed(&serialPortSettings, B115200) == -1)
+		{
+			LOG(LOG_ERR, "Error : failed to set serial port transmission speed (%s).\n", strerror(errno));
+			goto Exit_Error;
+		}
+		
+		// Apply serial port settings
+		if (tcsetattr(fileDescriptorSerialPort, TCSANOW, &serialPortSettings) == -1)
+		{
+			LOG(LOG_ERR, "Error : failed to set serial port settings (%s).\n", strerror(errno));
+			goto Exit_Error;
+		}
+		
+		// Everything went fine
+		return fileDescriptorSerialPort;
+		
+	Exit_Error:
+		if (fileDescriptorSerialPort != -1) close(fileDescriptorSerialPort);
+		return -1;
+	}
+	
 	/** The distance sampling thread. */
 	static void *_threadDistanceSampling(void *)
 	{
-		int gpioChipFileDescriptor, gpioFileDescriptor = -1;
+		int gpioChipFileDescriptor, gpioFileDescriptor = -1, serialPortFileDescriptor;
 		struct gpiohandle_request gpioRequest;
 		struct gpiohandle_data gpioData;
+		unsigned char communicationBuffer[22];
 		
-		// TODO serial port
+		// Configure the serial port used to communicate with the lidar
+		serialPortFileDescriptor = _configureSerialPort();
+		if (serialPortFileDescriptor < 0)
+		{
+			LOG(LOG_ERR, "Failed to configure serial port (%s).", strerror(errno));
+			return NULL;
+		}
 		
 		// Get access to GPIO controller
 		gpioChipFileDescriptor = open("/dev/gpiochip0", O_RDONLY);
@@ -89,8 +149,17 @@ namespace Lidar
 			// Sample data until lidar is disabled
 			do
 			{
-				printf("distance sampling thread is running.\n");
-				usleep(2000000);
+				// TEST
+				communicationBuffer[0] = 0xA5;
+				communicationBuffer[1] = 0x50;
+				if (write(serialPortFileDescriptor, communicationBuffer, 2) != 2) printf("WRITE ERROR\n");
+				for (int i = 0; i < 27; i++)
+				{
+					if (read(serialPortFileDescriptor, &communicationBuffer[0], 1) != 1) printf("READ ERROR %d\n", i);
+					printf("READ BYTE %d = %d 0x%02X %c\n", i, communicationBuffer[0], communicationBuffer[0], communicationBuffer[0]);
+				}
+				usleep(1000000);
+				
 				// TODO
 			} while (_isDistanceSamplingEnabled);
 			

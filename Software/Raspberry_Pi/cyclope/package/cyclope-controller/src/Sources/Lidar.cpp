@@ -18,14 +18,26 @@
 
 #include <stdio.h>
 
+/** TODO */
+#define LIDAR_COMMUNICATION_PROTOCOL_START_FLAG 0xA5
+
 namespace Lidar
 {
+	/** All used command codes. */
+	typedef enum
+	{
+		COMMAND_CODE_EXPRESS_SCAN = 0x82
+	} CommandCode;
+	
 	/** Make the thread sleep until distance sampling is enabled. */
 	static pthread_cond_t _waitConditionDistanceSampling = PTHREAD_COND_INITIALIZER;
 	/** The wait condition mutex. */
 	static pthread_mutex_t _mutexWaitConditionDistanceSampling = PTHREAD_MUTEX_INITIALIZER;
 	/** Tell whether the wait condition is still blocking. */
 	static bool _isDistanceSamplingEnabled = false;
+	
+	/** The serial port used to communicate with the lidar. */
+	static int _serialPortFileDescriptor;
 	
 	/** Configure the serial port connected to the lidar.
 	 * @return -1 if an error occurred,
@@ -80,28 +92,73 @@ namespace Lidar
 		return -1;
 	}
 	
+	/** Send a command to the lidar.
+	 * @param commandCode The command code. Command start flag is automatically added.
+	 * @param pointerPayloadBuffer Contain an optional payload. Payload size and checksum are automatically added.
+	 * @param payloadBufferSize The payload size in bytes. Set to 0 if there is no payload.
+	 * @return -1 if an error occurred,
+	 * @return 0 on success.
+	 */
+	static int _sendCommand(CommandCode commandCode, unsigned char *pointerPayloadBuffer, int payloadBufferSize)
+	{
+		unsigned char checksum, commandBuffer[64]; // Should be enough for all existing commands
+		int i;
+		ssize_t commandBufferSize;
+		
+		// Prepare command header
+		commandBuffer[0] = LIDAR_COMMUNICATION_PROTOCOL_START_FLAG;
+		commandBuffer[1] = commandCode;
+		commandBufferSize = 2;
+		
+		// Is there some payload to append ?
+		if (payloadBufferSize > 0)
+		{
+			// Will the whole payload fit in the transmission buffer ?
+			if (payloadBufferSize > static_cast<int>(sizeof(commandBuffer) - 4)) // Remove 2 bytes from the command header, 1 byte for payload size and 1 byte for the checksum
+			{
+				LOG(LOG_ERR, "Error : command payload for command %d is too large (payload size is %d bytes).", commandCode, payloadBufferSize);
+				return -1;
+			}
+			
+			// Append payload size
+			commandBuffer[2] = payloadBufferSize;
+			
+			// Append payload
+			memcpy(&commandBuffer[3], pointerPayloadBuffer, payloadBufferSize);
+			
+			// Compute checksum
+			checksum = 0;
+			for (i = 0; i < payloadBufferSize + 3; i++) checksum ^= commandBuffer[i];
+			commandBuffer[payloadBufferSize + 3] = checksum;
+			
+			// Adjust command total size with payload size, payload size byte and checksum
+			commandBufferSize += payloadBufferSize + 2;
+		}
+		
+		// Transmit command
+		if (write(_serialPortFileDescriptor, commandBuffer, commandBufferSize) != commandBufferSize)
+		{
+			LOG(LOG_ERR, "Error : failed to transmit command %d (%s).", commandCode, strerror(errno));
+			return -1;
+		}
+		
+		return 0;
+	}
+	
 	/** The distance sampling thread. */
 	static void *_threadDistanceSampling(void *)
 	{
-		int gpioChipFileDescriptor, gpioFileDescriptor = -1, serialPortFileDescriptor;
+		int gpioChipFileDescriptor, gpioFileDescriptor = -1;
 		struct gpiohandle_request gpioRequest;
 		struct gpiohandle_data gpioData;
-		unsigned char communicationBuffer[22];
-		
-		// Configure the serial port used to communicate with the lidar
-		serialPortFileDescriptor = _configureSerialPort();
-		if (serialPortFileDescriptor < 0)
-		{
-			LOG(LOG_ERR, "Failed to configure serial port (%s).", strerror(errno));
-			return NULL;
-		}
+		unsigned char commandPayloadBuffer[8]; // No need for more bytes for the used commands
 		
 		// Get access to GPIO controller
 		gpioChipFileDescriptor = open("/dev/gpiochip0", O_RDONLY);
 		if (gpioChipFileDescriptor == -1)
 		{
 			LOG(LOG_ERR, "Failed to open GPIO chip device (%s).", strerror(errno));
-			return NULL;
+			goto Exit;
 		}
 		
 		// Configure lidar GPIO as output
@@ -146,19 +203,30 @@ namespace Lidar
 			// Wait 3 seconds for the motor to spin
 			usleep(3000000);
 			
+			// RPLIDAR A1M8 preferred scan mode is Express one, which has index 1, so start scanning using this mode
+			/*commandPayloadBuffer[0] = 1; // Select mode 1, taking into account that multi-bytes numbers must be sent in little endian
+			commandPayloadBuffer[1] = 0;
+			commandPayloadBuffer[2] = 0;
+			commandPayloadBuffer[3] = 0;
+			commandPayloadBuffer[4] = 0;
+			if (_sendCommand(COMMAND_CODE_EXPRESS_SCAN, commandPayloadBuffer, 5) != 0) goto Exit;*/
+			
+			// TEST
+			commandPayloadBuffer[0] = 0x7F;
+			commandPayloadBuffer[1] = 0;
+			commandPayloadBuffer[2] = 0;
+			commandPayloadBuffer[3] = 0;
+			commandPayloadBuffer[4] = 0;
+			commandPayloadBuffer[5] = 0;
+			if (_sendCommand((CommandCode) 0x84, commandPayloadBuffer, 6) != 0) goto Exit;
+			
 			// Sample data until lidar is disabled
 			do
 			{
+				unsigned char byte;
 				// TEST
-				communicationBuffer[0] = 0xA5;
-				communicationBuffer[1] = 0x50;
-				if (write(serialPortFileDescriptor, communicationBuffer, 2) != 2) printf("WRITE ERROR\n");
-				for (int i = 0; i < 27; i++)
-				{
-					if (read(serialPortFileDescriptor, &communicationBuffer[0], 1) != 1) printf("READ ERROR %d\n", i);
-					printf("READ BYTE %d = %d 0x%02X %c\n", i, communicationBuffer[0], communicationBuffer[0], communicationBuffer[0]);
-				}
-				usleep(1000000);
+				if (read(_serialPortFileDescriptor, &byte, 1) != 1) printf("READ ERROR\n");
+				printf("READ BYTE %d 0x%02X %c\n", byte, byte, byte);
 				
 				// TODO
 			} while (_isDistanceSamplingEnabled);
@@ -182,10 +250,19 @@ namespace Lidar
 	{
 		pthread_t threadId;
 		
+		// Configure the serial port used to communicate with the lidar
+		_serialPortFileDescriptor = _configureSerialPort();
+		if (_serialPortFileDescriptor < 0)
+		{
+			LOG(LOG_ERR, "Failed to configure serial port (%s).", strerror(errno));
+			return -1;
+		}
+		
 		// Create the communication thread
 		if (pthread_create(&threadId, NULL, _threadDistanceSampling, NULL) != 0)
 		{
 			LOG(LOG_ERR, "Error : failed to create lidar thread (%s).", strerror(errno));
+			close(_serialPortFileDescriptor);
 			return -1;
 		}
 		

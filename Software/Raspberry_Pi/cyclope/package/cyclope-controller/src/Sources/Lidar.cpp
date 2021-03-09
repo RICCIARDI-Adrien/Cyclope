@@ -59,7 +59,7 @@ namespace Lidar
 		
 		// Configure new parameters
 		memset(&serialPortSettings, 0, sizeof(serialPortSettings));
-		serialPortSettings.c_iflag = IGNBRK | IGNPAR | ISTRIP | ICRNL; // Ignore break and parity errors
+		serialPortSettings.c_iflag = IGNBRK | IGNPAR; // Ignore break and parity errors
 		serialPortSettings.c_oflag = 0;
 		serialPortSettings.c_cflag = CS8 | CREAD | CLOCAL; // 8 data bits, receiver enabled, ignore modem control lines
 		serialPortSettings.c_lflag = 0; // Use raw mode
@@ -204,21 +204,15 @@ namespace Lidar
 			usleep(3000000);
 			
 			// RPLIDAR A1M8 preferred scan mode is Express one, which has index 1, so start scanning using this mode
-			/*commandPayloadBuffer[0] = 1; // Select mode 1, taking into account that multi-bytes numbers must be sent in little endian
+			commandPayloadBuffer[0] = 1; // Select mode 1, taking into account that multi-bytes numbers must be sent in little endian
 			commandPayloadBuffer[1] = 0;
 			commandPayloadBuffer[2] = 0;
 			commandPayloadBuffer[3] = 0;
 			commandPayloadBuffer[4] = 0;
-			if (_sendCommand(COMMAND_CODE_EXPRESS_SCAN, commandPayloadBuffer, 5) != 0) goto Exit;*/
+			if (_sendCommand(COMMAND_CODE_EXPRESS_SCAN, commandPayloadBuffer, 5) != 0) goto Exit;
 			
-			// TEST
-			commandPayloadBuffer[0] = 0x7F;
-			commandPayloadBuffer[1] = 0;
-			commandPayloadBuffer[2] = 0;
-			commandPayloadBuffer[3] = 0;
-			commandPayloadBuffer[4] = 0;
-			commandPayloadBuffer[5] = 0;
-			if (_sendCommand((CommandCode) 0x84, commandPayloadBuffer, 6) != 0) goto Exit;
+			// Get first response
+			//if (read(_serialPortFileDescriptor, commandPayloadBuffer, 7) != 7) LOG(LOG_WARNING, "Warning : failed to read response to express scan command (%s).", strerror(errno));
 			
 			// Sample data until lidar is disabled
 			do

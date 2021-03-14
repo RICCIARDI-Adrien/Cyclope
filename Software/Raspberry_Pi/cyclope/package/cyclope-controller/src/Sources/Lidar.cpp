@@ -27,6 +27,9 @@
 /** TODO */
 #define LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT 16
 
+/** How many measures in a response packet. There are 2 measures per cabin. */
+#define LIDAR_SCAN_LEGACY_DATA_MEASURES_COUNT (LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT * 2)
+
 namespace Lidar
 {
 	/** All used command codes. */
@@ -47,14 +50,21 @@ namespace Lidar
 		unsigned char reserved[2];
 		unsigned short startAngle;
 		ScanLegacyDataCabin cabins[LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT];
-	} ScanLegacyData;
+	} ScanLegacyResponsePacket;
 	
 	/** TODO */
 	typedef struct
 	{
 		int distanceMillimeter;
-		int angleDegree;
+		int angleDelta;
 	} Measure;
+	
+	/** TODO */
+	typedef struct
+	{
+		int startAngle;
+		Measure measures[LIDAR_SCAN_LEGACY_DATA_MEASURES_COUNT];
+	} ScanLegacyExtractedData;
 	
 	/** Make the thread sleep until distance sampling is enabled. */
 	static pthread_cond_t _waitConditionDistanceSampling = PTHREAD_COND_INITIALIZER;
@@ -203,10 +213,12 @@ namespace Lidar
 	/** TODO
 	 * @param pointerMeasures On output, contain the extracted measures. The provided buffer must be 2 times LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT big because each cabin contains 2 measures.
 	 */
-	static inline void _processScanLegacyData(ScanLegacyData *pointerData, Measure *pointerMeasures)
+/*	static inline void _processScanLegacyData(ScanLegacyRawData *pointerData, Measure *pointerMeasures)
 	{
 		int i, angleDelta;
 		ScanLegacyDataCabin *pointerCabin;
+		
+		printf("START ANGLE %d\n", (pointerData->startAngle & 0x7FFF) / 64);
 		
 		// Process each cabin
 		for (i = 0; i < LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT; i++)
@@ -226,6 +238,36 @@ namespace Lidar
 			// TODO
 			pointerMeasures++;
 		}
+	}*/
+	
+	/** TODO
+	 */
+	static inline void _extractScanLegacyData(ScanLegacyResponsePacket *pointerPacket, ScanLegacyExtractedData *pointerExtractedData)
+	{
+		int i, measuresIndex = 0;
+		ScanLegacyDataCabin *pointerCabin;
+		
+		// Extract starting angle
+		pointerExtractedData->startAngle = pointerPacket->startAngle & 0x7FFF;
+		
+		// Process each cabin
+		for (i = 0; i < LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT; i++)
+		{
+			// Cache current cabin access
+			pointerCabin = &pointerPacket->cabins[i];
+			
+			// Extract first distance
+			pointerExtractedData->measures[measuresIndex].distanceMillimeter = ((pointerCabin->data[1] << 6) | (pointerCabin->data[0] >> 2)) & 0x3FFF;
+			// Extract first angle delta
+			pointerExtractedData->measures[measuresIndex].angleDelta = ((pointerCabin->data[0] & 0x03) << 4) | (pointerCabin->data[4] & 0x0F);
+			measuresIndex++;
+			
+			// Extract second distance
+			pointerExtractedData->measures[measuresIndex].distanceMillimeter = ((pointerCabin->data[3] << 6) | (pointerCabin->data[2] >> 2)) & 0x3FFF;
+			// Extract second angle delta
+			pointerExtractedData->measures[measuresIndex].angleDelta = ((pointerCabin->data[2] & 0x03) << 4) | (pointerCabin->data[4] >> 4);
+			measuresIndex++;
+		}
 	}
 	
 	/** The distance sampling thread. */
@@ -235,8 +277,9 @@ namespace Lidar
 		struct gpiohandle_request gpioRequest;
 		struct gpiohandle_data gpioData;
 		unsigned char commandPayloadBuffer[8]; // No need for more bytes for the used commands
-		ScanLegacyData scanData;
-		Measure m[32]; // TEST
+		ScanLegacyResponsePacket packet;
+		ScanLegacyExtractedData previousExtractedData, currentExtractedData;
+		bool isInitialPacket = true;
 		
 		// Get access to GPIO controller
 		gpioChipFileDescriptor = open("/dev/gpiochip0", O_RDONLY);
@@ -303,15 +346,26 @@ namespace Lidar
 			do
 			{
 				// Retrieve next data response packet
-				if (_receiveCommandResponse(sizeof(scanData), &scanData) != 0)
+				if (_receiveCommandResponse(sizeof(packet), &packet) != 0)
 				{
 					LOG(LOG_WARNING, "Warning : failed to receive scan data response, trying next one.");
 					continue;
 				}
 				
+				// Recompose packet content
+				_extractScanLegacyData(&packet, &currentExtractedData);
+				
 				// TEST
-				_processScanLegacyData(&scanData, m);
-				for (int i = 0; i < 32; i++) printf("%d\n", m[i].distanceMillimeter);
+				printf("STARTING ANGLE %d\n", currentExtractedData.startAngle / 64);
+				for (int i = 0; i < 32; i++) printf("%d mm, %d delta\n", currentExtractedData.measures[i].distanceMillimeter, currentExtractedData.measures[i].angleDelta);
+				
+				if (!isInitialPacket)
+				{
+				}
+				else isInitialPacket = false;
+				
+				// Keep data for next packet processing
+				memcpy(&previousExtractedData, &currentExtractedData, sizeof(currentExtractedData));
 				
 				// TODO
 			} while (_isDistanceSamplingEnabled);

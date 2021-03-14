@@ -18,8 +18,14 @@
 
 #include <stdio.h>
 
-/** TODO */
+/** How many angles cna be sampled by this lidar. */
+#define LIDAR_ANGLES_COUNT 360
+
+/** The flag starting every lidar command and answer. */
 #define LIDAR_COMMUNICATION_PROTOCOL_START_FLAG 0xA5
+
+/** TODO */
+#define LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT 16
 
 namespace Lidar
 {
@@ -29,12 +35,38 @@ namespace Lidar
 		COMMAND_CODE_EXPRESS_SCAN = 0x82
 	} CommandCode;
 	
+	/** TODO */
+	typedef struct __attribute__((packed))
+	{
+		unsigned char data[5];
+	} ScanLegacyDataCabin;
+	
+	/** TODO */
+	typedef struct __attribute__((packed))
+	{
+		unsigned char reserved[2];
+		unsigned short startAngle;
+		ScanLegacyDataCabin cabins[LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT];
+	} ScanLegacyData;
+	
+	/** TODO */
+	typedef struct
+	{
+		int distanceMillimeter;
+		int angleDegree;
+	} Measure;
+	
 	/** Make the thread sleep until distance sampling is enabled. */
 	static pthread_cond_t _waitConditionDistanceSampling = PTHREAD_COND_INITIALIZER;
 	/** The wait condition mutex. */
 	static pthread_mutex_t _mutexWaitConditionDistanceSampling = PTHREAD_MUTEX_INITIALIZER;
 	/** Tell whether the wait condition is still blocking. */
 	static bool _isDistanceSamplingEnabled = false;
+	
+	/** Store latest measured distances for each angle degree. */
+	static int _distanceFromAngles[LIDAR_ANGLES_COUNT];
+	/** Allow atomic access to angles data. */
+	static pthread_mutex_t _mutexDistanceData = PTHREAD_MUTEX_INITIALIZER;
 	
 	/** The serial port used to communicate with the lidar. */
 	static int _serialPortFileDescriptor;
@@ -145,6 +177,57 @@ namespace Lidar
 		return 0;
 	}
 	
+	/** Receive all the bytes of an expected response.
+	 * @param bytesCount How many bytes to receive. This function will block until all bytes are received.
+	 * @param pointerOutputBuffer On output, contain the received data. Make sure the provided buffer is large enough.
+	 * @return -1 if an error occurred,
+	 * @return 0 on success.
+	 */
+	static int _receiveCommandResponse(int bytesCount, void *pointerOutputBuffer)
+	{
+		unsigned char *pointerBufferByte = reinterpret_cast<unsigned char *>(pointerOutputBuffer);
+		
+		while (bytesCount > 0)
+		{
+			// Try to read the next byte
+			if (read(_serialPortFileDescriptor, pointerBufferByte, 1) != 1) return -1;
+			
+			// Prepare for next one
+			pointerBufferByte++;
+			bytesCount--;
+		}
+		
+		return 0;
+	}
+	
+	/** TODO
+	 * @param pointerMeasures On output, contain the extracted measures. The provided buffer must be 2 times LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT big because each cabin contains 2 measures.
+	 */
+	static inline void _processScanLegacyData(ScanLegacyData *pointerData, Measure *pointerMeasures)
+	{
+		int i, angleDelta;
+		ScanLegacyDataCabin *pointerCabin;
+		
+		// Process each cabin
+		for (i = 0; i < LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT; i++)
+		{
+			// Cache current cabin access
+			pointerCabin = &pointerData->cabins[i];
+			
+			// Extract first distance
+			pointerMeasures->distanceMillimeter = ((pointerCabin->data[1] << 6) | (pointerCabin->data[0] >> 2)) & 0x3FFF;
+			// Extract first angle delta
+			angleDelta = ((pointerCabin->data[0] & 0x03) << 4) | (pointerCabin->data[4] & 0x0F);
+			// TODO
+			pointerMeasures++;
+			
+			// Extract second distance
+			pointerMeasures->distanceMillimeter = ((pointerCabin->data[3] << 6) | (pointerCabin->data[2] >> 2)) & 0x3FFF;
+			// TODO
+			pointerMeasures++;
+		}
+	}
+	
 	/** The distance sampling thread. */
 	static void *_threadDistanceSampling(void *)
 	{
@@ -152,6 +235,8 @@ namespace Lidar
 		struct gpiohandle_request gpioRequest;
 		struct gpiohandle_data gpioData;
 		unsigned char commandPayloadBuffer[8]; // No need for more bytes for the used commands
+		ScanLegacyData scanData;
+		Measure m[32]; // TEST
 		
 		// Get access to GPIO controller
 		gpioChipFileDescriptor = open("/dev/gpiochip0", O_RDONLY);
@@ -212,15 +297,21 @@ namespace Lidar
 			if (_sendCommand(COMMAND_CODE_EXPRESS_SCAN, commandPayloadBuffer, 5) != 0) goto Exit;
 			
 			// Get first response
-			//if (read(_serialPortFileDescriptor, commandPayloadBuffer, 7) != 7) LOG(LOG_WARNING, "Warning : failed to read response to express scan command (%s).", strerror(errno));
+			if (_receiveCommandResponse(7, commandPayloadBuffer) != 0) LOG(LOG_WARNING, "Warning : failed to read response to express scan command (%s).", strerror(errno)); // Recycle "commandPayloadBuffer" variable
 			
 			// Sample data until lidar is disabled
 			do
 			{
-				unsigned char byte;
+				// Retrieve next data response packet
+				if (_receiveCommandResponse(sizeof(scanData), &scanData) != 0)
+				{
+					LOG(LOG_WARNING, "Warning : failed to receive scan data response, trying next one.");
+					continue;
+				}
+				
 				// TEST
-				if (read(_serialPortFileDescriptor, &byte, 1) != 1) printf("READ ERROR\n");
-				printf("READ BYTE %d 0x%02X %c\n", byte, byte, byte);
+				_processScanLegacyData(&scanData, m);
+				for (int i = 0; i < 32; i++) printf("%d\n", m[i].distanceMillimeter);
 				
 				// TODO
 			} while (_isDistanceSamplingEnabled);

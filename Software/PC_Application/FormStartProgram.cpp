@@ -16,6 +16,7 @@ FormStartProgram::FormStartProgram(QWidget *parent) :
 
     // Fill list on startup as its content won't change
     ui->listWidget->addItem(tr("Follow tennis ball"));
+    ui->listWidget->addItem(tr("Wander with no goal"));
 
     // Connect slots
     connect(ui->listWidget, &QListWidget::itemClicked, this, &FormStartProgram::_slotListWidgetItemClicked);

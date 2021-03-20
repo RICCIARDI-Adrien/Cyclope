@@ -30,6 +30,7 @@ namespace Lidar
 	/** All used command codes. */
 	typedef enum
 	{
+		COMMAND_CODE_STOP = 0x25,
 		COMMAND_CODE_EXPRESS_SCAN = 0x82
 	} CommandCode;
 	
@@ -131,7 +132,7 @@ namespace Lidar
 	
 	/** Send a command to the lidar.
 	 * @param commandCode The command code. Command start flag is automatically added.
-	 * @param pointerPayloadBuffer Contain an optional payload. Payload size and checksum are automatically added.
+	 * @param pointerPayloadBuffer Contain an optional payload. Payload size and checksum are automatically added. It can be NULL if no payload is provided.
 	 * @param payloadBufferSize The payload size in bytes. Set to 0 if there is no payload.
 	 * @return -1 if an error occurred,
 	 * @return 0 on success.
@@ -390,7 +391,9 @@ namespace Lidar
 				memcpy(&previousExtractedData, &currentExtractedData, sizeof(currentExtractedData));
 			} while (_isDistanceSamplingEnabled);
 			
-			// TODO
+			// Tell lidar to stop
+			_sendCommand(COMMAND_CODE_STOP, nullptr, 0); // No need to check result as lidar power will be turned off
+			usleep(50000); // Give some time to the lidar to stop
 			
 			// Disable lidar power
 			gpioData.values[0] = 0;

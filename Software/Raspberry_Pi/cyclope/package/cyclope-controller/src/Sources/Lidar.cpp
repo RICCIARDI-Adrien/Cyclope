@@ -249,6 +249,7 @@ namespace Lidar
 		
 		// Extract starting angle
 		pointerExtractedData->startAngle = pointerPacket->startAngle & 0x7FFF;
+		pointerExtractedData->startAngle <<= 2; // Adjust value to be multiplied by 256 (extracted value is multiplied by 64)
 		
 		// Process each cabin
 		for (i = 0; i < LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT; i++)
@@ -260,12 +261,14 @@ namespace Lidar
 			pointerExtractedData->measures[measuresIndex].distanceMillimeter = ((pointerCabin->data[1] << 6) | (pointerCabin->data[0] >> 2)) & 0x3FFF;
 			// Extract first angle delta
 			pointerExtractedData->measures[measuresIndex].angleDelta = ((pointerCabin->data[0] & 0x03) << 4) | (pointerCabin->data[4] & 0x0F);
+			pointerExtractedData->measures[measuresIndex].angleDelta <<= 5; // Adjust value to be multiplied by 256 (extracted value is multiplied by 8)
 			measuresIndex++;
-			
+
 			// Extract second distance
 			pointerExtractedData->measures[measuresIndex].distanceMillimeter = ((pointerCabin->data[3] << 6) | (pointerCabin->data[2] >> 2)) & 0x3FFF;
 			// Extract second angle delta
 			pointerExtractedData->measures[measuresIndex].angleDelta = ((pointerCabin->data[2] & 0x03) << 4) | (pointerCabin->data[4] >> 4);
+			pointerExtractedData->measures[measuresIndex].angleDelta <<= 5; // Adjust value to be multiplied by 256 (extracted value is multiplied by 8)
 			measuresIndex++;
 		}
 	}
@@ -273,7 +276,7 @@ namespace Lidar
 	/** The distance sampling thread. */
 	static void *_threadDistanceSampling(void *)
 	{
-		int gpioChipFileDescriptor, gpioFileDescriptor = -1;
+		int gpioChipFileDescriptor, gpioFileDescriptor = -1, angleDifference, i, angleDegree;
 		struct gpiohandle_request gpioRequest;
 		struct gpiohandle_data gpioData;
 		unsigned char commandPayloadBuffer[8]; // No need for more bytes for the used commands
@@ -356,11 +359,23 @@ namespace Lidar
 				_extractScanLegacyData(&packet, &currentExtractedData);
 				
 				// TEST
-				printf("STARTING ANGLE %d\n", currentExtractedData.startAngle / 64);
-				for (int i = 0; i < 32; i++) printf("%d mm, %d delta\n", currentExtractedData.measures[i].distanceMillimeter, currentExtractedData.measures[i].angleDelta);
+				printf("\033[31mSTARTING ANGLE %d\033[0m\n", currentExtractedData.startAngle / 256);
 				
 				if (!isInitialPacket)
 				{
+					// Compute documentation AngleDiff() function only once
+					if (previousExtractedData.startAngle <= currentExtractedData.startAngle) angleDifference = currentExtractedData.startAngle - previousExtractedData.startAngle;
+					else angleDifference = 360 + currentExtractedData.startAngle - previousExtractedData.startAngle;
+					angleDifference /= 32;
+					
+					for (i = 0; i < LIDAR_SCAN_LEGACY_DATA_MEASURES_COUNT; i++)
+					{
+						angleDegree = previousExtractedData.startAngle + (angleDifference * (i + 1)) - previousExtractedData.measures[i].angleDelta;
+						// TEST
+						angleDegree >>= 8;
+						//printf("%d mm, %d deg\n", previousExtractedData.measures[i].distanceMillimeter, angleDegree);
+						printf("%d (0x%08X), %d deg, dist %d\n", previousExtractedData.measures[i].angleDelta, previousExtractedData.measures[i].angleDelta, angleDegree, previousExtractedData.measures[i].distanceMillimeter);
+					}
 				}
 				else isInitialPacket = false;
 				

@@ -390,6 +390,8 @@ namespace Lidar
 				memcpy(&previousExtractedData, &currentExtractedData, sizeof(currentExtractedData));
 			} while (_isDistanceSamplingEnabled);
 			
+			// TODO
+			
 			// Disable lidar power
 			gpioData.values[0] = 0;
 			if (ioctl(gpioFileDescriptor, GPIOHANDLE_SET_LINE_VALUES_IOCTL, &gpioData) < 0)
@@ -446,5 +448,35 @@ namespace Lidar
 		pthread_mutex_lock(&_mutexDistanceFromAngles);
 		memcpy(pointerDistanceFromAngles, _distanceFromAngles, sizeof(_distanceFromAngles));
 		pthread_mutex_unlock(&_mutexDistanceFromAngles);
+	}
+	
+	void getDistanceRangeLimits(int *pointerDistanceFromAngles, int startingAngle, int endingAngle, int *pointerMinimumDistance, int *pointerMaximumDistance)
+	{
+		int distance, minimumDistance = 10000000, maximumDistance = 0; // Initialize values with values that can't exist
+		
+		// Make sure provided angles are valid
+		startingAngle %= 360;
+		endingAngle %= 360;
+		
+		// Process each angle in between the provided range
+		while (startingAngle != endingAngle)
+		{
+			// Determine minimum and maximum distances
+			distance = pointerDistanceFromAngles[startingAngle];
+			if ((distance > 0) && (distance < minimumDistance)) minimumDistance = distance; // Do not take 0 (which stands for a bad measure) into account
+			else if (distance > maximumDistance) maximumDistance = distance;
+			
+			// Check next angle
+			startingAngle++;
+			if (startingAngle >= 360) startingAngle = 0;
+		}
+		
+		// Update provided output values
+		if (pointerMinimumDistance != nullptr)
+		{
+			if (minimumDistance == 10000000) minimumDistance = 0; // Force minimum distance to 0 in case all measured distances were bad
+			*pointerMinimumDistance = minimumDistance;
+		}
+		if (pointerMaximumDistance != nullptr) *pointerMaximumDistance = maximumDistance;
 	}
 }

@@ -57,9 +57,6 @@ int main()
 		return EXIT_FAILURE;
 	}
 	
-	// TEST
-	Lidar::setEnabled(true);
-	
 	// Execute AI programs
 	while (1)
 	{

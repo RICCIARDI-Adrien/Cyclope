@@ -244,12 +244,12 @@ namespace Lidar
 	 */
 	static inline void _extractScanLegacyData(ScanLegacyResponsePacket *pointerPacket, ScanLegacyExtractedData *pointerExtractedData)
 	{
-		int i, measuresIndex = 0;
+		int i, j, measuresIndex = 0;
 		ScanLegacyDataCabin *pointerCabin;
 		
 		// Extract starting angle
 		pointerExtractedData->startAngle = pointerPacket->startAngle & 0x7FFF;
-		pointerExtractedData->startAngle <<= 2; // Adjust value to be multiplied by 256 (extracted value is multiplied by 64)
+		//pointerExtractedData->startAngle <<= 2; // Adjust value to be multiplied by 256 (extracted value is multiplied by 64)
 		
 		// Process each cabin
 		for (i = 0; i < LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT; i++)
@@ -257,19 +257,57 @@ namespace Lidar
 			// Cache current cabin access
 			pointerCabin = &pointerPacket->cabins[i];
 			
+			//for (int g = 0; g < 5; g++) printf("cab[%d] = 0x%02X\n", g, pointerCabin->data[g]);
+			
 			// Extract first distance
 			pointerExtractedData->measures[measuresIndex].distanceMillimeter = ((pointerCabin->data[1] << 6) | (pointerCabin->data[0] >> 2)) & 0x3FFF;
 			// Extract first angle delta
 			pointerExtractedData->measures[measuresIndex].angleDelta = ((pointerCabin->data[0] & 0x03) << 4) | (pointerCabin->data[4] & 0x0F);
-			pointerExtractedData->measures[measuresIndex].angleDelta <<= 5; // Adjust value to be multiplied by 256 (extracted value is multiplied by 8)
-			measuresIndex++;
+			//printf("angle 1 = %d (%#02X)\n", pointerExtractedData->measures[measuresIndex].angleDelta, pointerExtractedData->measures[measuresIndex].angleDelta);
+			//pointerExtractedData->measures[measuresIndex].angleDelta <<= 5; // Adjust value to be multiplied by 256 (extracted value is multiplied by 8)
+			//printf("angle 1 q8 = %d (%#02X)\n", pointerExtractedData->measures[measuresIndex].angleDelta, pointerExtractedData->measures[measuresIndex].angleDelta);
+			//measuresIndex++;
 
 			// Extract second distance
-			pointerExtractedData->measures[measuresIndex].distanceMillimeter = ((pointerCabin->data[3] << 6) | (pointerCabin->data[2] >> 2)) & 0x3FFF;
+			pointerExtractedData->measures[measuresIndex + 1].distanceMillimeter = ((pointerCabin->data[3] << 6) | (pointerCabin->data[2] >> 2)) & 0x3FFF;
 			// Extract second angle delta
-			pointerExtractedData->measures[measuresIndex].angleDelta = ((pointerCabin->data[2] & 0x03) << 4) | (pointerCabin->data[4] >> 4);
-			pointerExtractedData->measures[measuresIndex].angleDelta <<= 5; // Adjust value to be multiplied by 256 (extracted value is multiplied by 8)
-			measuresIndex++;
+			pointerExtractedData->measures[measuresIndex + 1].angleDelta = ((pointerCabin->data[2] & 0x03) << 4) | (pointerCabin->data[4] >> 4);
+			//printf("angle 2 = %d (%#02X)\n", pointerExtractedData->measures[measuresIndex + 1].angleDelta, pointerExtractedData->measures[measuresIndex + 1].angleDelta);
+			//pointerExtractedData->measures[measuresIndex + 1].angleDelta <<= 5; // Adjust value to be multiplied by 256 (extracted value is multiplied by 8)
+			//printf("angle 2 q8 = %d (%#02X)\n", pointerExtractedData->measures[measuresIndex + 1].angleDelta, pointerExtractedData->measures[measuresIndex + 1].angleDelta);
+			//measuresIndex++;
+			
+			// Convert each angle delta to the same unit than the other values (i.e. multiplied by 256)
+#if 0
+			for (j = 0; j < 2; j++)
+			{
+				//printf("angle brut = %d (%#02X)\n", pointerExtractedData->measures[measuresIndex + j].angleDelta, pointerExtractedData->measures[measuresIndex + j].angleDelta);
+				
+				// Create a signed integer from the angular value (bit 5 of extracted data is the sign bit)
+				pointerExtractedData->measures[measuresIndex + j].angleDelta <<= 26;
+				//printf("ciccio 1 = %d (%#X)\n", pointerExtractedData->measures[measuresIndex + j].angleDelta, pointerExtractedData->measures[measuresIndex + j].angleDelta);
+				
+				pointerExtractedData->measures[measuresIndex + j].angleDelta /= 67108864;
+				//printf("ciccio 2 = %d (%#X)\n", pointerExtractedData->measures[measuresIndex + j].angleDelta, pointerExtractedData->measures[measuresIndex + j].angleDelta);
+				
+				// Bit 5 of extracted data is the sign bit, so convert data to negative if it is set
+				/*if (pointerExtractedData->measures[measuresIndex + j].angleDelta & (1 << 5))
+				{
+					// Clear sign bit before conversion as it is not part of the value
+					pointerExtractedData->measures[measuresIndex + j].angleDelta &= ~(1 << 5);
+					
+					// Convert value to negative
+					pointerExtractedData->measures[measuresIndex + j].angleDelta = -pointerExtractedData->measures[measuresIndex + j].angleDelta;
+				}*/
+				
+				// Adjust value to be multiplied by 256 (extracted value is multiplied by 8)
+				//pointerExtractedData->measures[measuresIndex].angleDelta <<= 5; // Sign bit will be preserved by the logical shift as computation are done on 32 bits for 14-bit numbers
+				
+				//printf("angle converti = %d (%#02X)\n", pointerExtractedData->measures[measuresIndex + j].angleDelta, pointerExtractedData->measures[measuresIndex + j].angleDelta);
+			}
+#endif
+			
+			measuresIndex += 2;
 		}
 	}
 	
@@ -359,12 +397,46 @@ namespace Lidar
 				_extractScanLegacyData(&packet, &currentExtractedData);
 				
 				// TEST
-				printf("\033[31mSTARTING ANGLE %d\033[0m\n", currentExtractedData.startAngle / 256);
+				printf("\033[31mSTARTING ANGLE %d\033[0m\n", currentExtractedData.startAngle / /*256*/ 64);
 				
 				if (!isInitialPacket)
 				{
+					int currentStartAngle_q8 = currentExtractedData.startAngle << 2;
+					int prevStartAngle_q8 = previousExtractedData.startAngle << 2;
+					
+					int diffAngle_q8 = (currentStartAngle_q8) - (prevStartAngle_q8);
+					if (prevStartAngle_q8 >  currentStartAngle_q8) {
+						diffAngle_q8 += (360<<8);
+					}
+					
+					int angleInc_q16 = (diffAngle_q8 << 3);
+					int currentAngle_raw_q16 = (prevStartAngle_q8 << 8);
+					
+					for (size_t pos = 0; pos < 16; ++pos)
+					{
+						int angle_q16[2];
+
+						int angle_offset1_q3 = previousExtractedData.measures[pos * 2].angleDelta;
+						int angle_offset2_q3 = previousExtractedData.measures[pos * 2 + 1].angleDelta;
+
+						angle_q16[0] = (currentAngle_raw_q16 - (angle_offset1_q3<<13));
+						currentAngle_raw_q16 += angleInc_q16;
+
+						angle_q16[1] = (currentAngle_raw_q16 - (angle_offset2_q3<<13));
+						currentAngle_raw_q16 += angleInc_q16;
+
+						for (int cpos = 0; cpos < 2; ++cpos) {
+
+							if (angle_q16[cpos] < 0) angle_q16[cpos] += (360<<16);
+							if (angle_q16[cpos] >= (360<<16)) angle_q16[cpos] -= (360<<16);
+
+							angleDegree = (angle_q16[cpos] >> 2) / 90;
+							printf("%f deg, %d, %d\n", angleDegree * 90.f / (1 << 14), angle_q16[cpos], angle_q16[cpos] >> 16);
+						}
+					}
+					
 					// Compute documentation AngleDiff() function only once
-					if (previousExtractedData.startAngle <= currentExtractedData.startAngle) angleDifference = currentExtractedData.startAngle - previousExtractedData.startAngle;
+					/*if (previousExtractedData.startAngle <= currentExtractedData.startAngle) angleDifference = currentExtractedData.startAngle - previousExtractedData.startAngle;
 					else angleDifference = 360 + currentExtractedData.startAngle - previousExtractedData.startAngle;
 					angleDifference /= 32;
 					
@@ -375,7 +447,7 @@ namespace Lidar
 						angleDegree >>= 8;
 						//printf("%d mm, %d deg\n", previousExtractedData.measures[i].distanceMillimeter, angleDegree);
 						printf("%d (0x%08X), %d deg, dist %d\n", previousExtractedData.measures[i].angleDelta, previousExtractedData.measures[i].angleDelta, angleDegree, previousExtractedData.measures[i].distanceMillimeter);
-					}
+					}*/
 				}
 				else isInitialPacket = false;
 				

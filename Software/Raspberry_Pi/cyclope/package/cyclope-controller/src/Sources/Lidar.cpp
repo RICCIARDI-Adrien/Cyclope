@@ -16,11 +16,6 @@
 #include <termios.h>
 #include <unistd.h>
 
-#include <stdio.h>
-
-/** How many angles can be sampled by this lidar. */
-#define LIDAR_ANGLES_COUNT 360
-
 /** The flag starting every lidar command and answer. */
 #define LIDAR_COMMUNICATION_PROTOCOL_START_FLAG 0xA5
 
@@ -443,5 +438,13 @@ namespace Lidar
 			pthread_mutex_unlock(&_mutexWaitConditionDistanceSampling);
 		}
 		else _isDistanceSamplingEnabled = false;
+	}
+	
+	void getLastDistances(int *pointerDistanceFromAngles)
+	{
+		// Atomically retrieve the array content
+		pthread_mutex_lock(&_mutexDistanceFromAngles);
+		memcpy(pointerDistanceFromAngles, _distanceFromAngles, sizeof(_distanceFromAngles));
+		pthread_mutex_unlock(&_mutexDistanceFromAngles);
 	}
 }

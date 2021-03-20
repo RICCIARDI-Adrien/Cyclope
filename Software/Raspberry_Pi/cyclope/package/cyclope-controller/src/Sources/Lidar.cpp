@@ -18,7 +18,7 @@
 
 #include <stdio.h>
 
-/** How many angles cna be sampled by this lidar. */
+/** How many angles can be sampled by this lidar. */
 #define LIDAR_ANGLES_COUNT 360
 
 /** The flag starting every lidar command and answer. */
@@ -76,7 +76,7 @@ namespace Lidar
 	/** Store latest measured distances for each angle degree. */
 	static int _distanceFromAngles[LIDAR_ANGLES_COUNT];
 	/** Allow atomic access to angles data. */
-	static pthread_mutex_t _mutexDistanceData = PTHREAD_MUTEX_INITIALIZER;
+	static pthread_mutex_t _mutexDistanceFromAngles = PTHREAD_MUTEX_INITIALIZER;
 	
 	/** The serial port used to communicate with the lidar. */
 	static int _serialPortFileDescriptor;
@@ -210,36 +210,6 @@ namespace Lidar
 		return 0;
 	}
 	
-	/** TODO
-	 * @param pointerMeasures On output, contain the extracted measures. The provided buffer must be 2 times LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT big because each cabin contains 2 measures.
-	 */
-/*	static inline void _processScanLegacyData(ScanLegacyRawData *pointerData, Measure *pointerMeasures)
-	{
-		int i, angleDelta;
-		ScanLegacyDataCabin *pointerCabin;
-		
-		printf("START ANGLE %d\n", (pointerData->startAngle & 0x7FFF) / 64);
-		
-		// Process each cabin
-		for (i = 0; i < LIDAR_SCAN_LEGACY_DATA_CABINS_COUNT; i++)
-		{
-			// Cache current cabin access
-			pointerCabin = &pointerData->cabins[i];
-			
-			// Extract first distance
-			pointerMeasures->distanceMillimeter = ((pointerCabin->data[1] << 6) | (pointerCabin->data[0] >> 2)) & 0x3FFF;
-			// Extract first angle delta
-			angleDelta = ((pointerCabin->data[0] & 0x03) << 4) | (pointerCabin->data[4] & 0x0F);
-			// TODO
-			pointerMeasures++;
-			
-			// Extract second distance
-			pointerMeasures->distanceMillimeter = ((pointerCabin->data[3] << 6) | (pointerCabin->data[2] >> 2)) & 0x3FFF;
-			// TODO
-			pointerMeasures++;
-		}
-	}*/
-	
 	/** Retrieve the relevant data from a raw lidar reponse packet.
 	 * @param pointerPacket The raw scan response packet received from the lidar.
 	 * @param pointerExtractedData On output, contain the reassembled information. Only relevant information are extracted, they are kept in their original units.
@@ -314,9 +284,6 @@ namespace Lidar
 				// Fill corresponding distance using angle as index
 				angleDegree = angle_q16[cpos] >> 16; // Convert angle to degrees
 				pointerDistanceFromAnglesArray[angleDegree] = pointerPreviousExtractedData->measures[pos * 2 + cpos].distanceMillimeter;
-				
-				// TEST
-				printf("angle %d, dist %d\n", angleDegree, pointerDistanceFromAnglesArray[angleDegree]);
 			}
 		}
 	}
@@ -324,7 +291,7 @@ namespace Lidar
 	/** The distance sampling thread. */
 	static void *_threadDistanceSampling(void *)
 	{
-		int gpioChipFileDescriptor, gpioFileDescriptor = -1, distanceFromAngles[LIDAR_ANGLES_COUNT] = {0};
+		int gpioChipFileDescriptor, gpioFileDescriptor = -1, distanceFromAngles[LIDAR_ANGLES_COUNT] = {0}, updatedMeasuresCount = 0;
 		struct gpiohandle_request gpioRequest;
 		struct gpiohandle_data gpioData;
 		unsigned char commandPayloadBuffer[8]; // No need for more bytes for the used commands
@@ -406,17 +373,26 @@ namespace Lidar
 				// Recompose packet content
 				_extractScanLegacyData(&packet, &currentExtractedData);
 				
-				// TEST
-				printf("\033[31mSTARTING ANGLE %d\033[0m\n", currentExtractedData.startAngle / /*256*/ 64);
-				
 				// Extract measured distances
-				if (!isInitialPacket) _processScanLegacyData(&previousExtractedData, &currentExtractedData, distanceFromAngles);
+				if (!isInitialPacket)
+				{
+					_processScanLegacyData(&previousExtractedData, &currentExtractedData, distanceFromAngles);
+					updatedMeasuresCount += LIDAR_SCAN_LEGACY_DATA_MEASURES_COUNT;
+					
+					// Atomically update global distance array if enough measures have been taken
+					if (updatedMeasuresCount >= LIDAR_ANGLES_COUNT)
+					{
+						pthread_mutex_lock(&_mutexDistanceFromAngles);
+						memcpy(_distanceFromAngles, distanceFromAngles, sizeof(distanceFromAngles));
+						pthread_mutex_unlock(&_mutexDistanceFromAngles);
+						
+						updatedMeasuresCount = 0;
+					}
+				}
 				else isInitialPacket = false;
 				
 				// Keep data for next packet processing
 				memcpy(&previousExtractedData, &currentExtractedData, sizeof(currentExtractedData));
-				
-				// TODO
 			} while (_isDistanceSamplingEnabled);
 			
 			// Disable lidar power

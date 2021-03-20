@@ -9,6 +9,9 @@ namespace ArtificialIntelligenceProgram
 {
 	/** Follow a tennis ball while it is visible by the robot and it is not too close. */
 	void followTennisBall();
+	
+	/** TODO */
+	void wanderWithNoGoal();
 }
 
 #endif

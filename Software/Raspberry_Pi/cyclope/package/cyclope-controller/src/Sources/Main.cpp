@@ -69,10 +69,14 @@ int main()
 		
 		// Execute the requested program
 		LOG(LOG_INFO, "Beginning execution of AI program %d.\n", programIndex); // TODO also display a string with the program name
-		switch (programIndex)
+		switch (programIndex) // TODO function pointers ?
 		{
 			case 0:
 				ArtificialIntelligenceProgram::followTennisBall();
+				break;
+				
+			case 1:
+				ArtificialIntelligenceProgram::wanderWithNoGoal();
 				break;
 				
 			default:

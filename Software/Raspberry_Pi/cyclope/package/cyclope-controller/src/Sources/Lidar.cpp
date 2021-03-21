@@ -279,7 +279,8 @@ namespace Lidar
 
 				// Fill corresponding distance using angle as index
 				angleDegree = angle_q16[cpos] >> 16; // Convert angle to degrees
-				pointerDistanceFromAnglesArray[angleDegree] = pointerPreviousExtractedData->measures[pos * 2 + cpos].distanceMillimeter;
+				// Save value only if angle is valid
+				if ((angleDegree >= 0) && (angleDegree <= 359)) pointerDistanceFromAnglesArray[angleDegree] = pointerPreviousExtractedData->measures[pos * 2 + cpos].distanceMillimeter;
 			}
 		}
 	}

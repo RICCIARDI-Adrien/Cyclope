@@ -130,20 +130,6 @@ F 3 "http://www.diodes.com/assets/Datasheets/ds31739.pdf" H 3250 4250 50  0001 L
 	1    3250 4250
 	1    0    0    -1  
 $EndComp
-$Comp
-L Connector_Generic:Conn_01x07 J?
-U 1 1 60342521
-P 6100 2150
-AR Path="/5F22814A/60342521" Ref="J?"  Part="1" 
-AR Path="/601E5913/60342521" Ref="J6"  Part="1" 
-F 0 "J6" V 6064 1762 50  0000 R CNN
-F 1 "22-03-5075" V 5973 1762 50  0000 R CNN
-F 2 "Connector_Molex:Molex_SPOX_5267-07A_1x07_P2.50mm_Vertical" H 6100 2150 50  0001 C CNN
-F 3 "https://www.molex.com/webdocs/datasheets/pdf/en-us/0022035075_PCB_HEADERS.pdf" H 6100 2150 50  0001 C CNN
-F 4 "Molex" H 6100 2150 50  0001 C CNN "Manufacturer"
-	1    6100 2150
-	0    -1   -1   0   
-$EndComp
 Text Notes 5800 1950 0    50   ~ 0
 Lidar\nRPLIDAR A1M8
 Wire Wire Line
@@ -338,4 +324,18 @@ Wire Wire Line
 Connection ~ 4800 2550
 Text Notes 4850 5200 0    50   ~ 0
 Allow to create a pi\nfilter if needed to keep\nlidar core voltage below\n50mVpp ripple.
+$Comp
+L Connector_Generic:Conn_01x07 J?
+U 1 1 60342521
+P 6100 2150
+AR Path="/5F22814A/60342521" Ref="J?"  Part="1" 
+AR Path="/601E5913/60342521" Ref="J6"  Part="1" 
+F 0 "J6" V 6064 2530 50  0000 L CNN
+F 1 "22-03-5075" V 5973 2530 50  0000 L CNN
+F 2 "Connector_Molex:Molex_SPOX_5267-07A_1x07_P2.50mm_Vertical" H 6100 2150 50  0001 C CNN
+F 3 "https://www.molex.com/webdocs/datasheets/pdf/en-us/0022035075_PCB_HEADERS.pdf" H 6100 2150 50  0001 C CNN
+F 4 "Molex" H 6100 2150 50  0001 C CNN "Manufacturer"
+	1    6100 2150
+	0    1    -1   0   
+$EndComp
 $EndSCHEMATC

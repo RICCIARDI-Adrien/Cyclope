@@ -16,6 +16,8 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include <stdio.h>
+
 /** The flag starting every lidar command and answer. */
 #define LIDAR_COMMUNICATION_PROTOCOL_START_FLAG 0xA5
 
@@ -276,7 +278,7 @@ namespace Lidar
 
 				if (angle_q16[cpos] < 0) angle_q16[cpos] += (360<<16);
 				if (angle_q16[cpos] >= (360<<16)) angle_q16[cpos] -= (360<<16);
-
+				
 				// Fill corresponding distance using angle as index
 				angleDegree = angle_q16[cpos] >> 16; // Convert angle to degrees
 				// Save value only if angle is valid
@@ -288,6 +290,7 @@ namespace Lidar
 	/** The distance sampling thread. */
 	static void *_threadDistanceSampling(void *)
 	{
+		static unsigned char startExpressScanCommandAnswer[] = { LIDAR_COMMUNICATION_PROTOCOL_START_FLAG, 0x5A, 0x54, 0, 0, 0x40, 0x82 };
 		int gpioChipFileDescriptor, gpioFileDescriptor = -1, distanceFromAngles[LIDAR_ANGLES_COUNT] = {0}, updatedMeasuresCount = 0;
 		struct gpiohandle_request gpioRequest;
 		struct gpiohandle_data gpioData;
@@ -343,7 +346,7 @@ namespace Lidar
 				goto Exit;
 			}
 			
-			// Wait 3 seconds for the motor to spin
+			// Wait some time for the motor to spin
 			usleep(3000000);
 			
 			// RPLIDAR A1M8 preferred scan mode is Express one, which has index 1, so start scanning using this mode
@@ -354,8 +357,23 @@ namespace Lidar
 			commandPayloadBuffer[4] = 0;
 			if (_sendCommand(COMMAND_CODE_EXPRESS_SCAN, commandPayloadBuffer, 5) != 0) goto Exit;
 			
-			// Get first response
-			if (_receiveCommandResponse(7, commandPayloadBuffer) != 0) LOG(LOG_WARNING, "Warning : failed to read response to express scan command (%s).", strerror(errno)); // Recycle "commandPayloadBuffer" variable
+			// Lidar will reply with its firmware version number, discard this data
+			while (1)
+			{
+				// Read each byte until the command answer beginning
+				_receiveCommandResponse(1, commandPayloadBuffer); // Recycle "commandPayloadBuffer" variable
+				if (commandPayloadBuffer[0] == LIDAR_COMMUNICATION_PROTOCOL_START_FLAG)
+				{
+					// Get response content
+					if (_receiveCommandResponse(sizeof(startExpressScanCommandAnswer) - 1, &commandPayloadBuffer[1]) != 0) LOG(LOG_WARNING, "Warning : failed to read response to express scan command (%s).", strerror(errno)); // Recycle "commandPayloadBuffer" variable
+					
+					// Is this the expected response ?
+					if (memcmp(commandPayloadBuffer, startExpressScanCommandAnswer, sizeof(startExpressScanCommandAnswer)) != 0) LOG(LOG_WARNING, "Warning : bad response to express scan command.");
+					
+					// In all cases, assume lidar data are good
+					break;
+				}
+			}
 			
 			// Sample data until lidar is disabled
 			do

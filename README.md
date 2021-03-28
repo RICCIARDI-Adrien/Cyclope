@@ -3,10 +3,11 @@
 
 # Cyclope
 
-A little robot powered by a Raspberry Pi 3 A+ and featuring a 8MPixel Raspberry Pi Camera V2.  
-A fast WiFi connection allows to remote control the robot while displaying camera real-time full HD video stream.
+A little robot powered by a Raspberry Pi 3 A+, featuring a 8MPixel Raspberry Pi Camera V2 and a 360° lidar.  
+A fast WiFi connection allows to remote control the robot while displaying camera real-time full HD video stream.  
+A tailored Buildroot Linux distribution runs the software, controlled through WiFi by a Qt desktop application running on a computer.
 
-![Cyclope](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Cyclope.jpg)
+![Cyclope](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Cyclope_With_Lidar.jpg)
 
 ## Hardware
 
@@ -128,9 +129,23 @@ With Raspberry Pi Camera V2 mounted :
 
 ### Assembled robot
 
+![Robot front](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Cyclope.jpg)
 ![Robot front rotated](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Front_Rotated.jpg)
 ![Robot bottom rotated](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Bottom_Rotated.jpg)
 ![Robot front](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Front.jpg)
 ![Robot bottom](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Bottom.jpg)
 ![Robot left side](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Left_Side.jpg)
 ![Robot right side](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Right_Side.jpg)
+
+### Update for version 1.1 adding a 360° lidar
+
+Chassis top plate with lidar holes :
+![Chassis top plate](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Chassis_Lidar_Plate.jpg)
+
+Lidar assembled on chassis top plate :
+![Lidar on chassis top plate](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Top_Plate_With_Lidar.jpg)
+
+Motherboard PCB with lidar support :
+![PCB with lidar](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Motherboard_With_Lidar.jpg)
+
+![Robot side](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Cyclope_With_Lidar_Side.jpg)

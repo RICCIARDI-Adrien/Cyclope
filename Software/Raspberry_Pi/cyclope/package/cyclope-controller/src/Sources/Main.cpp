@@ -86,6 +86,8 @@ int main()
 		
 		// Make sure robot is stopped
 		Motor::setRobotMotion(Motor::ROBOT_MOTION_STOP);
+		Lidar::setEnabled(false);
+		Light::setEnabled(false);
 		
 		// Restart camera streaming
 		system("/etc/init.d/S99camera start"); // TODO control camera when manual driving mode is enabled ?

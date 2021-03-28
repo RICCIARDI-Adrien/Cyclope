@@ -4,6 +4,7 @@
  */
 #include <ArtificialIntelligenceProgram.hpp>
 #include <cstdio>
+#include <cstring>
 #include <Lidar.hpp>
 #include <Light.hpp>
 #include <Motor.hpp>
@@ -16,6 +17,7 @@ namespace ArtificialIntelligenceProgram
 	{
 		const int MAXIMUM_DISTANCE_MILLIMETER = 800; // The maximum distance taken into account by the robot
 		const int OBSTACLE_AVOIDANCE_DISTANCE_MILLIMETER = 400; // The distance at which the robot will change its direction to avoid the object
+		const int VERY_CLOSE_OBSTACLE_DISTANCE_MILLIMETER = 200; // The distance preventing the robot to go further, it must go back or it will collide something
 		int distanceFromAngles[LIDAR_ANGLES_COUNT], distance, leftDistance, rightDistance;
 		
 		// Reset robot state
@@ -43,16 +45,35 @@ namespace ArtificialIntelligenceProgram
 			// Clamp the distance to the maximum taken into account here
 			if (distance > MAXIMUM_DISTANCE_MILLIMETER) distance = MAXIMUM_DISTANCE_MILLIMETER;
 			
-			// Is an obstacle becoming close ?
-			if (distance < OBSTACLE_AVOIDANCE_DISTANCE_MILLIMETER)
+			// Is an obstacle very close ?
+			if (distance <= VERY_CLOSE_OBSTACLE_DISTANCE_MILLIMETER)
 			{
 				Light::setEnabled(true);
 				
-				// Is there more room to go on the left or on the right (keep 10° each side as hysteresis) ?
-				Lidar::getDistanceRangeLimits(distanceFromAngles, 315, 350, &leftDistance, nullptr);
-				Lidar::getDistanceRangeLimits(distanceFromAngles, 10, 45, &rightDistance, nullptr);
+				// Can the robot go straight backward ?
+				Lidar::getDistanceRangeLimits(distanceFromAngles, 135, 225, &distance, nullptr);
+				if (distance > OBSTACLE_AVOIDANCE_DISTANCE_MILLIMETER) Motor::setRobotMotion(Motor::ROBOT_MOTION_BACKWARD);
+				else
+				{
+					// Is there more room to go on the left or on the right in the backward direction (keep 5° each side as hysteresis) ?
+					Lidar::getDistanceRangeLimits(distanceFromAngles, 185, 240, &leftDistance, nullptr); // 60° on the bottom left side
+					Lidar::getDistanceRangeLimits(distanceFromAngles, 120, 175, &rightDistance, nullptr); // 60° on the bottom right side
+					
+					// Turn to the location with the less close obstacle
+					if (leftDistance > rightDistance) Motor::setRobotMotion(Motor::ROBOT_MOTION_BACKWARD_LEFT);
+					else Motor::setRobotMotion(Motor::ROBOT_MOTION_BACKWARD_RIGHT);
+				}
+			}
+			// Is an obstacle becoming close ?
+			else if (distance <= OBSTACLE_AVOIDANCE_DISTANCE_MILLIMETER)
+			{
+				Light::setEnabled(true);
 				
-				// Turn the the location with the less close obstacle
+				// Is there more room to go on the left or on the right (keep 5° each side as hysteresis) ?
+				Lidar::getDistanceRangeLimits(distanceFromAngles, 300, 355, &leftDistance, nullptr); // 55° on the top left side
+				Lidar::getDistanceRangeLimits(distanceFromAngles, 5, 60, &rightDistance, nullptr); // 55° on the top right side
+				
+				// Turn to the location with the less close obstacle
 				if (leftDistance > rightDistance) Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_LEFT);
 				else Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_RIGHT);
 			}

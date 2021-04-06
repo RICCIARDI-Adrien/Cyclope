@@ -24,9 +24,7 @@ namespace ArtificialIntelligenceProgram
 	/** TODO */
 	typedef enum
 	{
-		WANDER_WITH_NO_GOAL_STATE_DETERMINE_FORWARD_DISTANCE,
 		WANDER_WITH_NO_GOAL_STATE_GO_FORWARD,
-		WANDER_WITH_NO_GOAL_STATE_DETERMINE_OBSTACLE_AVOIDANCE_DIRECTION,
 		WANDER_WITH_NO_GOAL_STATE_BACKWARD_SEQUENCE_GO_TO_SAFE_LOCATION,
 		WANDER_WITH_NO_GOAL_STATE_BACKWARD_SEQUENCE_DETERMINE_NEXT_DIRECTION,
 		WANDER_WITH_NO_GOAL_STATE_TURN
@@ -48,7 +46,7 @@ namespace ArtificialIntelligenceProgram
 		const int OBSTACLE_AVOIDANCE_DISTANCE_MILLIMETER = 400; // The distance at which the robot will change its direction to avoid the object
 		const int VERY_CLOSE_OBSTACLE_DISTANCE_MILLIMETER = 200; // The distance preventing the robot to go further, it must go back or it will collide something
 		int distanceFromAngles[LIDAR_ANGLES_COUNT] = {0}, distance, leftDistance, rightDistance, furtherDistance, distanceFromDirections[WANDER_WITH_NO_GOAL_DIRECTIONS_COUNT], turnRemainingCounts = 0, i; // Prevent the robot from running until some valid data was processed by clearing distanceFromAngles array
-		WanderWithNoGoalState state = WANDER_WITH_NO_GOAL_STATE_DETERMINE_FORWARD_DISTANCE;
+		WanderWithNoGoalState state = WANDER_WITH_NO_GOAL_STATE_GO_FORWARD;
 		WanderWithNoGoalDirection furtherDistanceDirection;
 		
 		// Initialize pseudo-random numbers generator
@@ -74,56 +72,45 @@ namespace ArtificialIntelligenceProgram
 			
 			switch (state)
 			{
-				case WANDER_WITH_NO_GOAL_STATE_DETERMINE_FORWARD_DISTANCE:
-				{
-					// Search for the longest obstacle-free distance in front of the robot (using a field of view of 90°)
-					Lidar::getDistanceRangeLimits(distanceFromAngles, 315, 45, &distance, nullptr);
-					if (distance > MAXIMUM_DISTANCE_MILLIMETER) distance = MAXIMUM_DISTANCE_MILLIMETER; // Clamp the distance to the maximum taken into account here
-					
-					// Is an obstacle very close ?
-					if (distance <= VERY_CLOSE_OBSTACLE_DISTANCE_MILLIMETER) state = WANDER_WITH_NO_GOAL_STATE_BACKWARD_SEQUENCE_GO_TO_SAFE_LOCATION;
-					// Is an obstacle becoming close ?
-					else if (distance <= OBSTACLE_AVOIDANCE_DISTANCE_MILLIMETER) state = WANDER_WITH_NO_GOAL_STATE_DETERMINE_OBSTACLE_AVOIDANCE_DIRECTION;
-					// No obstacle at sight, go straight
-					else state = WANDER_WITH_NO_GOAL_STATE_GO_FORWARD;
-					break;
-				}
-				
 				case WANDER_WITH_NO_GOAL_STATE_GO_FORWARD:
 				{
-					// No obstacle at sight, turn leds off
-					Light::setEnabled(false);
+					// Can the robot go straight backward ?
+					Lidar::getDistanceRangeLimits(distanceFromAngles, 330, 30, &distance, nullptr);
+					if (distance > OBSTACLE_AVOIDANCE_DISTANCE_MILLIMETER)
+					{
+						// No obstacle at sight, turn leds off
+						Light::setEnabled(false);
+						
+						Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD);
+						WANDER_WITH_NO_GOAL_MOTORS_DELAY();
+					}
+					else if (distance > VERY_CLOSE_OBSTACLE_DISTANCE_MILLIMETER)
+					{
+						// One or more obstacles is detected, turn leds on
+						Light::setEnabled(true);
+						
+						// Is there more room to go on the left or on the right in the forward direction (keep 5° each side as hysteresis) ?
+						Lidar::getDistanceRangeLimits(distanceFromAngles, 315, 355, &leftDistance, nullptr); // 60° on the front left side
+						Lidar::getDistanceRangeLimits(distanceFromAngles, 5, 60, &rightDistance, nullptr); // 60° on the front right side
+						
+						// Turn to the location with the less close obstacle
+						if (leftDistance > rightDistance) Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_LEFT);
+						else Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_RIGHT);
+						WANDER_WITH_NO_GOAL_MOTORS_DELAY();
+					}
+					else
+					{
+						// Turn leds on until the robot terminates the escaping sequence
+						Light::setEnabled(true);
+						
+						state = WANDER_WITH_NO_GOAL_STATE_BACKWARD_SEQUENCE_GO_TO_SAFE_LOCATION;
+					}
 					
-					Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD);
-					WANDER_WITH_NO_GOAL_MOTORS_DELAY();
-					
-					state = WANDER_WITH_NO_GOAL_STATE_DETERMINE_FORWARD_DISTANCE;
-					break;
-				}
-				
-				case WANDER_WITH_NO_GOAL_STATE_DETERMINE_OBSTACLE_AVOIDANCE_DIRECTION:
-				{
-					// Obstacle detected, turn leds on
-					Light::setEnabled(true);
-				
-					// Is there more room to go on the left or on the right (keep 5° each side as hysteresis) ?
-					Lidar::getDistanceRangeLimits(distanceFromAngles, 300, 355, &leftDistance, nullptr); // 55° on the top left side
-					Lidar::getDistanceRangeLimits(distanceFromAngles, 5, 60, &rightDistance, nullptr); // 55° on the top right side
-					
-					// Turn to the location with the less close obstacle
-					if (leftDistance > rightDistance) Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_LEFT);
-					else Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_RIGHT);
-					WANDER_WITH_NO_GOAL_MOTORS_DELAY();
-					
-					state = WANDER_WITH_NO_GOAL_STATE_DETERMINE_FORWARD_DISTANCE;
 					break;
 				}
 				
 				case WANDER_WITH_NO_GOAL_STATE_BACKWARD_SEQUENCE_GO_TO_SAFE_LOCATION:
 				{
-					// Turn leds on until the robot terminates the escaping sequence
-					Light::setEnabled(true);
-					
 					// Can the robot go straight backward ?
 					Lidar::getDistanceRangeLimits(distanceFromAngles, 135, 225, &distance, nullptr);
 					if (distance > OBSTACLE_AVOIDANCE_DISTANCE_MILLIMETER) Motor::setRobotMotion(Motor::ROBOT_MOTION_BACKWARD);
@@ -169,7 +156,7 @@ namespace ArtificialIntelligenceProgram
 					if (furtherDistanceDirection == WANDER_WITH_NO_GOAL_DIRECTION_FORWARD)
 					{
 						// Robot is facing the good direction yet, nothing more to do
-						state = WANDER_WITH_NO_GOAL_STATE_DETERMINE_FORWARD_DISTANCE;
+						state = WANDER_WITH_NO_GOAL_STATE_GO_FORWARD;
 						break;
 					}
 					
@@ -204,7 +191,7 @@ namespace ArtificialIntelligenceProgram
 						turnRemainingCounts--;
 						WANDER_WITH_NO_GOAL_MOTORS_DELAY();
 					}
-					else state = WANDER_WITH_NO_GOAL_STATE_DETERMINE_FORWARD_DISTANCE;
+					else state = WANDER_WITH_NO_GOAL_STATE_GO_FORWARD;
 					
 					break;
 				}

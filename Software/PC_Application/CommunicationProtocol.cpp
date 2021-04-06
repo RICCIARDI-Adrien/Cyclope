@@ -143,4 +143,16 @@ namespace CommunicationProtocol
         if (_socket.write(reinterpret_cast<char *>(&command), sizeof(command)) != sizeof(command)) return -1;
         return 0;
     }
+
+    int setStreamingCameraEnabled(bool isEnabled)
+    {
+        // Create the command to send
+        unsigned char command[2];
+        command[0] = COMMUNICATION_PROTOCOL_COMMAND_SET_STREAMING_CAMERA_ENABLED;
+        command[1] = isEnabled;
+
+        // Send command
+        if (_socket.write(reinterpret_cast<char *>(command), sizeof(command)) != sizeof(command)) return -1;
+        return 0;
+    }
 }

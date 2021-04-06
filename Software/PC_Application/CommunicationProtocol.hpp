@@ -22,6 +22,7 @@ namespace CommunicationProtocol
         COMMUNICATION_PROTOCOL_COMMAND_LIST_AVAILABLE_AI_PROGRAMS,
         COMMUNICATION_PROTOCOL_COMMAND_START_AI_PROGRAM,
         COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM,
+        COMMUNICATION_PROTOCOL_COMMAND_SET_STREAMING_CAMERA_ENABLED,
         COMMUNICATION_PROTOCOL_COMMANDS_COUNT
     } CommunicationProtocolCommand;
 
@@ -90,6 +91,15 @@ namespace CommunicationProtocol
      * @return 0 on success.
      */
     int stopArtificialIntelligenceProgram();
+
+    /** Turn streaming camera on or off.
+     * @param isEnabled Set to false to disable camera, set to true to enable camera.
+     * @return -1 if an error occurred,
+     * @return 0 on success.
+     * @note Do not enable streaming camera when an AI program is running, this could conflict with AI program camera usage.
+     * @note The streaming camera is automatically stopped when an AI program starts execution.
+     */
+    int setStreamingCameraEnabled(bool isEnabled);
 }
 
 #endif // COMMUNICATIONPROTOCOL_HPP

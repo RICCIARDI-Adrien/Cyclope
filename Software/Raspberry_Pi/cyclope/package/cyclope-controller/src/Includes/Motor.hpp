@@ -7,6 +7,11 @@
 
 namespace Motor
 {
+	/** How many time is needed (approximately) for the robot to make a 90° turn (one motor is stopped and the other one is running). */
+	const int TURNING_TIME_90_DEGREES_MILLISECONDS = 1600;
+	/** How many time is needed (approximately) for the robot to make a 180° turn (one motor is stopped and the other one is running). */
+	const int TURNING_TIME_180_DEGREES_MILLISECONDS = 3200;
+	
 	/** All available motors. */
 	typedef enum
 	{

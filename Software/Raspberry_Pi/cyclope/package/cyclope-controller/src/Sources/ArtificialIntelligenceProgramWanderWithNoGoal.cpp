@@ -141,7 +141,7 @@ namespace ArtificialIntelligenceProgram
 					
 					// Stop only when there is enough clearance all around the robot
 					Lidar::getDistanceRangeLimits(distanceFromAngles, 0, 359, &distance, nullptr);
-					if (distance >= MAXIMUM_DISTANCE_MILLIMETER) state = WANDER_WITH_NO_GOAL_STATE_BACKWARD_SEQUENCE_DETERMINE_NEXT_DIRECTION;
+					if (distance >= OBSTACLE_AVOIDANCE_DISTANCE_MILLIMETER) state = WANDER_WITH_NO_GOAL_STATE_BACKWARD_SEQUENCE_DETERMINE_NEXT_DIRECTION;
 					
 					break;
 				}
@@ -176,20 +176,20 @@ namespace ArtificialIntelligenceProgram
 					// Robot needs to turn, determine the quickest path
 					if (furtherDistanceDirection == WANDER_WITH_NO_GOAL_DIRECTION_LEFT)
 					{
-						Motor::setRobotMotion(Motor::ROBOT_MOTION_BACKWARD_LEFT);
-						turnRemainingCounts = 25; // TODO use tick constant
+						Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_LEFT);
+						turnRemainingCounts = Motor::TURNING_TIME_90_DEGREES_MILLISECONDS / MOTORS_DELAY_TICK_MILLISECONDS;
 					}
 					else if (furtherDistanceDirection == WANDER_WITH_NO_GOAL_DIRECTION_RIGHT)
 					{
-						Motor::setRobotMotion(Motor::ROBOT_MOTION_BACKWARD_RIGHT);
-						turnRemainingCounts = 25; // TODO use tick constant
+						Motor::setRobotMotion(Motor::ROBOT_MOTION_FORWARD_RIGHT);
+						turnRemainingCounts = Motor::TURNING_TIME_90_DEGREES_MILLISECONDS / MOTORS_DELAY_TICK_MILLISECONDS;
 					}
 					else
 					{
 						// Robot needs to do a half turn, select a random direction to do that
 						if (rand() % 2 == 0) Motor::setRobotMotion(Motor::ROBOT_MOTION_BACKWARD_LEFT);
 						else Motor::setRobotMotion(Motor::ROBOT_MOTION_BACKWARD_RIGHT);
-						turnRemainingCounts = 50; // TODO use tick constant
+						turnRemainingCounts = Motor::TURNING_TIME_180_DEGREES_MILLISECONDS / MOTORS_DELAY_TICK_MILLISECONDS;
 					}
 					WANDER_WITH_NO_GOAL_MOTORS_DELAY();
 					

@@ -64,9 +64,6 @@ int main()
 		LOG(LOG_INFO, "Waiting for an AI program to execute...");
 		int programIndex = Network::waitForProgramExecutionRequest(); // TODO cast to an enum type later ?
 		
-		// Turn off camera streaming to make camera available for AI program
-		system("/etc/init.d/S99camera stop");
-		
 		// Execute the requested program
 		LOG(LOG_INFO, "Beginning execution of AI program %d.\n", programIndex); // TODO also display a string with the program name
 		switch (programIndex) // TODO function pointers ?
@@ -88,9 +85,6 @@ int main()
 		Motor::setRobotMotion(Motor::ROBOT_MOTION_STOP);
 		Lidar::setEnabled(false);
 		Light::setEnabled(false);
-		
-		// Restart camera streaming
-		system("/etc/init.d/S99camera start"); // TODO control camera when manual driving mode is enabled ?
 	}
 	
 	return EXIT_SUCCESS;

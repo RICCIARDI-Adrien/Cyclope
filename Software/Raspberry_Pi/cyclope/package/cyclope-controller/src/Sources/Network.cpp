@@ -33,6 +33,7 @@ namespace Network
 		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_LIST_AVAILABLE_AI_PROGRAMS,
 		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_START_AI_PROGRAM,
 		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM,
+		NETWORK_COMMUNICATION_PROTOCOL_COMMAND_SET_STREAMING_CAMERA_ENABLED,
 		NETWORK_COMMUNICATION_PROTOCOL_COMMANDS_COUNT
 	} CommunicationProtocolCommand;
 	
@@ -157,6 +158,8 @@ namespace Network
 					case NETWORK_COMMUNICATION_PROTOCOL_COMMAND_START_AI_PROGRAM:
 						// Retrieve program number
 						if (recv(clientSocket, &byte, 1, MSG_WAITALL) != 1) goto Client_Disconnected;
+						// Make sure streaming camera is stopped, so AI program can access the camera
+						system("/etc/init.d/S99camera stop");
 						// Unlock waitForProgramExecutionRequest() in main thread
 						pthread_mutex_lock(&_programExecutionWaitConditionMutex);
 						_programToExecuteIndex = byte;
@@ -166,6 +169,14 @@ namespace Network
 						
 					case NETWORK_COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM:
 						_isProgramRunning = false;
+						break;
+						
+					case NETWORK_COMMUNICATION_PROTOCOL_COMMAND_SET_STREAMING_CAMERA_ENABLED:
+						// Retrieve enabling state
+						if (recv(clientSocket, &byte, 1, MSG_WAITALL) != 1) goto Client_Disconnected;
+						// Change camera state
+						system("/etc/init.d/S99camera stop"); // Always call stop, even when camera must be enabled, to make sure camera is disabled before enabling it
+						if (byte != 0) system("/etc/init.d/S99camera start");
 						break;
 						
 					default:

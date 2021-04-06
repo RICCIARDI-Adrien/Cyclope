@@ -47,6 +47,8 @@ private:
 
     /** Retrieve battery voltage from robot and display it. */
     QTimer _timerBatteryVoltagePolling;
+    /** Give some time to the camera to start, then connect to it. */
+    QTimer _timerStreamingCameraConnection;
 
 protected:
     // See base class documentation
@@ -67,6 +69,8 @@ private slots:
 
     /** Called when battery voltage polling timer times out. */
     void _slotTimerBatteryVoltagePollingTimeout();
+    /** Called when streaming camera connection timer times out. */
+    void _slotTimerStreamingCameraConnectionTimeout();
 };
 
 #endif // FORMREMOTECONTROL_HPP

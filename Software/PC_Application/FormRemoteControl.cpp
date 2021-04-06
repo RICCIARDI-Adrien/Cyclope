@@ -21,9 +21,13 @@ FormRemoteControl::FormRemoteControl(QWidget *parent) :
     _pointerMediaPlayer = new QMediaPlayer(nullptr, QMediaPlayer::LowLatency);
     _pointerMediaPlayer->setVideoOutput(ui->videoWidget);
 
+    // Camera connection timer must trigger only once when called
+    _timerStreamingCameraConnection.setSingleShot(true);
+
     // Connect slots
     connect(ui->pushButtonBack, &QPushButton::clicked, this, &FormRemoteControl::_slotPushButtonBackClicked);
     connect(&_timerBatteryVoltagePolling, &QTimer::timeout, this, &FormRemoteControl::_slotTimerBatteryVoltagePollingTimeout);
+    connect(&_timerStreamingCameraConnection, &QTimer::timeout, this, &FormRemoteControl::_slotTimerStreamingCameraConnectionTimeout);
 }
 
 FormRemoteControl::~FormRemoteControl()
@@ -37,6 +41,13 @@ FormRemoteControl::~FormRemoteControl()
 
 void FormRemoteControl::enterView()
 {
+    // Start streaming camera
+    if (CommunicationProtocol::setStreamingCameraEnabled(true) != 0)
+    {
+        CommunicationProtocol::displayConnectionLostMessage(this);
+        return;
+    }
+
     // Make sure robot is stopped
     if (CommunicationProtocol::setRobotMotion(CommunicationProtocol::ROBOT_MOTION_STOP) != 0)
     {
@@ -54,14 +65,12 @@ void FormRemoteControl::enterView()
     }
     ui->labelLightState->setText(tr("State: <b>OFF</b>"));
 
-    // Connect to video stream
-    QString ipAddress = Configuration::getValue("LastUsedIpAddress", "127.0.0.1").toString();
-    _pointerMediaPlayer->setMedia(QUrl("gst-pipeline: tcpclientsrc host=\"" + ipAddress + "\" port=1234 ! decodebin latency=0 ! xvimagesink name=\"qtvideosink\""));
-    _pointerMediaPlayer->play();
-
     // Start displaying voltage
     _timerBatteryVoltagePolling.start(3000);
     _slotTimerBatteryVoltagePollingTimeout(); // Immediately display values
+
+    // Wait for camera to start, then connect to video stream
+    _timerStreamingCameraConnection.start(3000);
 }
 
 void FormRemoteControl::exitView()
@@ -69,8 +78,14 @@ void FormRemoteControl::exitView()
     // Battery voltage is no more needed
     _timerBatteryVoltagePolling.stop();
 
+    // Stop trying to connect to video streaming
+    _timerStreamingCameraConnection.stop();
+
     // Stop video playing
     _pointerMediaPlayer->stop();
+
+    // Stop streaming camera
+    CommunicationProtocol::setStreamingCameraEnabled(false);
 }
 
 void FormRemoteControl::keyPressEvent(QKeyEvent *pointerEvent)
@@ -290,4 +305,12 @@ void FormRemoteControl::_slotTimerBatteryVoltagePollingTimeout()
 
     // Display values
     ui->labelBattery->setText(tr("Battery: <b>%1% (%2V)</b>").arg(chargePercentage).arg(voltageMillivolts / 1000.));
+}
+
+void FormRemoteControl::_slotTimerStreamingCameraConnectionTimeout()
+{
+    // Connect to video stream
+    QString ipAddress = Configuration::getValue("LastUsedIpAddress", "127.0.0.1").toString();
+    _pointerMediaPlayer->setMedia(QUrl("gst-pipeline: tcpclientsrc host=\"" + ipAddress + "\" port=1234 ! decodebin latency=0 ! xvimagesink name=\"qtvideosink\""));
+    _pointerMediaPlayer->play();
 }

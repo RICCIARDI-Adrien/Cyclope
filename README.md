@@ -7,7 +7,7 @@ A little robot powered by a Raspberry Pi 3 A+, featuring a 8MPixel Raspberry Pi 
 A fast WiFi connection allows to remote control the robot while displaying camera real-time full HD video stream.  
 A tailored Buildroot Linux distribution runs the software, controlled through WiFi by a Qt desktop application running on a computer.
 
-![Cyclope](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Cyclope_With_Lidar.jpg)
+![Cyclope](Resources/Pictures/Cyclope_With_Lidar.jpg)
 
 ## Hardware
 
@@ -40,7 +40,7 @@ Generated image to burn to a SD card is `Cyclope/Software/Raspberry_Pi/buildroot
 ## Mechanical
 
 Chassis is made of two overlaid 3mm-thick steel plates.  
-See [Mechanical_Dimensions.odg](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Chassis/Mechanical_Dimensions.odg) file for additional design information.  
+See [Mechanical_Dimensions.odg](Chassis/Mechanical_Dimensions.odg) file for additional design information.  
 Provide the `Chassis.dxf` file from [Release](https://github.com/RICCIARDI-Adrien/Cyclope/releases) page to a metal laser cutting service.
 
 ## Supply parts
@@ -83,69 +83,69 @@ See `Bill_Of_Material.csv` file from [Release](https://github.com/RICCIARDI-Adri
 
 ### Castor wheel
 
-![Castor wheel](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Castor_Wheel.jpg)
+![Castor wheel](Resources/Pictures/Castor_Wheel.jpg)
 
 ### Servomotor, wheel and support
 
-![Servomotor, wheel and support](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Servomotor_And_Parts.jpg)
+![Servomotor, wheel and support](Resources/Pictures/Servomotor_And_Parts.jpg)
 
 ### Chassis
 
-![Chassis plates](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Chassis_Plates.jpg)
-![Assembled wheels 1](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Wheels_1.jpg)
-![Assembled wheels 2](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Wheels_2.jpg)
-![Assembled chassis bottom 1](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Chassis_Bottom_1.jpg)
-![Assembled chassis bottom 2](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Chassis_Bottom_2.jpg)
+![Chassis plates](Resources/Pictures/Chassis_Plates.jpg)
+![Assembled wheels 1](Resources/Pictures/Assembled_Wheels_1.jpg)
+![Assembled wheels 2](Resources/Pictures/Assembled_Wheels_2.jpg)
+![Assembled chassis bottom 1](Resources/Pictures/Assembled_Chassis_Bottom_1.jpg)
+![Assembled chassis bottom 2](Resources/Pictures/Assembled_Chassis_Bottom_2.jpg)
 
 ### PCB
 
-![Naked PCB top](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Naked_PCB_Top.jpg)
-![Naked PCB bottom](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Naked_PCB_Bottom.jpg)
+![Naked PCB top](Resources/Pictures/Naked_PCB_Top.jpg)
+![Naked PCB bottom](Resources/Pictures/Naked_PCB_Bottom.jpg)
 
 ### Motherboard
 
 PCB has been soldered by hands (resistors array part was missing, I used normal 0805 resistors) :
-![Assembled motherboard PCB top](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Motherboard_PCB_Top.jpg)
-![Assembled motherboard PCB bottom](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Motherboard_PCB_Bottom.jpg)
+![Assembled motherboard PCB top](Resources/Pictures/Assembled_Motherboard_PCB_Top.jpg)
+![Assembled motherboard PCB bottom](Resources/Pictures/Assembled_Motherboard_PCB_Bottom.jpg)
 
 A big capacitor has been added to keep battery voltage stable when a lot of current is required :
-![Motherboard PCB with big capacitor](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Motherboard_PCB_With_Big_Capacitor.jpg)
+![Motherboard PCB with big capacitor](Resources/Pictures/Motherboard_PCB_With_Big_Capacitor.jpg)
 
 ### Front board
 
-![Assembled front board PCB top](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Front_Board_PCB_Top.jpg)
-![Assembled front board PCB bottom](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Assembled_Front_Board_PCB_Bottom.jpg)
+![Assembled front board PCB top](Resources/Pictures/Assembled_Front_Board_PCB_Top.jpg)
+![Assembled front board PCB bottom](Resources/Pictures/Assembled_Front_Board_PCB_Bottom.jpg)
 
 With Raspberry Pi Camera V2 mounted :
-![Front board with camera](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Front_Board_With_Camera.jpg)
+![Front board with camera](Resources/Pictures/Front_Board_With_Camera.jpg)
 
 ### Assembled electronic boards
 
-![Electronic boards 1](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_1.jpg)
-![Electronic boards 2](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_2.jpg)
-![Electronic boards 3](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_3.jpg)
-![Electronic boards 4](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_4.jpg)
-![Electronic boards 5](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Electronic_Boards_5.jpg)
+![Electronic boards 1](Resources/Pictures/Electronic_Boards_1.jpg)
+![Electronic boards 2](Resources/Pictures/Electronic_Boards_2.jpg)
+![Electronic boards 3](Resources/Pictures/Electronic_Boards_3.jpg)
+![Electronic boards 4](Resources/Pictures/Electronic_Boards_4.jpg)
+![Electronic boards 5](Resources/Pictures/Electronic_Boards_5.jpg)
 
 ### Assembled robot
 
-![Robot front](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Cyclope.jpg)
-![Robot front rotated](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Front_Rotated.jpg)
-![Robot bottom rotated](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Bottom_Rotated.jpg)
-![Robot front](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Front.jpg)
-![Robot bottom](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Bottom.jpg)
-![Robot left side](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Left_Side.jpg)
-![Robot right side](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Robot_Right_Side.jpg)
+![Robot front](Resources/Pictures/Cyclope.jpg)
+![Robot front rotated](Resources/Pictures/Robot_Front_Rotated.jpg)
+![Robot bottom rotated](Resources/Pictures/Robot_Bottom_Rotated.jpg)
+![Robot front](Resources/Pictures/Robot_Front.jpg)
+![Robot bottom](Resources/Pictures/Robot_Bottom.jpg)
+![Robot left side](Resources/Pictures/Robot_Left_Side.jpg)
+![Robot right side](Resources/Pictures/Robot_Right_Side.jpg)
 
 ### Update for version 1.1 adding a 360° lidar
 
 Chassis top plate with lidar holes :
-![Chassis top plate](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Chassis_Lidar_Plate.jpg)
+![Chassis top plate](Resources/Pictures/Chassis_Lidar_Plate.jpg)
 
 Lidar assembled on chassis top plate :
-![Lidar on chassis top plate](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Top_Plate_With_Lidar.jpg)
+![Lidar on chassis top plate](Resources/Pictures/Top_Plate_With_Lidar.jpg)
 
 Motherboard PCB with lidar support :
-![PCB with lidar](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Motherboard_With_Lidar.jpg)
+![PCB with lidar](Resources/Pictures/Motherboard_With_Lidar.jpg)
 
-![Robot side](https://github.com/RICCIARDI-Adrien/Cyclope/blob/master/Resources/Pictures/Cyclope_With_Lidar_Side.jpg)
+![Robot side](Resources/Pictures/Cyclope_With_Lidar_Side.jpg)

@@ -29,4 +29,5 @@ _autosave-*
 build-Cyclope-*
 fp-info-cache
 Hardware/*.xml
-Hardware/Production_Files
+Hardware/Cyclope-backups/
+Hardware/Production_Files/

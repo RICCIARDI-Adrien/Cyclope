@@ -1,4 +1,4 @@
 (sym_lib_table
-  (lib (name NCP51460SN33T1G)(type Legacy)(uri ${KIPRJMOD}/NCP51460SN33T1G.lib)(options "")(descr ""))
-  (lib (name Supply_Part)(type Legacy)(uri ${KIPRJMOD}/Supply_Part.lib)(options "")(descr ""))
+  (lib (name "NCP51460SN33T1G")(type "KiCad")(uri "${KIPRJMOD}/NCP51460SN33T1G.kicad_sym")(options "")(descr ""))
+  (lib (name "Supply_Part")(type "KiCad")(uri "${KIPRJMOD}/Supply_Part.kicad_sym")(options "")(descr ""))
 )

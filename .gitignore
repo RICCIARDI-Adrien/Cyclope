@@ -10,6 +10,7 @@
 *.hex
 *.hxl
 *.job
+*.kicad_prl
 *.l#*
 *.lck
 *.lpp

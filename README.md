@@ -11,7 +11,7 @@ A tailored Buildroot Linux distribution runs the software, controlled through Wi
 
 ## Hardware
 
-PCB has been designed using KiCad 5.1.5. All manufacturing files are available from [Release](https://github.com/RICCIARDI-Adrien/Cyclope/releases) page.  
+PCB has been designed using KiCad 5.1.5 and has been ported to KiCad 6. All manufacturing files are available from [Release](https://github.com/RICCIARDI-Adrien/Cyclope/releases) page.  
 A PDF version of the schematic is also provided.
 
 ## Software

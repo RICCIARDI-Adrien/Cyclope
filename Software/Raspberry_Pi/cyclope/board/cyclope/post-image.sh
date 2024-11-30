@@ -48,7 +48,7 @@ cp bcm2710-rpi-3-b.dtb bcm2710-rpi-3-b-plus.dtb bcm2710-rpi-cm3.dtb boot
 cp -r rpi-firmware/* boot
 # Do not copy cmdline.txt as this file is modified by the firmware update code to select the newly burned rootfs
 rm -f boot/cmdline.txt
-cp zImage boot
+cp Image boot
 tar --append -f "${FIRMWARE_UPDATE_FILE_NAME}" boot
 # Compress it
 printf "\033[33mCompressing firmware update file...\033[0m\n"

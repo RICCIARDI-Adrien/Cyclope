@@ -1,8 +1,10 @@
 # Kernel
-kernel=zImage
+arm_64bit=1
+kernel=Image
 
 # Camera
 gpu_mem=128
+start_x=1
 
 # PWM
 dtoverlay=pwm-2chan,pin=12,func=4,pin2=13,func2=4

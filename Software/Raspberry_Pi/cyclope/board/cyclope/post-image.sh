@@ -7,9 +7,6 @@ BOOT_PARTITION_DIR="$1"
 GENIMAGE_TMP="${BUILD_DIR}/genimage.tmp"
 FIRMWARE_UPDATE_FILE_NAME="cyclope.tar"
 
-# Provide custom boot files
-cp "${BOARD_DIR}"/boot/* "${BOOT_PARTITION_DIR}"/rpi-firmware
-
 # Create data partition manually because genimage is only able to create FAT file systems with content
 # Create empty partition
 dd if=/dev/zero of="${BOOT_PARTITION_DIR}"/data.ext4 bs=1M count=1000

@@ -2,7 +2,7 @@ CXX ?= g++
 
 BINARY = cyclope-controller
 INCLUDES = -IIncludes
-LIBRARIES = -pthread -lopencv_videoio -lopencv_imgcodecs -lopencv_imgproc -lopencv_core
+LIBRARIES = -pthread -lmicrohttpd -lopencv_videoio -lopencv_imgcodecs -lopencv_imgproc -lopencv_core
 SOURCES = $(wildcard Sources/*.cpp)
 
 all:

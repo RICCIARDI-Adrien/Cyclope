@@ -23,12 +23,13 @@ namespace WebServer
 	static void _generatePageHeader(std::string &referencePageContent)
 	{
 		referencePageContent =
-			"<!DOCTYPE html>"
-			"	<html lang='en'>"
-			"	<head>"
-			"		<title>Cyclope Controller</title>"
-			"	</head>"
-			"	<body>";
+			"<!DOCTYPE html>\n"
+			"	<html lang='en'>\n"
+			"	<head>\n"
+			"		<title>Cyclope Controller</title>\n"
+			"		<link rel=\"icon\" href=\"data:,\">\n" // Disable the favicon.ico request from the browser
+			"	</head>\n"
+			"	<body>\n";
 	}
 
 	/** Append the end of the HTML page to the provided string.
@@ -37,7 +38,8 @@ namespace WebServer
 	static void _generatePageFooter(std::string &referencePageContent)
 	{
 		referencePageContent.append(
-			"	</body>"
+			"\n"
+			"	</body>\n"
 			"</html>");
 	}
 

@@ -46,7 +46,7 @@ namespace WebServer
 	/** Called every time a clients sends a request to the web server.
 	 * @param pointerCustomData Custom data provided to MHD_start_daemon().
 	 * @param pointerConnection The connection handle used to build the response.
-	 * @param pointerStringURL The URL requested by the client.
+	 * @param pointerStringUrl The URL requested by the client.
 	 * @param pointerStringMethod The HTTP method (GET, POST...) of the request.
 	 * @param pointerStringVersion HTTP protocol version.
 	 * @param pointerStringUploadData The data to upload to POST request.
@@ -55,7 +55,7 @@ namespace WebServer
 	 * @return MHD_NO to close the connection,
 	 * @return MHD_YES to continue servicing the client request.
 	 */
-	static enum MHD_Result _accessHandlerCallback(void __attribute__((unused)) *pointerCustomData, struct MHD_Connection *pointerConnection, const char __attribute__((unused)) *pointerStringURL, const char *pointerStringMethod, const char __attribute__((unused)) *pointerStringVersion, const char *pointerStringUploadData, size_t *pointerUploadDataSize, void __attribute__((unused)) **pointerPersistentConnectionCustomData)
+	static enum MHD_Result _accessHandlerCallback(void __attribute__((unused)) *pointerCustomData, struct MHD_Connection *pointerConnection, const char __attribute__((unused)) *pointerStringUrl, const char *pointerStringMethod, const char __attribute__((unused)) *pointerStringVersion, const char *pointerStringUploadData, size_t *pointerUploadDataSize, void __attribute__((unused)) **pointerPersistentConnectionCustomData)
 	{
 		// Callback is called when a new connection header is received, and no response must be sent at this time
 		if (*pointerPersistentConnectionCustomData == NULL) // This value is always NULL for a new connection
@@ -68,11 +68,11 @@ namespace WebServer
 		WebPageBase *pointerPage;
 		try
 		{
-			pointerPage = _pagesMap.at(pointerStringURL);
+			pointerPage = _pagesMap.at(pointerStringUrl);
 		}
 		catch (const std::out_of_range &referenceException)
 		{
-			LOG(LOG_ERR, "The page with URL \"%s\" does not exist.", pointerStringURL);
+			LOG(LOG_ERR, "The page with URL \"%s\" does not exist.", pointerStringUrl);
 			return MHD_NO;
 		}
 
@@ -81,7 +81,7 @@ namespace WebServer
 		_generatePageHeader(stringPage);
 		if (pointerPage->generateContent(stringPageContent) != 0)
 		{
-			LOG(LOG_ERR, "Failed to generate the page content for the URL \"%s\".", pointerStringURL);
+			LOG(LOG_ERR, "Failed to generate the page content for the URL \"%s\".", pointerStringUrl);
 			return MHD_NO;
 		}
 		stringPage.append(stringPageContent);
@@ -91,7 +91,7 @@ namespace WebServer
 		struct MHD_Response *pointerResponse = MHD_create_response_from_buffer(stringPage.size(), const_cast<char *>(stringPage.c_str()), MHD_RESPMEM_MUST_COPY);
 		if (pointerResponse == NULL)
 		{
-			LOG(LOG_ERR, "Failed to create the response buffer for the page with URL \"%s\".", pointerStringURL);
+			LOG(LOG_ERR, "Failed to create the response buffer for the page with URL \"%s\".", pointerStringUrl);
 			return MHD_NO;
 		}
 
@@ -113,7 +113,7 @@ namespace WebServer
 		}
 
 		// Create all pages
-		_pagesMap.insert({"/", new WebPageIndex()});
+		_pagesMap.insert({webPageIndex.getBaseUrl(), &webPageIndex});
 
 		return 0;
 	}

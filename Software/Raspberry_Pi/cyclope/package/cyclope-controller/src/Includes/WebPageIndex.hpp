@@ -11,7 +11,13 @@ class WebPageIndex: public WebPageBase
 {
 	public:
 		// See base class documentation for description
+		WebPageIndex();
+
+		// See base class documentation for description
 		virtual int generateContent(std::string &referenceStringContent) override;
 };
+
+/** Give global access to the page statically allocated instance. */
+extern WebPageIndex webPageIndex;
 
 #endif

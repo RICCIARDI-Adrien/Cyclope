@@ -4,6 +4,8 @@
  */
 #include <WebPageIndex.hpp>
 
+WebPageIndex::WebPageIndex() : WebPageBase("/") {};
+
 int WebPageIndex::generateContent(std::string &referenceStringContent)
 {
 	// TEST
@@ -11,3 +13,6 @@ int WebPageIndex::generateContent(std::string &referenceStringContent)
 
 	return 0;
 }
+
+// The statically allocated instance of the page
+WebPageIndex webPageIndex{};

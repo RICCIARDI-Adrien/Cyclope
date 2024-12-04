@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <unordered_map>
 #include <WebPageIndex.hpp>
+#include <WebPageManualControl.hpp>
 #include <WebServer.hpp>
 
 namespace WebServer
@@ -28,6 +29,12 @@ namespace WebServer
 			"	<head>\n"
 			"		<title>Cyclope Controller</title>\n"
 			"		<link rel=\"icon\" href=\"data:,\">\n" // Disable the favicon.ico request from the browser
+			"		<style>\n"
+			"			.text-center\n"
+			"			{\n"
+			"				text-align: center;\n"
+			"			}\n"
+			"		</style>\n"
 			"	</head>\n"
 			"	<body>\n";
 	}
@@ -38,7 +45,6 @@ namespace WebServer
 	static void _generatePageFooter(std::string &referencePageContent)
 	{
 		referencePageContent.append(
-			"\n"
 			"	</body>\n"
 			"</html>");
 	}
@@ -112,8 +118,9 @@ namespace WebServer
 			return -1;
 		}
 
-		// Create all pages
+		// Create all pages in alphabetical order
 		_pagesMap.insert({webPageIndex.getBaseUrl(), &webPageIndex});
+		_pagesMap.insert({webPageManualControl.getBaseUrl(), &webPageManualControl});
 
 		return 0;
 	}

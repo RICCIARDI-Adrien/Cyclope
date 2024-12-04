@@ -1,23 +1,23 @@
-/** @file WebPageIndex.hpp
- * The web site root page. It allows to reach all controls of the web interface.
+/** @file WebPageManualControl.hpp
+ * Allow to remote control the robot.
  * @author Adrien RICCIARDI
  */
-#ifndef HPP_WEB_PAGE_INDEX_HPP
-#define HPP_WEB_PAGE_INDEX_HPP
+#ifndef HPP_WEB_PAGE_MANUAL_CONTROL_HPP
+#define HPP_WEB_PAGE_MANUAL_CONTROL_HPP
 
 #include <WebPageBase.hpp>
 
-class WebPageIndex : public WebPageBase
+class WebPageManualControl : public WebPageBase
 {
 	public:
 		// See base class documentation for description
-		WebPageIndex();
+		WebPageManualControl();
 
 		// See base class documentation for description
 		virtual int generateContent(std::string &referenceStringContent) override;
 };
 
 /** Give global access to the page statically allocated instance. */
-extern WebPageIndex webPageIndex;
+extern WebPageManualControl webPageManualControl;
 
 #endif

@@ -31,6 +31,18 @@ int WebPageManualControl::generateContent(std::string &referenceStringContent)
 		"		handleKeyEvent(false, event);\n"
 		"	};\n"
 		"\n"
+		"	// Make sure the robot is stopped when leaving the page\n"
+		"	onbeforeunload = (event) =>\n"
+		"	{\n"
+		"		// Stop the robot\n"
+		"		command = CommunicationProtocol.COMMUNICATION_PROTOCOL_COMMAND_SET_MOTION + RobotMotion.ROBOT_MOTION_STOP;\n"
+		"		communicationProtocolSendCommand(command);\n"
+		"\n"
+		"		// Turn lights off\n"
+		"		command = CommunicationProtocol.COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED + '0';\n"
+		"		communicationProtocolSendCommand(command);\n"
+		"	}\n"
+		"\n"
 		"	function setUserInterfaceControlText(htmlElementId, text)\n"
 		"	{\n"
 		"		userInterfaceControl = document.getElementById(htmlElementId);\n"
@@ -180,7 +192,7 @@ int WebPageManualControl::generateContent(std::string &referenceStringContent)
 		"<p id=\"label-lights-status\">Lights : disabled</p>\n"
 		"<p id=\"label-robot-motion-status\">Motion : stopped</p>\n"
 		"<p class=\"text-center\">\n"
-		"	<a href=\"" + webPageIndex.getBaseUrl() + "\">Back</a>\n" // TODO stop robot movement when clicked
+		"	<a href=\"" + webPageIndex.getBaseUrl() + "\">Back</a>\n"
 		"</p>\n";
 
 	return 0;

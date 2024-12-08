@@ -51,6 +51,9 @@ namespace WebServer
 			"	<head>\n"
 			"		<title>Cyclope Controller</title>\n"
 			"		<link rel=\"icon\" href=\"data:,\">\n" // Disable the favicon.ico request from the browser
+			"		<meta http-equiv=\"Cache-Control\" content=\"no-cache, no-store, must-revalidate\">\n" // These 3 meta tags should prevent the browser from caching the page
+			"		<meta http-equiv=\"Pragma\" content=\"no-cache\">\n"
+			"		<meta http-equiv=\"Expires\" content=\"0\">\n"
 			"		<style>\n"
 			"			.text-center\n"
 			"			{\n"
@@ -81,7 +84,7 @@ namespace WebServer
 			"			async function communicationProtocolSendCommand(stringCommand)\n"
 			"			{\n"
 			"				// Send the POST request\n"
-			"				response = await fetch(\"/api\", { method: \"POST\", body: stringCommand });\n"
+			"				response = await fetch(\"/api\", { method: \"POST\", body: stringCommand, keepalive: true });\n" // The "keepalive" flag tells the brower to continue the fetch calls even if the calling page is unloaded (this is useful to send commands to the robot in the "beforeunload" event handler)
 			"				if (!response.ok) return \"error\";\n"
 			"				// Wait for the server answer\n"
 			"				commandAnswer = await response.text();\n"

@@ -3,6 +3,7 @@
  * @author Adrien RICCIARDI
  */
 #include <cstring>
+#include <Light.hpp>
 #include <Log.hpp>
 #include <microhttpd.h>
 #include <stdexcept>
@@ -13,11 +14,30 @@
 
 namespace WebServer
 {
+	/** All available commands the user can send. */
+	typedef enum
+	{
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_SET_MOTION,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_GET_MOTOR_DUTY_CYCLE,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_SET_MOTOR_DUTY_CYCLE,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_POWER_OFF,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_LIST_AVAILABLE_AI_PROGRAMS,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_START_AI_PROGRAM,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_SET_STREAMING_CAMERA_ENABLED,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMANDS_COUNT
+	} WebServerCommunicationProtocolCommand;
+
 	/** The server handle. */
 	static struct MHD_Daemon *_pointerServerHandle;
 
 	/** Quickly find a page handler from its URL. */
 	static std::unordered_map<std::string, WebPageBase *> _pagesMap;
+
+	/** Store the ASCII response to send for the last executed command. */
+	static char _stringLastCommandAnswer[64];
 
 	/** Initialize the provided string with the HTML header of the page.
 	 * @param referencePageContent On output, the string will be overwritten by the page header.
@@ -37,7 +57,26 @@ namespace WebServer
 			"			}\n"
 			"		</style>\n"
 			"	</head>\n"
-			"	<body>\n";
+			"	<body>\n"
+			"		<script>\n"
+			"			const CommunicationProtocol =\n"
+			"			{\n"
+			"				COMMUNICATION_PROTOCOL_COMMAND_SET_MOTION: '0',\n"
+			"				COMMUNICATION_PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE: '1',\n"
+			"				COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED: '4'\n"
+			"			}\n"
+			"\n"
+			"			async function communicationProtocolSendCommand(stringCommand)\n"
+			"			{\n"
+			"				// Send the POST request\n"
+			"				response = await fetch(\"/api\", { method: \"POST\", body: stringCommand });\n"
+			"				if (!response.ok) return \"error\";\n"
+			"				// Wait for the server answer\n"
+			"				commandAnswer = await response.text();\n"
+			"\n"
+			"				return commandAnswer;\n"
+			"			}\n"
+			"		</script>\n";
 	}
 
 	/** Append the end of the HTML page to the provided string.
@@ -54,24 +93,37 @@ namespace WebServer
 	 * @param pointerStringCommand The command to execute.
 	 * @return -1 if an error occurred,
 	 * @return 0 on success.
+	 * @note On output, fill the global _stringLastCommandAnswer string with the value that the user interface should display.
 	 */
 	static int _processApiCommand(const char *pointerStringCommand)
 	{
-		// TEST
-		LOG(LOG_ERR, "command=%s", pointerStringCommand);
+		// The first character of the string is the command opcode
+		switch (pointerStringCommand[0] - '0')
+		{
+			case WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED:
+			{
+				// The second character is the light state
+				bool isEnabled;
+				if (pointerStringCommand[1] == '0') isEnabled = false;
+				else isEnabled = true;
 
-		return 0;
-	}
+				// Execute the command
+				if (Light::setEnabled(isEnabled) != 0)
+				{
+					LOG(LOG_ERR, "Failed to set the new light state %d.", isEnabled);
+					strcpy(_stringLastCommandAnswer, "ERROR");
+					return -1;
+				}
+				else
+				{
+					if (isEnabled) strcpy(_stringLastCommandAnswer, "enabled");
+					else strcpy(_stringLastCommandAnswer, "disabled");
+				}
+				break;
+			}
 
-	/** Retrieve the last executed API command result.
-	 * @param referenceStringResponse On output, contain the response to provide to the POST request.
-	 * @return -1 if an error occurred,
-	 * @return 0 on success.
-	 */
-	static int _getApiCommandResponse(std::string &referenceStringResponse)
-	{
-		// TEST
-		referenceStringResponse = "test";
+			return 0;
+		}
 
 		return 0;
 	}
@@ -170,16 +222,8 @@ namespace WebServer
 			// All the data has been processed, send the response
 			else
 			{
-				// Get the command execution result
-				std::string stringResponse;
-				if (_getApiCommandResponse(stringResponse) != 0)
-				{
-					LOG(LOG_ERR, "Failed to retrieve the last API request response.");
-					return MHD_NO;
-				}
-
 				// Send the response
-				pointerResponse = MHD_create_response_from_buffer(stringResponse.size(), const_cast<char *>(stringResponse.c_str()), MHD_RESPMEM_MUST_COPY);
+				pointerResponse = MHD_create_response_from_buffer(strnlen(_stringLastCommandAnswer, sizeof(_stringLastCommandAnswer)), _stringLastCommandAnswer, MHD_RESPMEM_MUST_COPY);
 				if (pointerResponse == NULL)
 				{
 					LOG(LOG_ERR, "Failed to create the response buffer for the last API request.");

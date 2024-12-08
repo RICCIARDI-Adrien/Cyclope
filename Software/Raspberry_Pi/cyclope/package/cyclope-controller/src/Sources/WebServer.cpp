@@ -6,6 +6,7 @@
 #include <Light.hpp>
 #include <Log.hpp>
 #include <microhttpd.h>
+#include <Motor.hpp>
 #include <stdexcept>
 #include <unordered_map>
 #include <WebPageIndex.hpp>
@@ -66,6 +67,17 @@ namespace WebServer
 			"				COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED: '4'\n"
 			"			}\n"
 			"\n"
+			"			const RobotMotion =\n"
+			"			{\n"
+			"				ROBOT_MOTION_STOP: '0',\n"
+			"				ROBOT_MOTION_FORWARD: '1',\n"
+			"				ROBOT_MOTION_BACKWARD: '2',\n"
+			"				ROBOT_MOTION_FORWARD_LEFT: '3',\n"
+			"				ROBOT_MOTION_FORWARD_RIGHT: '4',\n"
+			"				ROBOT_MOTION_BACKWARD_LEFT: '5',\n"
+			"				ROBOT_MOTION_BACKWARD_RIGHT: '6'\n"
+			"			}\n"
+			"\n"
 			"			async function communicationProtocolSendCommand(stringCommand)\n"
 			"			{\n"
 			"				// Send the POST request\n"
@@ -100,6 +112,53 @@ namespace WebServer
 		// The first character of the string is the command opcode
 		switch (pointerStringCommand[0] - '0')
 		{
+			case WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_SET_MOTION:
+			{
+				Motor::RobotMotion motion = static_cast<Motor::RobotMotion>(pointerStringCommand[1] - '0');
+				if (Motor::setRobotMotion(motion) != 0)
+				{
+					LOG(LOG_ERR, "Failed to set the new robot motion %d.", motion);
+					strcpy(_stringLastCommandAnswer, "ERROR");
+					return -1;
+				}
+				else
+				{
+					// Prepare the answer string for the user interface
+					const char *pointerString;
+					switch (motion)
+					{
+						case Motor::ROBOT_MOTION_STOP:
+							pointerString = "stopped";
+							break;
+
+						case Motor::ROBOT_MOTION_FORWARD:
+							pointerString = "forward";
+							break;
+
+						case Motor::ROBOT_MOTION_BACKWARD:
+							pointerString = "backward";
+							break;
+
+						case Motor::ROBOT_MOTION_FORWARD_LEFT:
+						case Motor::ROBOT_MOTION_BACKWARD_LEFT:
+							pointerString = "left";
+							break;
+
+						case Motor::ROBOT_MOTION_FORWARD_RIGHT:
+						case Motor::ROBOT_MOTION_BACKWARD_RIGHT:
+							pointerString = "right";
+							break;
+
+						// Should never reach here
+						default:
+							pointerString = "INVALID DIRECTION";
+							break;
+					}
+					strcpy(_stringLastCommandAnswer, pointerString);
+				}
+				break;
+			}
+
 			case WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED:
 			{
 				// The second character is the light state
@@ -116,13 +175,17 @@ namespace WebServer
 				}
 				else
 				{
-					if (isEnabled) strcpy(_stringLastCommandAnswer, "enabled");
-					else strcpy(_stringLastCommandAnswer, "disabled");
+					const char *pointerString;
+					if (isEnabled) pointerString = "enabled";
+					else pointerString = "disabled";
+					strcpy(_stringLastCommandAnswer, pointerString);
 				}
 				break;
 			}
 
-			return 0;
+			default:
+				LOG(LOG_ERR, "Unknown command '%c'.", pointerStringCommand[0]);
+				return -1;
 		}
 
 		return 0;

@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <WebPageIndex.hpp>
 #include <WebPageManualControl.hpp>
+#include <WebPagePowerOff.hpp>
 #include <WebServer.hpp>
 
 namespace WebServer
@@ -318,6 +319,7 @@ namespace WebServer
 		// Create all pages in alphabetical order
 		_pagesMap.insert({webPageIndex.getBaseUrl(), &webPageIndex});
 		_pagesMap.insert({webPageManualControl.getBaseUrl(), &webPageManualControl});
+		_pagesMap.insert({webPagePowerOff.getBaseUrl(), &webPagePowerOff});
 
 		return 0;
 	}

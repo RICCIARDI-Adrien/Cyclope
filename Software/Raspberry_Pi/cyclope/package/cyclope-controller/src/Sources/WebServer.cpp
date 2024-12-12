@@ -2,6 +2,7 @@
  * See WebServer.hpp for description.
  * @author Adrien RICCIARDI
  */
+#include <Adc.hpp>
 #include <cstring>
 #include <Light.hpp>
 #include <Log.hpp>
@@ -160,6 +161,17 @@ namespace WebServer
 					}
 					strcpy(_stringLastCommandAnswer, pointerString);
 				}
+				break;
+			}
+
+			case WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE:
+			{
+				// Execute the command
+				int voltageMillivolts, percentage;
+				Adc::getBatteryValues(&voltageMillivolts, &percentage);
+
+				// Prepare the answer string for the user interface
+				snprintf(_stringLastCommandAnswer, sizeof(_stringLastCommandAnswer), "%d%% (%.2f V)", percentage, voltageMillivolts / 1000.f);
 				break;
 			}
 

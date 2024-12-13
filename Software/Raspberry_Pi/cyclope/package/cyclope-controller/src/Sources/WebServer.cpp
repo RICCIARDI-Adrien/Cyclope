@@ -57,6 +57,16 @@ namespace WebServer
 			"		<meta http-equiv=\"Pragma\" content=\"no-cache\">\n"
 			"		<meta http-equiv=\"Expires\" content=\"0\">\n"
 			"		<style>\n"
+			"			.table-center\n"
+			"			{\n"
+			"				margin: auto;\n" // Center the table (needs the "width" property to be set)
+			"				width: 40%;\n"
+			"				border-collapse: collapse;\n" // Use a single row around the table
+			"			}\n"
+			"			.table-center th, .table-center td\n"
+			"			{\n"
+			"				border: 1px solid;\n"
+			"			}\n"
 			"			.text-center\n"
 			"			{\n"
 			"				text-align: center;\n"
@@ -85,10 +95,10 @@ namespace WebServer
 			"\n"
 			"			async function communicationProtocolSendCommand(stringCommand)\n"
 			"			{\n"
-			"				// Send the POST request\n"
+							// Send the POST request
 			"				response = await fetch(\"/api\", { method: \"POST\", body: stringCommand, keepalive: true });\n" // The "keepalive" flag tells the brower to continue the fetch calls even if the calling page is unloaded (this is useful to send commands to the robot in the "beforeunload" event handler)
 			"				if (!response.ok) return \"error\";\n"
-			"				// Wait for the server answer\n"
+							// Wait for the server answer
 			"				commandAnswer = await response.text();\n"
 			"\n"
 			"				return commandAnswer;\n"
@@ -133,25 +143,25 @@ namespace WebServer
 					switch (motion)
 					{
 						case Motor::ROBOT_MOTION_STOP:
-							pointerString = "stopped";
+							pointerString = "Stopped";
 							break;
 
 						case Motor::ROBOT_MOTION_FORWARD:
-							pointerString = "forward";
+							pointerString = "Forward";
 							break;
 
 						case Motor::ROBOT_MOTION_BACKWARD:
-							pointerString = "backward";
+							pointerString = "Backward";
 							break;
 
 						case Motor::ROBOT_MOTION_FORWARD_LEFT:
 						case Motor::ROBOT_MOTION_BACKWARD_LEFT:
-							pointerString = "left";
+							pointerString = "Left";
 							break;
 
 						case Motor::ROBOT_MOTION_FORWARD_RIGHT:
 						case Motor::ROBOT_MOTION_BACKWARD_RIGHT:
-							pointerString = "right";
+							pointerString = "Right";
 							break;
 
 						// Should never reach here
@@ -192,8 +202,8 @@ namespace WebServer
 				else
 				{
 					const char *pointerString;
-					if (isEnabled) pointerString = "enabled";
-					else pointerString = "disabled";
+					if (isEnabled) pointerString = "Enabled";
+					else pointerString = "Disabled";
 					strcpy(_stringLastCommandAnswer, pointerString);
 				}
 				break;

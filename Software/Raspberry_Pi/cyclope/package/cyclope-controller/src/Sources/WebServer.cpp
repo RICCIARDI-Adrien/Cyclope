@@ -13,6 +13,7 @@
 #include <WebPageIndex.hpp>
 #include <WebPageManualControl.hpp>
 #include <WebPagePowerOff.hpp>
+#include <WebPageStartProgram.hpp>
 #include <WebServer.hpp>
 
 namespace WebServer
@@ -342,6 +343,7 @@ namespace WebServer
 		_pagesMap.insert({webPageIndex.getBaseUrl(), &webPageIndex});
 		_pagesMap.insert({webPageManualControl.getBaseUrl(), &webPageManualControl});
 		_pagesMap.insert({webPagePowerOff.getBaseUrl(), &webPagePowerOff});
+		_pagesMap.insert({webPageStartProgram.getBaseUrl(), &webPageStartProgram});
 
 		return 0;
 	}

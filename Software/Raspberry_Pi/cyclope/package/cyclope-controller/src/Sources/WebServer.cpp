@@ -10,6 +10,7 @@
 #include <Motor.hpp>
 #include <stdexcept>
 #include <unordered_map>
+#include <WebPageExecuteProgram.hpp>
 #include <WebPageIndex.hpp>
 #include <WebPageManualControl.hpp>
 #include <WebPagePowerOff.hpp>
@@ -340,6 +341,7 @@ namespace WebServer
 		}
 
 		// Create all pages in alphabetical order
+		_pagesMap.insert({webPageExecuteProgram.getBaseUrl(), &webPageExecuteProgram});
 		_pagesMap.insert({webPageIndex.getBaseUrl(), &webPageIndex});
 		_pagesMap.insert({webPageManualControl.getBaseUrl(), &webPageManualControl});
 		_pagesMap.insert({webPagePowerOff.getBaseUrl(), &webPagePowerOff});

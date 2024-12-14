@@ -7,7 +7,7 @@
 
 WebPageExecuteProgram::WebPageExecuteProgram() : WebPageBase("/execute-program") {};
 
-int WebPageExecuteProgram::generateContent(std::string &referenceStringContent)
+int WebPageExecuteProgram::generateContent(std::vector<UrlArgument *> &referenceVectorUrlArguments, std::string &referenceStringContent)
 {
 	referenceStringContent =
 		"<p>TEST</p>\n"

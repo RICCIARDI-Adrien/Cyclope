@@ -8,7 +8,7 @@
 
 WebPagePowerOff::WebPagePowerOff() : WebPageBase("/power-off") {};
 
-int WebPagePowerOff::generateContent(std::string &referenceStringContent)
+int WebPagePowerOff::generateContent(std::vector<UrlArgument *> &, std::string &referenceStringContent)
 {
 	referenceStringContent =
 		"<div class=\"text-center\">\n"

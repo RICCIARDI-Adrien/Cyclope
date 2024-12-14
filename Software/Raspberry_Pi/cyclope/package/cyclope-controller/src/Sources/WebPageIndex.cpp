@@ -9,7 +9,7 @@
 
 WebPageIndex::WebPageIndex() : WebPageBase("/") {};
 
-int WebPageIndex::generateContent(std::string &referenceStringContent)
+int WebPageIndex::generateContent(std::vector<UrlArgument *> &, std::string &referenceStringContent)
 {
 	referenceStringContent =
 		"<div class=\"text-center\">\n"

@@ -219,6 +219,38 @@ namespace WebServer
 		return 0;
 	}
 
+	/** Called by the web server upon reception of a GET request to extract the URL arguments. This callback is called for every argument.
+	 * @param pointerCustomData Point to the output vector into which the extracted data will be stored.
+	 * @param kind The type of key to extract, unused here.
+	 * @param pointerStringKey The key (i.e. argument here).
+	 * @param pointerStringValue The value.
+	 * @return MHD_NO if an error occured,
+	 * @return MHD_YES on success.
+	 */
+	static enum MHD_Result _urlArgumentsKeyValueIterator(void *pointerCustomData, enum MHD_ValueKind __attribute__((unused)) kind, const char *pointerStringKey, const char *pointerStringValue)
+	{
+		std::vector<WebPageBase::UrlArgument *> *pointerVectorArguments = static_cast<std::vector<WebPageBase::UrlArgument *> *>(pointerCustomData);
+
+		// Retrieve the values
+		WebPageBase::UrlArgument *pointerUrlArgument = new WebPageBase::UrlArgument();
+		if (pointerUrlArgument == nullptr)
+		{
+			LOG(LOG_ERR, "Failed to allocate memmory for the argument \"%s\" with value \"%s\".", pointerStringKey, pointerStringValue);
+			return MHD_NO;
+		}
+		// Retrieve the argument
+		strncpy(pointerUrlArgument->stringArgument, pointerStringKey, sizeof(pointerUrlArgument->stringArgument) - 1);
+		pointerUrlArgument->stringArgument[sizeof(pointerUrlArgument->stringArgument) - 1] = 0; // Make sure that the string is terminated
+		// Retrieve the value
+		strncpy(pointerUrlArgument->stringValue, pointerStringValue, sizeof(pointerUrlArgument->stringValue) - 1);
+		pointerUrlArgument->stringValue[sizeof(pointerUrlArgument->stringValue) - 1] = 0; // Make sure that the string is terminated
+
+		// Append the data
+		pointerVectorArguments->push_back(pointerUrlArgument);
+
+		return MHD_YES;
+	}
+
 	/** Called every time a clients sends a request to the web server.
 	 * @param pointerCustomData Custom data provided to MHD_start_daemon().
 	 * @param pointerConnection The connection handle used to build the response.
@@ -270,16 +302,24 @@ namespace WebServer
 				return MHD_NO;
 			}
 
+			// Extract the URL arguments (if any)
+			std::vector<WebPageBase::UrlArgument *> vectorArguments;
+			MHD_get_connection_values(pointerConnection, MHD_GET_ARGUMENT_KIND, _urlArgumentsKeyValueIterator, &vectorArguments);
+
 			// Generate the page
 			std::string stringPage, stringPageContent;
 			_generatePageHeader(stringPage);
-			if (pointerPage->generateContent(stringPageContent) != 0)
+			if (pointerPage->generateContent(vectorArguments, stringPageContent) != 0)
 			{
 				LOG(LOG_ERR, "Failed to generate the page content for the URL \"%s\".", pointerStringUrl);
 				return MHD_NO;
 			}
 			stringPage.append(stringPageContent);
 			_generatePageFooter(stringPage);
+
+			// Release the allocated resources
+			const size_t vectorArgumentsSize = vectorArguments.size();
+			for (size_t i = 0; i < vectorArgumentsSize; i++) delete vectorArguments[i];
 
 			// Generate the HTTP answer containing the page
 			pointerResponse = MHD_create_response_from_buffer(stringPage.size(), const_cast<char *>(stringPage.c_str()), MHD_RESPMEM_MUST_COPY);

@@ -7,7 +7,7 @@
 
 WebPageManualControl::WebPageManualControl() : WebPageBase("/remote-control") {};
 
-int WebPageManualControl::generateContent(std::string &referenceStringContent)
+int WebPageManualControl::generateContent(std::vector<UrlArgument *> &, std::string &referenceStringContent)
 {
 	referenceStringContent =
 		"<script>\n"

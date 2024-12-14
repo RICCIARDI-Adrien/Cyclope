@@ -7,7 +7,7 @@
 
 WebPageStartProgram::WebPageStartProgram() : WebPageBase("/start-program") {};
 
-int WebPageStartProgram::generateContent(std::string &referenceStringContent)
+int WebPageStartProgram::generateContent(std::vector<UrlArgument *> &, std::string &referenceStringContent)
 {
 	referenceStringContent =
 		"<p>TODO</p>\n"

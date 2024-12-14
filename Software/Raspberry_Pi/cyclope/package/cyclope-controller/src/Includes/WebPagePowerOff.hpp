@@ -14,7 +14,7 @@ class WebPagePowerOff : public WebPageBase
 		WebPagePowerOff();
 
 		// See base class documentation for description
-		virtual int generateContent(std::string &referenceStringContent) override;
+		virtual int generateContent(std::vector<UrlArgument *> &, std::string &referenceStringContent) override;
 };
 
 /** Give global access to the page statically allocated instance. */

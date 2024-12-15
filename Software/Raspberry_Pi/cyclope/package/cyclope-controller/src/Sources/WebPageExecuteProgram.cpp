@@ -12,6 +12,15 @@ WebPageExecuteProgram::WebPageExecuteProgram() : WebPageBase("/execute-program")
 int WebPageExecuteProgram::generateContent(std::vector<UrlArgument *> &referenceVectorUrlArguments, std::string &referenceStringContent)
 {
 	referenceStringContent =
+		"<script>\n"
+		// Stop the running AI program when leaving the page
+		"	onbeforeunload = (event) =>\n"
+		"	{\n"
+		"		command = CommunicationProtocol.COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM;\n"
+		"		communicationProtocolSendCommand(command);\n"
+		"	}\n"
+		"\n"
+		"</script>\n"
 		"<div class=\"text-center\">\n"
 		"	<h1>Running an AI program</h1>\n"
 		"</div>\n";

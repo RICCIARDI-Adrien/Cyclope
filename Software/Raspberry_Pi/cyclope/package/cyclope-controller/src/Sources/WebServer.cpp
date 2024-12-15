@@ -2,6 +2,7 @@
  * See WebServer.hpp for description.
  * @author Adrien RICCIARDI
  */
+#include <ArtificialIntelligenceProgramManager.hpp>
 #include <Adc.hpp>
 #include <cstring>
 #include <Light.hpp>
@@ -81,7 +82,8 @@ namespace WebServer
 			"			{\n"
 			"				COMMUNICATION_PROTOCOL_COMMAND_SET_MOTION: '0',\n"
 			"				COMMUNICATION_PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE: '1',\n"
-			"				COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED: '4'\n"
+			"				COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED: '4',\n"
+			"				COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM: '8'\n"
 			"			}\n"
 			"\n"
 			"			const RobotMotion =\n"
@@ -210,6 +212,10 @@ namespace WebServer
 				}
 				break;
 			}
+
+			case WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM:
+				ArtificialIntelligenceProgramManager::stopRunningProgram();
+				break;
 
 			default:
 				LOG(LOG_ERR, "Unknown command '%c'.", pointerStringCommand[0]);

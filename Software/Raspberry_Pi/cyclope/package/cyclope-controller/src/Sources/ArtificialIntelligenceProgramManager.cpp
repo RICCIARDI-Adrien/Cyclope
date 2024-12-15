@@ -106,13 +106,9 @@ namespace ArtificialIntelligenceProgramManager
 		// Wait for the web server telling to begin program execution
 		pthread_mutex_lock(&_programExecutionWaitConditionMutex);
 		while (_pointerCurrentlyRunProgram == nullptr) pthread_cond_wait(&_programExecutionWaitCondition, &_programExecutionWaitConditionMutex);
-
-		// Cache the program and reset it, so this method will block the next time it will be called
-		ArtificialIntelligenceProgramBase *pointerProgram = _pointerCurrentlyRunProgram;
-		_pointerCurrentlyRunProgram = nullptr;
 		pthread_mutex_unlock(&_programExecutionWaitConditionMutex);
 
-		return pointerProgram;
+		return _pointerCurrentlyRunProgram;
 	}
 
 	int startProgramExecution(unsigned int programIndex)

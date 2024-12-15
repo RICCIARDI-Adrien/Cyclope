@@ -312,6 +312,9 @@ namespace WebServer
 			if (pointerPage->generateContent(vectorArguments, stringPageContent) != 0)
 			{
 				LOG(LOG_ERR, "Failed to generate the page content for the URL \"%s\".", pointerStringUrl);
+				// Release the allocated resources
+				const size_t vectorArgumentsSize = vectorArguments.size();
+				for (size_t i = 0; i < vectorArgumentsSize; i++) delete vectorArguments[i];
 				return MHD_NO;
 			}
 			stringPage.append(stringPageContent);

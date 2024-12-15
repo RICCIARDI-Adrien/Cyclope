@@ -3,74 +3,20 @@
  * @author Adrien RICCIARDI
  */
 #include <ArtificialIntelligenceProgramManager.hpp>
+#include <ArtificialIntelligenceProgramWanderWithNoGoal.hpp>
 #include <Log.hpp>
 #include <pthread.h>
-
-// TEST
-#include <unistd.h>
-
-// TEST
-namespace
-{
-	class Program1 : public ArtificialIntelligenceProgramBase
-	{
-		public :
-			Program1() : ArtificialIntelligenceProgramBase{"Program number 1"} {}
-			virtual void run()
-			{
-				int i = 0;
-				while (!_isExitRequested)
-				{
-					LOG(LOG_INFO, "prog 1 exec %d", i++);
-					usleep(500000);
-				}
-			}
-	};
-
-	class Program2 : public ArtificialIntelligenceProgramBase
-	{
-		public:
-			Program2() : ArtificialIntelligenceProgramBase{"The second program"} {}
-			virtual void run()
-			{
-				int i = 0;
-				while (!_isExitRequested)
-				{
-					LOG(LOG_INFO, "second program exec %d", i++);
-					usleep(250000);
-				}
-			}
-	};
-
-	class Program3 : public ArtificialIntelligenceProgramBase
-	{
-		public:
-			Program3() : ArtificialIntelligenceProgramBase{"Le troisième"} {}
-			virtual void run()
-			{
-				int i = 0;
-				while (!_isExitRequested)
-				{
-					LOG(LOG_INFO, "le prog num 3 exec %d", i++);
-					usleep(1000000);
-				}
-			}
-	};
-}
 
 namespace ArtificialIntelligenceProgramManager
 {
 	// The statically allocated instances of the programs
-	Program1 _p1;
-	Program2 _p2;
-	Program3 _p3;
+	/** Move into the room, simulating a sort of will. */
+	static ArtificialIntelligenceProgramWanderWithNoGoal _artificialIntelligenceProgramWanderWithNoGoal{"Wander with no goal"};
 
 	/** List all available programs. */
 	static ArtificialIntelligenceProgramBase *_pointerArtificialIntelligencePrograms[] =
 	{
-		&_p1,
-		&_p2,
-		&_p3
+		&_artificialIntelligenceProgramWanderWithNoGoal
 	};
 	/** The amount of available programs. */
 	static constexpr unsigned int _pointerArtificialIntelligenceProgramsCount = sizeof(_pointerArtificialIntelligencePrograms) / sizeof(_pointerArtificialIntelligencePrograms[0]);

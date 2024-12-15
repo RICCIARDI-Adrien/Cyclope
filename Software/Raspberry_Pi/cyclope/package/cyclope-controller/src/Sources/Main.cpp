@@ -3,7 +3,7 @@
  * @author Adrien RICCIARDI
  */
 #include <Adc.hpp>
-#include <ArtificialIntelligenceProgram.hpp>
+#include <ArtificialIntelligenceProgramManager.hpp>
 #include <cstdlib>
 #include <Lidar.hpp>
 #include <Light.hpp>
@@ -50,7 +50,7 @@ int main()
 		return EXIT_FAILURE;
 	}
 
-	// Initialize server
+	// Initialize the server
 	if (Network::initialize() != 0)
 	{
 		LOG(LOG_ERR, "Communication protocol server initialization failed, aborting.");
@@ -62,31 +62,24 @@ int main()
 		return EXIT_FAILURE;
 	}
 
-	// Execute AI programs
+	// Execute AI programs, exploiting the main thread
 	while (1)
 	{
 		// Wait for a program to execute
 		LOG(LOG_INFO, "Waiting for an AI program to execute...");
-		int programIndex = Network::waitForProgramExecutionRequest(); // TODO cast to an enum type later ?
-
-		// Execute the requested program
-		LOG(LOG_INFO, "Beginning execution of AI program %d.\n", programIndex); // TODO also display a string with the program name
-		switch (programIndex) // TODO function pointers ?
+		ArtificialIntelligenceProgramBase *pointerProgram = ArtificialIntelligenceProgramManager::waitForProgramExecutionRequest();
+		if (pointerProgram == nullptr)
 		{
-			case 0:
-				ArtificialIntelligenceProgram::followTennisBall();
-				break;
-
-			case 1:
-				ArtificialIntelligenceProgram::wanderWithNoGoal();
-				break;
-
-			default:
-				LOG(LOG_ERR, "Unknown AI program requested, aborting.");
-				break;
+			LOG(LOG_ERR, "The selected AI program does not exist.");
+			continue;
 		}
 
-		// Make sure robot is stopped
+		// Execute the requested program
+		LOG(LOG_INFO, "Beginning execution of the AI program \"%s\".", pointerProgram->getDescriptiveName());
+		pointerProgram->setExitRequest(false); // Reset the exit flag to make the program run
+		pointerProgram->run();
+
+		// Make sure the robot is stopped
 		Motor::setRobotMotion(Motor::ROBOT_MOTION_STOP);
 		Lidar::setEnabled(false);
 		Light::setEnabled(false);

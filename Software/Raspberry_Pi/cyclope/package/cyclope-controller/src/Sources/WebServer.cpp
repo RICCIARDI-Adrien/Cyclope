@@ -107,6 +107,12 @@ namespace WebServer
 			"\n"
 			"				return commandAnswer;\n"
 			"			}\n"
+			"\n"
+			"			function setUserInterfaceControlText(htmlElementId, text)\n"
+			"			{\n"
+			"				userInterfaceControl = document.getElementById(htmlElementId);\n"
+			"				userInterfaceControl.innerHTML = text;\n"
+			"			}\n"
 			"		</script>\n";
 	}
 

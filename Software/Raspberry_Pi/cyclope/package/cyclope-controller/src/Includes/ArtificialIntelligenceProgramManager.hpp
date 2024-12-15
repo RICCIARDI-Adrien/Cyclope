@@ -20,6 +20,21 @@ namespace ArtificialIntelligenceProgramManager
 	 * @return How many programs can be retrieved with the getProgram() method.
 	 */
 	unsigned int getProgramsCount();
+
+	/** Block the calling thread until receiving a command to execute a specific program.
+	 * @return A pointer on the program to execute.
+	 */
+	ArtificialIntelligenceProgramBase *waitForProgramExecutionRequest();
+
+	/** Ask the main thread to start executing the specified program.
+	 * @param programIndex The program to run.
+	 * @return -1 if an error occurred,
+	 * @return 0 on success.
+	 */
+	int startProgramExecution(unsigned int programIndex);
+
+	/** Ask the program returned by waitForProgramExecutionRequest() to stop execution. */
+	void stopRunningProgram();
 }
 
 #endif

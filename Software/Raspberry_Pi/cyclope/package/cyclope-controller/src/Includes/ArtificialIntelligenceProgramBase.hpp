@@ -24,7 +24,7 @@ class ArtificialIntelligenceProgramBase
 		/** Ask the program to exit at its next loop iteration.
 		 * @param isExitRequested Set to true to make the program exit, set to false to reset the flag.
 		 */
-		void setExitRequest(bool isExitRequested)
+		inline void setExitRequest(bool isExitRequested)
 		{
 			_isExitRequested = isExitRequested;
 		}

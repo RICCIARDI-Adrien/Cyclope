@@ -205,9 +205,9 @@ int WebPageManualControl::generateContent(std::vector<UrlArgument *> &, std::str
 		"		<td id=\"label-lights-status\">Disabled</td>\n"
 		"	</tr>\n"
 		"</table>\n"
-		"<p class=\"text-center\">\n"
-		"	<a href=\"" + webPageIndex.getBaseUrl() + "\">Back</a>\n"
-		"</p>\n";
+		"<div class=\"div-button-center\">\n"
+		"	<button onclick=\"location.href='" + webPageIndex.getBaseUrl() + "';\">Back</button>\n"
+		"</div>\n";
 
 	return 0;
 }

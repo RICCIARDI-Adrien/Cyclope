@@ -32,9 +32,9 @@ int WebPageStartProgram::generateContent(std::vector<UrlArgument *> &, std::stri
 
 	referenceStringContent +=
 		"<br />\n"
-		"<p class=\"text-center\">\n"
-		"	<a href=\"" + webPageIndex.getBaseUrl() + "\">Back</a>\n"
-		"</p>\n";
+		"<div class=\"div-button-center\">\n"
+		"	<button onclick=\"location.href='" + webPageIndex.getBaseUrl() + "';\">Back</button>\n"
+		"</div>\n";
 
 	return 0;
 }

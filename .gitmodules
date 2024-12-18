@@ -1,3 +1,9 @@
 [submodule "Software/Raspberry_Pi/buildroot"]
 	path = Software/Raspberry_Pi/buildroot
 	url = https://git.buildroot.net/buildroot
+[submodule "Software/--force"]
+	path = Software/--force
+	url = https://github.com/buildroot/buildroot
+[submodule "Software/buildroot"]
+	path = Software/buildroot
+	url = https://github.com/buildroot/buildroot

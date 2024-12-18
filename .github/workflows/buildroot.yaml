@@ -6,11 +6,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: '0'
           submodules: 'recursive'
       - name: Buildroot distribution build
         run: |
-          make -C Software/Raspberry_Pi/buildroot BR2_EXTERNAL=$(realpath .)/Software/Raspberry_Pi/cyclope cyclope_defconfig
-          make -C Software/Raspberry_Pi/buildroot
+          make -C Software/buildroot BR2_EXTERNAL=$(realpath .)/Software/cyclope cyclope_defconfig
+          make -C Software/buildroot

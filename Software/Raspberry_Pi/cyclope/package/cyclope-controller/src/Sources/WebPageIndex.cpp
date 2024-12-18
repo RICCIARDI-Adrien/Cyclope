@@ -15,15 +15,15 @@ int WebPageIndex::generateContent(std::vector<UrlArgument *> &, std::string &ref
 		"<div class=\"text-center\">\n"
 		"	<h1>Cyclope Controller main menu</h1>\n"
 		"</div>\n"
-		"<p class=\"text-center\">\n"
-		"	<a href=\"" + webPageManualControl.getBaseUrl() + "\">Manual control</a>\n"
-		"</p>\n"
-		"<p class=\"text-center\">\n"
-		"	<a href=\"" + webPageStartProgram.getBaseUrl() + "\">Start an AI program</a>\n"
-		"</p>\n"
-		"<p class=\"text-center\">\n"
-		"	<a href=\"" + webPagePowerOff.getBaseUrl() + "\">Power the robot off</a>\n"
-		"</p>\n";
+		"<div class=\"div-button-center\">\n"
+		"	<button onclick=\"location.href='" + webPageManualControl.getBaseUrl() + "';\">Manual control</button>\n"
+		"</div>\n"
+		"<div class=\"div-button-center\">\n"
+		"	<button onclick=\"location.href='" + webPageStartProgram.getBaseUrl() + "';\">Start an AI program</button>\n"
+		"</div>\n"
+		"<div class=\"div-button-center\">\n"
+		"	<button onclick=\"location.href='" + webPagePowerOff.getBaseUrl() + "';\">Power the robot off</button>\n"
+		"</div>\n";
 
 	return 0;
 }

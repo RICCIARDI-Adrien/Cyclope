@@ -62,6 +62,16 @@ int main()
 		return EXIT_FAILURE;
 	}
 
+	// Make the robot lights blink three times to tell it is ready
+	for (int i = 0; i < 3; i++)
+	{
+		if (Light::setEnabled(true) != 0) LOG(LOG_ERR, "Failed to turn lights on.");
+		usleep(250000);
+		if (Light::setEnabled(false) != 0) LOG(LOG_ERR, "Failed to turn lights off.");
+		usleep(250000);
+	}
+	LOG(LOG_INFO, "Server is ready.");
+
 	// Execute AI programs, exploiting the main thread
 	while (1)
 	{

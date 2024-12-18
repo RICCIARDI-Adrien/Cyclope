@@ -1,11 +1,10 @@
 [![](https://github.com/RICCIARDI-Adrien/Cyclope/workflows/Buildroot%20build/badge.svg)](https://github.com/RICCIARDI-Adrien/Cyclope/actions)
-[![](https://github.com/RICCIARDI-Adrien/Cyclope/workflows/PC%20application%20build/badge.svg)](https://github.com/RICCIARDI-Adrien/Cyclope/actions)
 
 # Cyclope
 
 A little robot powered by a Raspberry Pi 3 A+, featuring a 8MPixel Raspberry Pi Camera V2 and a 360° lidar.  
 A fast WiFi connection allows to remote control the robot while displaying camera real-time full HD video stream.  
-A tailored Buildroot Linux distribution runs the software, controlled through WiFi by a Qt desktop application running on a computer.
+A tailored Buildroot Linux distribution runs the software, controlled through WiFi through an embedded web server.
 
 ![Cyclope](Resources/Pictures/Cyclope_With_Lidar.jpg)
 

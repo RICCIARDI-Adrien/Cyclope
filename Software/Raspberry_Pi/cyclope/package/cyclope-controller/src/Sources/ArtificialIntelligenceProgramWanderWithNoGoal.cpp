@@ -20,7 +20,6 @@
 
 void ArtificialIntelligenceProgramWanderWithNoGoal::run()
 {
-	const int MAXIMUM_DISTANCE_MILLIMETER = 800; // The maximum distance taken into account by the robot
 	const int OBSTACLE_AVOIDANCE_DISTANCE_MILLIMETER = 400; // The distance at which the robot will change its direction to avoid the object
 	const int VERY_CLOSE_OBSTACLE_DISTANCE_MILLIMETER = 200; // The distance preventing the robot to go further, it must go back or it will collide something
 	int distanceFromAngles[LIDAR_ANGLES_COUNT] = {0}, distance, leftDistance, rightDistance, furtherDistance, distanceFromDirections[WANDER_WITH_NO_GOAL_DIRECTIONS_COUNT], turnRemainingCounts = 0, i; // Prevent the robot from running until some valid data was processed by clearing distanceFromAngles array

@@ -2,6 +2,7 @@
  * See ArtificialIntelligenceProgramManager.hpp for description.
  * @author Adrien RICCIARDI
  */
+#include <ArtificialIntelligenceProgramFollowTennisBall.hpp>
 #include <ArtificialIntelligenceProgramManager.hpp>
 #include <ArtificialIntelligenceProgramWanderWithNoGoal.hpp>
 #include <Log.hpp>
@@ -10,12 +11,15 @@
 namespace ArtificialIntelligenceProgramManager
 {
 	// The statically allocated instances of the programs
+	/** Try to discern a tennis ball with the camera and to follow it in the room. */
+	static ArtificialIntelligenceProgramFollowTennisBall _artificialIntelligenceProgramFollowTennisBall{"Follow a tennis ball"};
 	/** Move into the room, simulating a sort of will. */
 	static ArtificialIntelligenceProgramWanderWithNoGoal _artificialIntelligenceProgramWanderWithNoGoal{"Wander with no goal"};
 
 	/** List all available programs. */
 	static ArtificialIntelligenceProgramBase *_pointerArtificialIntelligencePrograms[] =
 	{
+		&_artificialIntelligenceProgramFollowTennisBall,
 		&_artificialIntelligenceProgramWanderWithNoGoal
 	};
 	/** The amount of available programs. */

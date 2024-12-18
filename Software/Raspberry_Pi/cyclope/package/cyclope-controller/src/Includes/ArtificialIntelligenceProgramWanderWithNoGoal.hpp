@@ -1,5 +1,5 @@
 /** @file ArtificialIntelligenceProgramWanderWithNoGoal.hpp
- * The base class from which all AI programs are derived.
+ * Move into the room, simulating a sort of will.
  * @author Adrien RICCIARDI
  */
 #ifndef HPP_ARTIFICIAL_INTELLIGENCE_PROGRAM_WANDER_WITH_NO_GOAL_HPP

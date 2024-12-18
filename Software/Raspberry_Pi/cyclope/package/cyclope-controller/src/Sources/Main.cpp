@@ -9,7 +9,6 @@
 #include <Light.hpp>
 #include <Log.hpp>
 #include <Motor.hpp>
-#include <Network.hpp>
 #include <unistd.h>
 #include <WebServer.hpp>
 
@@ -51,11 +50,6 @@ int main()
 	}
 
 	// Initialize the server
-	if (Network::initialize() != 0)
-	{
-		LOG(LOG_ERR, "Communication protocol server initialization failed, aborting.");
-		return EXIT_FAILURE;
-	}
 	if (WebServer::initialize() != 0)
 	{
 		LOG(LOG_ERR, "Web server initialization failed, aborting.");

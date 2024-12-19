@@ -4,11 +4,14 @@
  */
 #include <ArtificialIntelligenceProgramManager.hpp>
 #include <Adc.hpp>
+#include <cerrno>
 #include <cstring>
+#include <Lidar.hpp>
 #include <Light.hpp>
 #include <Log.hpp>
 #include <microhttpd.h>
 #include <Motor.hpp>
+#include <signal.h>
 #include <stdexcept>
 #include <unordered_map>
 #include <WebPageExecuteProgram.hpp>
@@ -24,11 +27,11 @@ namespace WebServer
 	typedef enum
 	{
 		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_SET_MOTION,
-		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_GET_BATTERY_VOLTAGE,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_G  ET_BATTERY_VOLTAGE,
 		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_SET_LIGHT_ENABLED,
 		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM,
-		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_SET_STREAMING_CAMERA_ENABLED,
-		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMANDS_COUNT
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_CLEAR_WATCHDOG,
+		WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_SET_STREAMING_CAMERA_ENABLED
 	} WebServerCommunicationProtocolCommand;
 
 	/** The server handle. */
@@ -231,6 +234,10 @@ namespace WebServer
 			case WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_STOP_CURRENT_AI_PROGRAM:
 				ArtificialIntelligenceProgramManager::stopRunningProgram();
 				break;
+				
+			case WEB_SERVER_COMMUNICATION_PROTOCOL_COMMAND_CLEAR_WATCHDOG:
+				alarm(WATCHDOG_TIMEOUT_SECONDS); // Reset the watchdog
+				break;
 
 			default:
 				LOG(LOG_ERR, "Unknown command '%c'.", pointerStringCommand[0]);
@@ -393,9 +400,36 @@ namespace WebServer
 
 		return returnValue;
 	}
+	
+	/** Called when the watchdog fires. */
+	static _watchogSignalHandler(int)
+	{
+		LOG(LOG_WARNING, "The watchdog fired, stopping the robot.");
+		
+		// Stop the currently running AI program (if any)
+		ArtificialIntelligenceProgramManager::stopRunningProgram();
+		
+		// Stop the robot to be sure
+		Motor::setRobotMotion(Motor::ROBOT_MOTION_STOP);
+		Lidar::setEnabled(false);
+		Light::setEnabled(false);
+		
+		// Stop the watchdog to avoid it retrigger itself continuously
+		int result = alarm(0);
+		if (result < 0) LOG(LOG_ERR, "Failed to disable the watchdog (%s).", strerror(errno));
+	}
 
 	int initialize()
 	{
+		// Create the event handler that will be called if the watchdog fires
+		struct sigaction signalAction{ _watchogSignalHandler };
+		int result = sigaction(SIGALRM, &signalAction, nullptr);
+		if (result < 0)
+		{
+			LOG(LOG_ERR, "Error : failed to install the SIGALRM handler (%s).", strerror(errno));
+			return -1;
+		}
+		
 		// Start the web server daemon and configure it to accept connections from any IP
 		_pointerServerHandle = MHD_start_daemon(MHD_USE_THREAD_PER_CONNECTION, 80, NULL, NULL, _accessHandlerCallback, NULL, MHD_OPTION_END);
 		if (_pointerServerHandle == NULL)
